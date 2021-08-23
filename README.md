@@ -1,7 +1,7 @@
 ## Project: Craft master
 ### Project tasks:
 - Database design
-- Create a service for orders, offers, registration and authorization of users, and support their API methods
+- Create services for orders, offers, registration and authorization of users, and support their API methods
 - ...
 
 
