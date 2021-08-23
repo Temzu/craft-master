@@ -9,5 +9,4 @@ public class CraftMasterApplication {
   public static void main(String[] args) {
     SpringApplication.run(CraftMasterApplication.class, args);
   }
-
 }
