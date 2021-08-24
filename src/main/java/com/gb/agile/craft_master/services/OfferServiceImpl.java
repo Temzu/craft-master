@@ -3,7 +3,7 @@ package com.gb.agile.craft_master.services;
 import com.gb.agile.craft_master.exceptions.OfferException;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.repositories.OfferRepository;
-import com.gb.agile.craft_master.services.interfaces.OfferService;
+import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,7 +28,6 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public void deleteOfferById(Long id) {
     if (id <= 0) throw OfferException.badOfferId(id);
-
     try {
       offerRepository.deleteById(id);
     } catch (EmptyResultDataAccessException e) {

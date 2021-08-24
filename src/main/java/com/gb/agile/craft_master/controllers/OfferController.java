@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.model.entities.Offer;
-import com.gb.agile.craft_master.services.interfaces.OfferService;
+import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;

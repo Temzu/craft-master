@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.gb.agile.craft_master.exceptions.OfferException;
 import com.gb.agile.craft_master.model.entities.Offer;
-import com.gb.agile.craft_master.services.interfaces.OfferService;
+import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

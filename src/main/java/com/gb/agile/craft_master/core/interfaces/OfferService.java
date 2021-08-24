@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.services.interfaces;
+package com.gb.agile.craft_master.core.interfaces;
 
 import com.gb.agile.craft_master.model.entities.Offer;
 import java.util.List;
