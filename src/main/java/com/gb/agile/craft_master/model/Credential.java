@@ -1,7 +1,9 @@
 package com.gb.agile.craft_master.model;
 
+import com.gb.agile.craft_master.model.dto.CredentialDto;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "credential")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Credential {
 
     @Id
@@ -17,7 +20,7 @@ public class Credential {
     private Integer id;
 
     @Column
-    private String user_id;
+    private Integer user_id;
 
     @Column
     private String code;
@@ -27,4 +30,11 @@ public class Credential {
 
     @Column
     private String name;
+
+    public Credential(CredentialDto credential) {
+        this.user_id = credential.getUserId();
+        this.code = credential.getCode();
+        this.value = credential.getValue();
+        this.name = credential.getName();
+    }
 }

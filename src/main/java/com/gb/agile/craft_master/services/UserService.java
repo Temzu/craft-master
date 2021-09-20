@@ -1,10 +1,13 @@
 package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.exceptions.LoginFailedException;
+import com.gb.agile.craft_master.model.Credential;
 import com.gb.agile.craft_master.model.Role;
 import com.gb.agile.craft_master.model.RoleCodes;
 import com.gb.agile.craft_master.model.User;
+import com.gb.agile.craft_master.model.dto.CredentialDto;
 import com.gb.agile.craft_master.model.dto.UserDto;
+import com.gb.agile.craft_master.repositories.CredentialRepository;
 import com.gb.agile.craft_master.repositories.RoleRepository;
 import com.gb.agile.craft_master.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,11 +22,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CredentialRepository credentialRepository;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder, CredentialRepository credentialRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.credentialRepository = credentialRepository;
     }
 
     public User findById(Integer id) {
@@ -59,7 +64,7 @@ public class UserService {
         return userRepository.save(new User(user));
     }
 
-    private Role getDefaultRole() {
+    public Role getDefaultRole() {
         return roleRepository.findByCode(RoleCodes.ROLE_USER.toString());
     }
 
@@ -76,5 +81,23 @@ public class UserService {
     @Transactional
     public void deleteById(int id) {
         userRepository.deleteById(id);
+    }
+
+    public List<Credential> getAllCredentials(Integer id) {
+        User user = findById(id);
+        if (user == null) throw new RuntimeException("User not found");
+        return user.getCredentials();
+    }
+
+    @Transactional
+    public Credential addCredential(CredentialDto credential) {
+        return credentialRepository.save(new Credential(credential));
+    }
+
+    @Transactional
+    public void deleteCredential(Integer id, String code) {
+        List<Credential> list = getAllCredentials(id);
+        if (list == null) return;
+        list.stream().filter(c -> c.getCode().equals(code)).findFirst().ifPresent(credentialRepository::delete);
     }
 }
