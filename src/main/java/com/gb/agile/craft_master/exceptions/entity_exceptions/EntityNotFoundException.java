@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.exceptions;
+package com.gb.agile.craft_master.exceptions.entity_exceptions;
 
 public class EntityNotFoundException extends RuntimeException {
 

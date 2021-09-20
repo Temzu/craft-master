@@ -2,6 +2,7 @@ package com.gb.agile.craft_master.model.entities;
 
 import javax.persistence.*;
 
+import com.gb.agile.craft_master.model.User;
 import lombok.Data;
 
 @Data

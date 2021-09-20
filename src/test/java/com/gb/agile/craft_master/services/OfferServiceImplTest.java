@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.gb.agile.craft_master.exceptions.EntityBadIdException;
-import com.gb.agile.craft_master.exceptions.EntityNotFoundException;
+import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityBadIdException;
+import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
@@ -84,7 +84,7 @@ class OfferServiceImplTest {
     Offer offer = new Offer();
     offer.setId(id);
     offer.setTitle("Offer-123");
-    offer.setUser(userRepository.getById(1L));
+    offer.setUser(userRepository.getById(1));
     offer.setService(serviceRepository.getById(1L));
 
     offerService.saveOrUpdate(offer);

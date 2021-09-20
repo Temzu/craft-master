@@ -1,8 +1,8 @@
 package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.interfaces.OfferService;
-import com.gb.agile.craft_master.exceptions.EntityBadIdException;
-import com.gb.agile.craft_master.exceptions.EntityNotFoundException;
+import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityBadIdException;
+import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.repositories.OfferRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,9 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public Offer getOfferById(Long id) {
     checkId(id);
-    return offerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
+    return offerRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
   }
 
   @Override

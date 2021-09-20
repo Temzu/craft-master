@@ -1,13 +1,8 @@
 package com.gb.agile.craft_master.services;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.gb.agile.craft_master.core.interfaces.OrderService;
-import com.gb.agile.craft_master.exceptions.OrderException;
+import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityBadIdException;
 import com.gb.agile.craft_master.model.entities.Order;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,6 +10,10 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class OrderServiceImplTest {
@@ -38,7 +37,7 @@ class OrderServiceImplTest {
   @CsvSource(value = {"0", "-1", "1000"})
   @ParameterizedTest
   void getOrderById_false(Long id) {
-    assertThrows(OrderException.class, () -> orderService.getOrderById(id));
+    assertThrows(EntityBadIdException.class, () -> orderService.getOrderById(id));
   }
 
   @CsvSource(value = {"1", "4"})
@@ -50,7 +49,7 @@ class OrderServiceImplTest {
   @CsvSource(value = {"0", "-1", "1000"})
   @ParameterizedTest
   void deleteOrderById_false(Long id) {
-    assertThrows(OrderException.class, () -> orderService.deleteOrderById(id));
+    assertThrows(EntityBadIdException.class, () -> orderService.deleteOrderById(id));
   }
 
   @CsvSource(value = {"1", "5", "-1", "100"})
