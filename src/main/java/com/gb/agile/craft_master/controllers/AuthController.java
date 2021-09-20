@@ -6,7 +6,6 @@ import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.model.dto.AuthRequestDto;
 import com.gb.agile.craft_master.model.dto.AuthResponseDto;
 import com.gb.agile.craft_master.model.User;
-import com.gb.agile.craft_master.model.dto.UserInfoDto;
 import com.gb.agile.craft_master.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,11 +38,4 @@ public class AuthController {
         return "OK";
     }
 
-    //Переместить в другой контроллер, когда он будет
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("/user_info")
-//    public UserInfoDto getUserInfo() {
-//        Integer userId = JwtProvider.getUserId();
-//        return new UserInfoDto(userService.findById(userId));
-//    }
 }
