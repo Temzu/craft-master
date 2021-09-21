@@ -24,20 +24,23 @@ public class CredentialController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{id}")
-    public List<Credential> getAll(@PathVariable Integer id) {
-        return userService.getAllCredentials(id);
+    @GetMapping("/")
+    public List<Credential> getAll() {
+        Integer userId = JwtProvider.getUserId();
+        return userService.getAllCredentials(userId);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/")
     public Credential addCredential(@RequestBody CredentialDto credential) {
-        return userService.addCredential(credential);
+        Integer userId = JwtProvider.getUserId();
+        return userService.addCredential(userId, credential);
     }
 
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/{id}/{code}")
-    public void deleteCredential(@PathVariable Integer id, @PathVariable String code) {
-        userService.deleteCredential(id, code);
+    @DeleteMapping("/{code}")
+    public void deleteCredential(@PathVariable String code) {
+        Integer userId = JwtProvider.getUserId();
+        userService.deleteCredential(userId, code);
     }
 }

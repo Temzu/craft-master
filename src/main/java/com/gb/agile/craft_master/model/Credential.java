@@ -31,8 +31,8 @@ public class Credential {
     @Column
     private String name;
 
-    public Credential(CredentialDto credential) {
-        this.user_id = credential.getUserId();
+    public Credential(Integer userId, CredentialDto credential) {
+        this.user_id = userId;
         this.code = credential.getCode();
         this.value = credential.getValue();
         this.name = credential.getName();

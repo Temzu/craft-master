@@ -90,8 +90,8 @@ public class UserService {
     }
 
     @Transactional
-    public Credential addCredential(CredentialDto credential) {
-        return credentialRepository.save(new Credential(credential));
+    public Credential addCredential(Integer userId, CredentialDto credential) {
+        return credentialRepository.save(new Credential(userId, credential));
     }
 
     @Transactional
