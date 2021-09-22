@@ -1,11 +1,19 @@
 package com.gb.agile.craft_master.model;
 
+import com.gb.agile.craft_master.model.dto.UserDto;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -25,4 +33,14 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Credential> credentials;
+
+    public User(UserDto user) {
+        this.login = user.getLogin();
+        this.name = user.getName();
+        this.role = user.getRole();
+        this.password = user.getPassword();
+    }
 }

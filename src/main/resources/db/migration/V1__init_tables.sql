@@ -58,7 +58,8 @@ CREATE TABLE credential
     code character(16) NOT NULL,
     value character(128),
     name character(128),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE (user_id, code)
 );
 
 CREATE TABLE offer
