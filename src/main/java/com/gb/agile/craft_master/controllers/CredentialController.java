@@ -12,26 +12,24 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/credentials")
+@RequestMapping("/api/v1/credentials")
+@PreAuthorize("isAuthenticated()")
 public class CredentialController {
 
     private final CredentialService credentialService;
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/")
+    @GetMapping
     public List<Credential> getAll() {
         Integer userId = JwtProvider.getUserId();
         return credentialService.getAllCredentialByUserId(userId);
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/")
+    @PostMapping
     public Credential addCredential(@RequestBody CredentialDto credential) {
         Integer userId = JwtProvider.getUserId();
         return credentialService.addCredential(userId, credential);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{code}")
     public void deleteCredential(@PathVariable String code) {
         Integer userId = JwtProvider.getUserId();

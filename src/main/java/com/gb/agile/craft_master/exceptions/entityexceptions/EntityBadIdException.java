@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.exceptions.entity_exceptions;
+package com.gb.agile.craft_master.exceptions.entityexceptions;
 
 public class EntityBadIdException extends RuntimeException {
 

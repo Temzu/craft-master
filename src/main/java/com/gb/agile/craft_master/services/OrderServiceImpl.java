@@ -1,8 +1,8 @@
 package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.interfaces.OrderService;
-import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityBadIdException;
-import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityNotFoundException;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Order;
 import com.gb.agile.craft_master.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;

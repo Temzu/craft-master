@@ -20,7 +20,7 @@ public class OfferController {
 
   private final OfferService offerService;
 
-  @GetMapping()
+  @GetMapping
   public List<Offer> getAllOffers() {
     return offerService.getAllOffers();
   }

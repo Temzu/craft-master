@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityBadIdException;
-import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityNotFoundException;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;

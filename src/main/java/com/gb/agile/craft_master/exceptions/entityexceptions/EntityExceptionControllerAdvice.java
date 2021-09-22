@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.exceptions.entity_exceptions;
+package com.gb.agile.craft_master.exceptions.entityexceptions;
 
 import com.gb.agile.craft_master.exceptions.CraftMasterError;
 import lombok.extern.slf4j.Slf4j;
