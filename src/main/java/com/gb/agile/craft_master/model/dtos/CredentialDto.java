@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.model.dto;
+package com.gb.agile.craft_master.model.dtos;
 
 import com.gb.agile.craft_master.model.Credential;
 import lombok.AllArgsConstructor;

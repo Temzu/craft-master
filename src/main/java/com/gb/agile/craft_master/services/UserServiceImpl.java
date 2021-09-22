@@ -5,7 +5,7 @@ import com.gb.agile.craft_master.core.interfaces.UserService;
 import com.gb.agile.craft_master.exceptions.LoginFailedException;
 import com.gb.agile.craft_master.model.RoleCodes;
 import com.gb.agile.craft_master.model.User;
-import com.gb.agile.craft_master.model.dto.UserDto;
+import com.gb.agile.craft_master.model.dtos.UserDto;
 import com.gb.agile.craft_master.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

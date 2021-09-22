@@ -2,11 +2,10 @@ package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.interfaces.CredentialService;
 import com.gb.agile.craft_master.model.Credential;
-import com.gb.agile.craft_master.model.dto.CredentialDto;
+import com.gb.agile.craft_master.model.dtos.CredentialDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

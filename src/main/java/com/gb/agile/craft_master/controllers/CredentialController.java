@@ -3,7 +3,7 @@ package com.gb.agile.craft_master.controllers;
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.interfaces.CredentialService;
 import com.gb.agile.craft_master.model.Credential;
-import com.gb.agile.craft_master.model.dto.CredentialDto;
+import com.gb.agile.craft_master.model.dtos.CredentialDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

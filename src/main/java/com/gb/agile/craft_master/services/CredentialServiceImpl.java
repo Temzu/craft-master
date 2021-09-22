@@ -2,7 +2,7 @@ package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.interfaces.CredentialService;
 import com.gb.agile.craft_master.model.Credential;
-import com.gb.agile.craft_master.model.dto.CredentialDto;
+import com.gb.agile.craft_master.model.dtos.CredentialDto;
 import com.gb.agile.craft_master.repositories.CredentialRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

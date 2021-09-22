@@ -1,7 +1,6 @@
 package com.gb.agile.craft_master.model;
 
-import com.gb.agile.craft_master.model.dto.CredentialDto;
-import lombok.Data;
+import com.gb.agile.craft_master.model.dtos.CredentialDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

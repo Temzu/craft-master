@@ -4,7 +4,7 @@ import com.gb.agile.craft_master.core.interfaces.RoleService;
 import com.gb.agile.craft_master.core.interfaces.UserService;
 import com.gb.agile.craft_master.model.RoleCodes;
 import com.gb.agile.craft_master.model.User;
-import com.gb.agile.craft_master.model.dto.UserDto;
+import com.gb.agile.craft_master.model.dtos.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
