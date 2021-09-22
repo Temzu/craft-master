@@ -1,16 +1,13 @@
 package com.gb.agile.craft_master.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.gb.agile.craft_master.model.User;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "offers")
+@Table(name = "offer")
 public class Offer {
 
   @Id
@@ -18,6 +15,17 @@ public class Offer {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name")
-  private String name;
+  @Column(name = "title")
+  private String title;
+
+  @Column(name = "description")
+  private String description;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "service_id")
+  private Service service;
 }

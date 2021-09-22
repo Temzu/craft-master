@@ -1,13 +1,15 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.exceptions.OfferException;
+import com.gb.agile.craft_master.core.interfaces.OfferService;
+import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityBadIdException;
+import com.gb.agile.craft_master.exceptions.entity_exceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.repositories.OfferRepository;
-import com.gb.agile.craft_master.core.interfaces.OfferService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,21 +24,28 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public Offer getOfferById(Long id) {
-    return offerRepository.findById(id).orElseThrow(() -> OfferException.offerNotFound(id));
+    checkId(id);
+    return offerRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
   }
 
   @Override
   public void deleteOfferById(Long id) {
-    if (id <= 0) throw OfferException.badOfferId(id);
+    checkId(id);
     try {
       offerRepository.deleteById(id);
     } catch (EmptyResultDataAccessException e) {
-      throw OfferException.offerNotFound(id);
+      throw new EntityNotFoundException(Offer.class, id);
     }
   }
 
   @Override
   public Offer saveOrUpdate(Offer offer) {
     return offerRepository.save(offer);
+  }
+
+  private void checkId(Long id) {
+    if (id <= 0) throw new EntityBadIdException(Offer.class, id);
   }
 }
