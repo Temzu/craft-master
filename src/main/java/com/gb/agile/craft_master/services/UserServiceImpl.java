@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.interfaces.RoleService;
-import com.gb.agile.craft_master.core.interfaces.UserServiceVer2;
+import com.gb.agile.craft_master.core.interfaces.UserService;
 import com.gb.agile.craft_master.exceptions.LoginFailedException;
 import com.gb.agile.craft_master.model.RoleCodes;
 import com.gb.agile.craft_master.model.User;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceVer2Impl implements UserServiceVer2 {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

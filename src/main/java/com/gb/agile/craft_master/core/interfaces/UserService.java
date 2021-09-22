@@ -5,7 +5,7 @@ import com.gb.agile.craft_master.model.dto.UserDto;
 
 import java.util.List;
 
-public interface UserServiceVer2 {
+public interface UserService {
 
     List<User> getAllUsers();
 
