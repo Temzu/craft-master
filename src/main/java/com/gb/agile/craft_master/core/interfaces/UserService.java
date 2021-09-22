@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.core.interfaces;
 
-import com.gb.agile.craft_master.model.User;
+import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.UserDto;
 
 import java.util.List;

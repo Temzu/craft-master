@@ -2,7 +2,7 @@ package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.interfaces.UserService;
-import com.gb.agile.craft_master.model.User;
+import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.UserDto;
 import com.gb.agile.craft_master.model.dtos.UserInfoDto;
 import org.springframework.security.access.prepost.PreAuthorize;

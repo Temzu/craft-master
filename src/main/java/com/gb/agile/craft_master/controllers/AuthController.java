@@ -4,7 +4,7 @@ import com.gb.agile.craft_master.config.Const;
 import com.gb.agile.craft_master.config.JwtFilter;
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.interfaces.UserService;
-import com.gb.agile.craft_master.model.User;
+import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.AuthRequestDto;
 import com.gb.agile.craft_master.model.dtos.AuthResponseDto;
 import lombok.RequiredArgsConstructor;

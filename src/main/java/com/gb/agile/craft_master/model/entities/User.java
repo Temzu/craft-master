@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.model;
+package com.gb.agile.craft_master.model.entities;
 
 import com.gb.agile.craft_master.model.dtos.UserDto;
 import lombok.Getter;

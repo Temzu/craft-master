@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.core.interfaces;
 
-import com.gb.agile.craft_master.model.Credential;
+import com.gb.agile.craft_master.model.entities.Credential;
 import com.gb.agile.craft_master.model.dtos.CredentialDto;
 
 import java.util.List;

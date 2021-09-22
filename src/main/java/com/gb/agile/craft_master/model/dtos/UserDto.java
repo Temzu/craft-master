@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.model.dtos;
 
-import com.gb.agile.craft_master.model.Role;
+import com.gb.agile.craft_master.model.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

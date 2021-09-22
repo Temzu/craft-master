@@ -2,8 +2,8 @@ package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.interfaces.RoleService;
 import com.gb.agile.craft_master.core.interfaces.UserService;
-import com.gb.agile.craft_master.model.RoleCodes;
-import com.gb.agile.craft_master.model.User;
+import com.gb.agile.craft_master.core.enums.RoleCodes;
+import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class UserServiceVer2ImplTest {
+class UserServiceImplTest {
 
     @Autowired
     private UserService userService;

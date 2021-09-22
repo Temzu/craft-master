@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.core.interfaces;
 
-import com.gb.agile.craft_master.model.Role;
+import com.gb.agile.craft_master.model.entities.Role;
 
 import java.util.List;
 
