@@ -81,6 +81,7 @@ class CraftMasterUserServiceTests {
     }
 
     @Test
+    @Transactional
     public void whenDelCredentials_thenCountShouldBeIncrease() {
         List<Credential> list = userService.getAllCredentials(2);
         int count = list.size();

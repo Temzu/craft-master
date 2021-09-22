@@ -19,8 +19,8 @@ public class Credential {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private Integer user_id;
+    @Column(name = "user_id")
+    private Integer userId;
 
     @Column
     private String code;
@@ -32,7 +32,7 @@ public class Credential {
     private String name;
 
     public Credential(Integer userId, CredentialDto credential) {
-        this.user_id = userId;
+        this.userId = userId;
         this.code = credential.getCode();
         this.value = credential.getValue();
         this.name = credential.getName();
