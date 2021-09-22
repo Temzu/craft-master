@@ -18,14 +18,10 @@ public class CredentialServiceImpl implements CredentialService {
 
     private final CredentialRepository credentialRepository;
 
-    private final UserServiceVer2 userService;
-
     @Transactional
     @Override
     public List<Credential> getAllCredentialByUserId(Integer userId) {
-        User user = userService.getUserById(userId);
-        if (user == null) throw new RuntimeException("User not found");
-        return user.getCredentials();
+        return credentialRepository.getAllByUserId(userId);
     }
 
     @Transactional
