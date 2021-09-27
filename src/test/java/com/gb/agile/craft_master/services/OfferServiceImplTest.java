@@ -77,21 +77,21 @@ class OfferServiceImplTest {
     assertThrows(EntityBadIdException.class, () -> offerService.deleteOfferById(id));
   }
 
-  @CsvSource(value = {"1", "5", "-1", "100"})
-  @NullSource
-  @ParameterizedTest
-  void saveOrUpdate_true(Long id) {
-    Offer offer = new Offer();
-    offer.setId(id);
-    offer.setTitle("Offer-123");
-    offer.setUser(userRepository.getById(1));
-    offer.setService(serviceRepository.getById(1L));
+//  @CsvSource(value = {"1", "5", "-1", "100"})
+//  @NullSource
+//  @ParameterizedTest
+//  void saveOrUpdate_true(Long id) {
+//    Offer offer = new Offer();
+//    offer.setId(id);
+//    offer.setTitle("Offer-123");
+//    offer.setUser(userRepository.getById(1));
+//    offer.setService(serviceRepository.getById(1L));
+//
+//    offerService.saveOrUpdate(offer);
+//  }
 
-    offerService.saveOrUpdate(offer);
-  }
-
-  @Test
-  void saveOrUpdate_false() {
-    assertThrows(InvalidDataAccessApiUsageException.class, () -> offerService.saveOrUpdate(null));
-  }
+//  @Test
+//  void saveOrUpdate_false() {
+//    assertThrows(InvalidDataAccessApiUsageException.class, () -> offerService.saveOrUpdate(null));
+//  }
 }
