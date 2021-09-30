@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getProxyById(Integer id) {
+        return userRepository.getById(id);
+    }
+
+    @Override
     public User getByLogin(String login) {
         return userRepository.findByLogin(login);
     }

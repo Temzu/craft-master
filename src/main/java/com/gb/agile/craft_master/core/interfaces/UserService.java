@@ -11,6 +11,8 @@ public interface UserService {
 
     User getUserById(Integer id);
 
+    User getProxyById(Integer id);
+
     User getByLogin(String login);
 
     User getByLoginAndPassword(String login, String password);
