@@ -23,7 +23,7 @@ VALUES (1, NULL, 'Строительство'),
        (12, 10, 'Санузел');
 
 
-INSERT INTO offer (title, description, user_id, service_id)
+INSERT INTO offer (title, description, user_id, occupation_id)
 VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6),
        ('Предложение_2', 'Описание_2', 2, 3),
        ('Предложение_3', 'Описание_3', 2, 5),
@@ -36,6 +36,6 @@ VALUES (1, 2, 3),
 INSERT INTO credential (user_id, code, value, name)
 VALUES (2, 'phone', '+79001238070', NULL);
 
-INSERT INTO offer (title, description, user_id, service_id)
+INSERT INTO offer (title, description, user_id, occupation_id)
 VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6);
 

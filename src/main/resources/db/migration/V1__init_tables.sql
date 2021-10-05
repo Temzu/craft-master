@@ -40,7 +40,7 @@ CREATE TABLE profile
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     occupation_id integer NOT NULL
-        CONSTRAINT fk_profile_service
+        CONSTRAINT fk_profile_occupation
         REFERENCES occupation (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
@@ -73,7 +73,7 @@ CREATE TABLE offer
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     occupation_id integer NOT NULL
-        CONSTRAINT fk_offer_service
+        CONSTRAINT fk_offer_occupation
         REFERENCES occupation (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
