@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-@PreAuthorize("isAuthenticated()")
 public class OccupationServiceImpl implements OccupationService {
 
     private OccupationRepository occupationRepository;

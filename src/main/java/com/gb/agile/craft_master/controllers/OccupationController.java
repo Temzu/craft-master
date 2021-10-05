@@ -2,14 +2,16 @@ package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.services.OccupationServiceImpl;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/occupations")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@PreAuthorize("isAuthenticated()")
 public class OccupationController {
 
     private final OccupationServiceImpl occupationService;
