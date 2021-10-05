@@ -13,5 +13,5 @@ public interface OfferService {
 
   void deleteOfferById(Long id);
 
-  Offer saveOrUpdate(OfferDto offerDto, Integer userId);
+  Offer saveOrUpdate(OfferDto offerDto, Long userId);
 }

@@ -9,9 +9,9 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User getUserById(Integer id);
+    User getUserById(Long id);
 
-    User getProxyById(Integer id);
+    User getProxyById(Long id);
 
     User getByLogin(String login);
 
@@ -19,8 +19,8 @@ public interface UserService {
 
     User addUser(UserDto userDto);
 
-    User updateUser(Integer id, UserDto userDto);
+    User updateUser(Long id, UserDto userDto);
 
-    void deleteUserById(Integer id);
+    void deleteUserById(Long id);
 
 }

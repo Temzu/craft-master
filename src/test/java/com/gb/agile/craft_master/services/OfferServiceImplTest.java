@@ -10,15 +10,13 @@ import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
 
-import com.gb.agile.craft_master.repositories.ServiceRepository;
+import com.gb.agile.craft_master.repositories.OccupationRepository;
 import com.gb.agile.craft_master.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 
 @SpringBootTest
 class OfferServiceImplTest {
@@ -30,7 +28,7 @@ class OfferServiceImplTest {
   private UserRepository userRepository;
 
   @Autowired
-  private ServiceRepository serviceRepository;
+  private OccupationRepository occupationRepository;
 
 
   @Test

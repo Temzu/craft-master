@@ -19,22 +19,22 @@ class CredentialServiceImplTest {
 
     @Test
     public void whenGetAllCredentials_thenFindShouldBeSuccessful() {
-        List<Credential> list = credentialService.getAllCredentialByUserId(2);
+        List<Credential> list = credentialService.getAllCredentialByUserId(Long.valueOf(2));
         assertNotNull(list);
     }
 
     @Test
     public void whenAddCredentials_thenCountShouldBeIncrease() {
-        int count = credentialService.getAllCredentialByUserId(2).size();
-        credentialService.addCredential(2, new CredentialDto("mail", "a@a.a", "e-mail"));
-        assertEquals(++count,  credentialService.getAllCredentialByUserId(2).size());
+        int count = credentialService.getAllCredentialByUserId(Long.valueOf(2)).size();
+        credentialService.addCredential(Long.valueOf(2), new CredentialDto("mail", "a@a.a", "e-mail"));
+        assertEquals(++count,  credentialService.getAllCredentialByUserId(Long.valueOf(2)).size());
     }
 
     @Test
     public void whenDelCredentials_thenCountShouldBeIncrease() {
-        List<Credential> list = credentialService.getAllCredentialByUserId(2);
+        List<Credential> list = credentialService.getAllCredentialByUserId(Long.valueOf(2));
         int count = list.size();
-        credentialService.deleteCredential(2,list.get(0).getCode());
-        assertEquals(--count,  credentialService.getAllCredentialByUserId(2).size());
+        credentialService.deleteCredential(Long.valueOf(2),list.get(0).getCode());
+        assertEquals(--count,  credentialService.getAllCredentialByUserId(Long.valueOf(2)).size());
     }
 }
