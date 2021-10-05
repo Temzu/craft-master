@@ -2,14 +2,14 @@ package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.model.Occupation;
 import com.gb.agile.craft_master.repositories.OccupationRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class OccupationService {
 
     private OccupationRepository occupationRepository;
