@@ -6,6 +6,14 @@ import java.util.List;
 
 public interface OccupationService {
 
-    List<Occupation> getAll();
+    public List<Occupation> getOccupations ();
+
+    public List<Occupation> getOccupationsByParent (Long parentId);
+
+    public Occupation getOccupation(Long id);
+
+    public boolean deleteOccupation(Long id);
+
+    public Occupation saveOccupation(Occupation occupation);
 
 }

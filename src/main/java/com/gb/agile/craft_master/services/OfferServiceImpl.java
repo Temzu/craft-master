@@ -21,7 +21,7 @@ public class OfferServiceImpl implements OfferService {
 
     private final OfferRepository offerRepository;
     private final UserService userService;
-    private final OccupationService occupationService;
+    private final OccupationServiceImpl occupationService;
 
     @Override
     public List<Offer> getAllOffers() {

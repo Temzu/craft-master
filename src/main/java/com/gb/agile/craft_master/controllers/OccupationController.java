@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.model.entities.Occupation;
-import com.gb.agile.craft_master.services.OccupationService;
+import com.gb.agile.craft_master.services.OccupationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OccupationController {
 
-    private final OccupationService occupationService;
+    private final OccupationServiceImpl occupationService;
 
     @GetMapping()
     public List<Occupation> getAllOccupations() {

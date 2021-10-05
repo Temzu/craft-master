@@ -1,8 +1,10 @@
 package com.gb.agile.craft_master.services;
 
+import com.gb.agile.craft_master.core.interfaces.OccupationService;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.repositories.OccupationRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -10,7 +12,8 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class OccupationService {
+@PreAuthorize("isAuthenticated()")
+public class OccupationServiceImpl implements OccupationService {
 
     private OccupationRepository occupationRepository;
 
