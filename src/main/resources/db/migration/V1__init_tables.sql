@@ -1,3 +1,4 @@
+
 CREATE TABLE role
 (
     id serial NOT NULL,
@@ -29,6 +30,7 @@ CREATE TABLE service
     PRIMARY KEY (id)
 );
 
+
 CREATE TABLE profile
 (
     id serial NOT NULL,
@@ -56,12 +58,13 @@ CREATE TABLE credential
     code character(16) NOT NULL,
     value character(128),
     name character(128),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE (user_id, code)
 );
 
 CREATE TABLE offer
 (
-    id serial NOT NULL,
+    id bigserial NOT NULL,
     title character(128) NOT NULL,
     description character(256),
     user_id integer NOT NULL
@@ -76,4 +79,3 @@ CREATE TABLE offer
         ON DELETE NO ACTION,
     PRIMARY KEY (id)
 );
-

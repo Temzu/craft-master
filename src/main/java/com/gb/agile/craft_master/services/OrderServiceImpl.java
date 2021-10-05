@@ -1,13 +1,15 @@
 package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.interfaces.OrderService;
-import com.gb.agile.craft_master.exceptions.OrderException;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Order;
 import com.gb.agile.craft_master.repositories.OrderRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,9 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Order getOrderById(Long id) {
     checkId(id);
-    return orderRepository.findById(id).orElseThrow(() -> OrderException.orderNotFound(id));
+    return orderRepository
+        .findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(Order.class, id));
   }
 
   @Override
@@ -32,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     try {
       orderRepository.deleteById(id);
     } catch (EmptyResultDataAccessException e) {
-      throw OrderException.orderNotFound(id);
+      throw new EntityNotFoundException(Order.class, id);
     }
   }
 
@@ -42,6 +46,6 @@ public class OrderServiceImpl implements OrderService {
   }
 
   private void checkId(Long id) {
-    if (id <= 0) throw OrderException.badOrderId(id);
+    if (id <= 0) throw new EntityBadIdException(Order.class, id);
   }
 }
