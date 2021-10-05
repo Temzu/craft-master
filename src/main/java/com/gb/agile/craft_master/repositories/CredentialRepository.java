@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface CredentialRepository extends JpaRepository<Credential, Integer> {
+public interface CredentialRepository extends JpaRepository<Credential, Long> {
 
-    List<Credential> getAllByUserId(Integer id);
+    List<Credential> getAllByUserId(Long id);
 
-    void deleteCredentialByUserIdAndCode(Integer userId, String code);
+    void deleteCredentialByUserIdAndCode(Long userId, String code);
 }

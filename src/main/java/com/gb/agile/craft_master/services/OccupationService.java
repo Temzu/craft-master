@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.model.Occupation;
+import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.repositories.OccupationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

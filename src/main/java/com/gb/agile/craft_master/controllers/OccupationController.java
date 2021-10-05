@@ -1,7 +1,6 @@
 package com.gb.agile.craft_master.controllers;
 
-import com.gb.agile.craft_master.model.Occupation;
-import com.gb.agile.craft_master.model.entities.Order;
+import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.services.OccupationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
