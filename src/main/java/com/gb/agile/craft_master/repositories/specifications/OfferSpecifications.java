@@ -8,7 +8,7 @@ public class OfferSpecifications {
 
     private static Specification<Offer> titleLike(String title) {
         return (root, criteriaQuery, criteriaBuilder)
-                -> criteriaBuilder.like(root.get("title"), String.format("%%%s%%",title));
+                -> criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), String.format("%%%s%%", title.toLowerCase()));
     }
     public static Specification<Offer> build(MultiValueMap<String, String> params) {
         Specification<Offer> spec = Specification.where(null);

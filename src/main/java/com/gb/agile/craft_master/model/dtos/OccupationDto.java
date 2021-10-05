@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.model.dtos;
 
-import com.gb.agile.craft_master.model.entities.Service;
+import com.gb.agile.craft_master.model.entities.Occupation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,23 +11,23 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceDto {
+public class OccupationDto {
     private Integer id;
     private String name;
-    private List<ServiceDto> child;
+    private List<OccupationDto> child;
 
-    public ServiceDto(Service service) {
-        this.id = service.getId();
-        this.name = service.getName();
+    public OccupationDto(Occupation category) {
+        this.id = category.getId();
+        this.name = category.getName();
         this.child = new ArrayList<>();
     }
 
-    public ServiceDto(Integer id) {
+    public OccupationDto(Integer id) {
         this.id = id;
         this.child = new ArrayList<>();
     }
 
-    public void addChild(ServiceDto c) {
+    public void addChild(OccupationDto c) {
         this.child.add(c);
     }
 }

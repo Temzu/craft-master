@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "service")
-public class Service {
+@Table(name = "occupation")
+public class Occupation {
 
   @Id
   @Column(name = "id")

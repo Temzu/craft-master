@@ -25,6 +25,6 @@ public class Offer {
   private User user;
 
   @ManyToOne
-  @JoinColumn(name = "service_id")
-  private Service service;
+  @JoinColumn(name = "occupation_id")
+  private Occupation occupation;
 }

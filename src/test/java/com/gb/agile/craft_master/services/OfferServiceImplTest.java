@@ -12,7 +12,7 @@ import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
 import java.util.Optional;
 
-import com.gb.agile.craft_master.repositories.ServiceRepository;
+import com.gb.agile.craft_master.repositories.OccupationRepository;
 import com.gb.agile.craft_master.repositories.UserRepository;
 import com.gb.agile.craft_master.repositories.specifications.OfferSpecifications;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class OfferServiceImplTest {
   private UserRepository userRepository;
 
   @Autowired
-  private ServiceRepository serviceRepository;
+  private OccupationRepository serviceRepository;
 
 
   @Test
