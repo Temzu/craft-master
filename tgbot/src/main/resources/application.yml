@@ -1,0 +1,9 @@
+logging:
+  file:
+    name: log/camel-demo.log
+
+telegram:
+  key: 393595994
+  token: XXX
+
+

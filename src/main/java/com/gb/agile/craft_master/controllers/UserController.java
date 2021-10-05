@@ -14,16 +14,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-@PreAuthorize("isAuthenticated()")
 public class UserController {
 
     private final UserService userService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
     public List<User> getAll() {
         return userService.getAllUsers();
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
     public User getUser(@PathVariable Integer id) {
         return userService.getUserById(id);
@@ -34,16 +35,19 @@ public class UserController {
         return userService.addUser(user);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Integer id, @RequestBody UserDto user) {
         return userService.updateUser(id, user);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Integer id) {
         userService.deleteUserById(id);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/user_info")
     public UserInfoDto getUserInfo() {
         Integer userId = JwtProvider.getUserId();
