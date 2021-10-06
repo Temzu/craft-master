@@ -34,7 +34,8 @@ VALUES (1, 2, 3),
        (2, 2, 6);
 
 INSERT INTO credential (user_id, code, value, name)
-VALUES (2, 'phone', '+79001238070', NULL);
+VALUES (2, 'phone', '+79001238070', NULL),
+       (2, 'sdfsd', 'asdfsfadf', NULL);
 
 INSERT INTO offer (title, description, user_id, occupation_id)
 VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6);

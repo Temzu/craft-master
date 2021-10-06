@@ -6,17 +6,23 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
+import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
+import java.util.Optional;
 
 import com.gb.agile.craft_master.repositories.OccupationRepository;
 import com.gb.agile.craft_master.repositories.UserRepository;
+import com.gb.agile.craft_master.repositories.specifications.OfferSpecifications;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 @SpringBootTest
 class OfferServiceImplTest {
@@ -28,12 +34,25 @@ class OfferServiceImplTest {
   private UserRepository userRepository;
 
   @Autowired
-  private OccupationRepository occupationRepository;
+  private OccupationRepository serviceRepository;
 
 
   @Test
-  void getAllOffers() {
-    List<Offer> allOffers = offerService.getAllOffers();
+  void getAllOffersNonPaged() {
+    List<Offer> allOffers = offerService.getAllOffersNonPaged();
+    assertFalse(allOffers.isEmpty());
+  }
+
+  @Test
+  void getAllOffersPaged() {
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    params.add("page", "1");
+    params.add("size", "2");
+    params.add("sort", "title");
+    params.add("dir","desc");
+    int size = 2;
+    String[] sort = new String[]{"title"};
+    Page<OfferDto> allOffers = offerService.getAllOffers(OfferSpecifications.build(params), 0, size, sort, "dir");
     assertFalse(allOffers.isEmpty());
   }
 

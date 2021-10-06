@@ -1,19 +1,19 @@
 package com.gb.agile.craft_master.core.interfaces;
 
+import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 
 import java.util.List;
 
 public interface OccupationService {
 
-    public List<Occupation> getOccupations ();
+    List<OccupationDto> getAllOccupations();
 
-    public List<Occupation> getOccupationsByParent (Long parentId);
+    Occupation getOccupationById(Long id);
 
-    public Occupation getOccupation(Long id);
+    List<OccupationDto> getOccupationsByParent(Long parentId);
 
-    public boolean deleteOccupation(Long id);
+    void deleteOccupationById(Long id);
 
-    public Occupation saveOccupation(Occupation occupation);
-
+    Occupation saveOrUpdate(Occupation offer);
 }

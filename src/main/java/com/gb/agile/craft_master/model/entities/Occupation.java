@@ -13,19 +13,20 @@ import javax.persistence.*;
 @Table(name = "occupation")
 public class Occupation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(value = AccessLevel.PRIVATE)
-    private Long id;
+  @Id
+  @Column(name = "id")
+  @Setter(value = AccessLevel.PRIVATE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "parent_id")
-    private Long parentId;
+  @Column(name = "parentId")
+  private Long parentId;
 
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    @Override
-    public String toString() {
-        return String.format("%s [%d/%d]", name, id, parentId);
-    }
-
+  @Override
+  public String toString() {
+    return String.format("%s [%d/%d]", name, id, parentId);
+  }
 }

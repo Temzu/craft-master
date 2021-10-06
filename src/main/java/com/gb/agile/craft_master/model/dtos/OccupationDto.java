@@ -10,7 +10,9 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class OccupationDto {
+  
     private Long id;
     private String name;
     private List<OccupationDto> child;
