@@ -6,10 +6,12 @@ import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.repositories.OccupationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,15 +20,23 @@ public class OccupationServiceImpl implements OccupationService {
     private final OccupationRepository occupationRepository;
 
     @Override
-    public Occupation getOccupationById(Integer id) {
-        return occupationRepository.getById(Long.valueOf(id));
+    public Occupation getOccupationById(Long id) {
+        return occupationRepository.getById(id);
+    }
+
+    @Override
+    public List<OccupationDto> getOccupationsByParent(Long parentId) {
+        return occupationRepository.getAllByParentId(parentId)
+                .stream()
+                .map(OccupationDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<OccupationDto> getAllOccupations() {
         //ToDo: закешировать результат
         List<Occupation> occupations = occupationRepository.findAll();
-        HashMap<Integer, OccupationDto> mapOccupationDto = new HashMap<>();
+        HashMap<Long, OccupationDto> mapOccupationDto = new HashMap<>();
         List<OccupationDto> resList = new ArrayList<>();
 
         for (Occupation occupation : occupations) {
@@ -54,13 +64,15 @@ public class OccupationServiceImpl implements OccupationService {
         return resList;
     }
 
+    @Transactional
     @Override
-    public void deleteOccupationById(Integer id) {
-
+    public void deleteOccupationById(Long id) {
+        occupationRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
-    public Occupation saveOrUpdate(Occupation offer) {
-        return null;
+    public Occupation saveOrUpdate(Occupation occupation) {
+        return occupationRepository.save(occupation);
     }
 }

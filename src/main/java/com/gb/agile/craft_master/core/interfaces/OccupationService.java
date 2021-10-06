@@ -9,9 +9,11 @@ public interface OccupationService {
 
     List<OccupationDto> getAllOccupations();
 
-    Occupation getOccupationById(Integer id);
+    Occupation getOccupationById(Long id);
 
-    void deleteOccupationById(Integer id);
+    List<OccupationDto> getOccupationsByParent(Long parentId);
+
+    void deleteOccupationById(Long id);
 
     Occupation saveOrUpdate(Occupation offer);
 }

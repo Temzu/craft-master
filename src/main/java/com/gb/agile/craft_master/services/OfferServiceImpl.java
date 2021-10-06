@@ -1,5 +1,6 @@
 package com.gb.agile.craft_master.services;
 
+import com.gb.agile.craft_master.core.interfaces.OccupationService;
 import com.gb.agile.craft_master.core.interfaces.OfferService;
 import com.gb.agile.craft_master.core.interfaces.UserService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
@@ -27,7 +28,7 @@ public class OfferServiceImpl implements OfferService {
 
   private final OfferRepository offerRepository;
   private final UserService userService;
-  private final OccupationServiceImpl occupationService;
+  private final OccupationService occupationService;
 
   @Override
   public List<Offer> getAllOffersNonPaged() {
@@ -65,10 +66,6 @@ public class OfferServiceImpl implements OfferService {
     return offerRepository.save(offer);
   }
 
-  private void checkId(Long id) {
-    if (id <= 0) throw new EntityBadIdException(Offer.class, id);
-  }
-
   public Page<OfferDto> getAllOffers(Specification<Offer> spec, Integer page,
                                      Integer size,
                                      Optional<String[]> sort) {
@@ -88,5 +85,9 @@ public class OfferServiceImpl implements OfferService {
       return offers.map(OfferDto::new);
     else
       throw new EntityNotFoundException(Offer.class,"");
+  }
+
+  private void checkId(Long id) {
+    if (id <= 0) throw new EntityBadIdException(Offer.class, id);
   }
 }

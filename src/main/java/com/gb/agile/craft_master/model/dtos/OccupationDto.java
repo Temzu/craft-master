@@ -12,17 +12,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OccupationDto {
-    private Integer id;
+    private Long id;
     private String name;
     private List<OccupationDto> child;
 
-    public OccupationDto(Occupation category) {
-        this.id = category.getId();
-        this.name = category.getName();
+    public OccupationDto(Occupation occupation) {
+        this.id = occupation.getId();
+        this.name = occupation.getName();
         this.child = new ArrayList<>();
     }
 
-    public OccupationDto(Integer id) {
+    public OccupationDto(Long id) {
         this.id = id;
         this.child = new ArrayList<>();
     }

@@ -10,7 +10,7 @@ public class OfferDto {
     private Long id;
     private String title;
     private String description;
-    private Integer occupationId;
+    private Long occupationId;
 
     public OfferDto(Offer offer) {
         this.id = offer.getId();
