@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class OfferDto {
+    
     private Long id;
     private String title;
     private String description;

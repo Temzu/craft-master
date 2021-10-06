@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OccupationDto {
+  
     private Long id;
     private String name;
     private List<OccupationDto> child;

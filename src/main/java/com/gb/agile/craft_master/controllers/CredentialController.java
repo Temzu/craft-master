@@ -20,19 +20,19 @@ public class CredentialController {
 
     @GetMapping
     public List<Credential> getAll() {
-        Integer userId = JwtProvider.getUserId();
+        Long userId = JwtProvider.getUserId();
         return credentialService.getAllCredentialByUserId(userId);
     }
 
     @PostMapping
     public Credential addCredential(@RequestBody CredentialDto credential) {
-        Integer userId = JwtProvider.getUserId();
+        Long userId = JwtProvider.getUserId();
         return credentialService.addCredential(userId, credential);
     }
 
     @DeleteMapping("/{code}")
     public void deleteCredential(@PathVariable String code) {
-        Integer userId = JwtProvider.getUserId();
+        Long userId = JwtProvider.getUserId();
         credentialService.deleteCredential(userId, code);
     }
 }

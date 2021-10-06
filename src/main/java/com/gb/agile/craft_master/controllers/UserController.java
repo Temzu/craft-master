@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Integer id) {
+    public User getUser(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
@@ -35,18 +35,18 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Integer id, @RequestBody UserDto user) {
+    public User updateUser(@PathVariable Long id, @RequestBody UserDto user) {
         return userService.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Integer id) {
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
 
     @GetMapping("/user_info")
     public UserInfoDto getUserInfo() {
-        Integer userId = JwtProvider.getUserId();
+        Long userId = JwtProvider.getUserId();
         return new UserInfoDto(userService.getUserById(userId));
     }
 }
