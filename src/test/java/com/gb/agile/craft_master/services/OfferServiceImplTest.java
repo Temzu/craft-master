@@ -49,11 +49,10 @@ class OfferServiceImplTest {
     params.add("page", "1");
     params.add("size", "2");
     params.add("sort", "title");
-    params.add("title.dir","desc");
-    int page = 1;
+    params.add("dir","desc");
     int size = 2;
     String[] sort = new String[]{"title"};
-    Page<OfferDto> allOffers = offerService.getAllOffers(OfferSpecifications.build(params), page - 1, size, Optional.of(sort));
+    Page<OfferDto> allOffers = offerService.getAllOffers(OfferSpecifications.build(params), 0, size, sort, "dir");
     assertFalse(allOffers.isEmpty());
   }
 

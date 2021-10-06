@@ -3,6 +3,7 @@ package com.gb.agile.craft_master.services;
 import com.gb.agile.craft_master.core.interfaces.OccupationService;
 import com.gb.agile.craft_master.core.interfaces.OfferService;
 import com.gb.agile.craft_master.core.interfaces.UserService;
+import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
@@ -14,13 +15,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +54,7 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public Offer saveOrUpdate(OfferDto offerDto, Integer userId) {
+  public Offer saveOrUpdate(OfferDto offerDto, Long userId) {
     Occupation occupation = occupationService.getOccupationById(offerDto.getOccupationId());
     User user = userService.getProxyById(userId);
     Offer offer = new Offer();
@@ -66,25 +66,22 @@ public class OfferServiceImpl implements OfferService {
     return offerRepository.save(offer);
   }
 
-  public Page<OfferDto> getAllOffers(Specification<Offer> spec, Integer page,
-                                     Integer size,
-                                     Optional<String[]> sort) {
-    Page<Offer> offers;
-    if (sort.isPresent()) {
-      List o = new ArrayList<Sort.Order>();
-      for (int i = 0; i < sort.get().length; i++) {
-        String[] s = sort.get()[i].split(",");
-        if (s.length >= 2) {
-          o.add(new Sort.Order(Sort.Direction.fromString(s[1]), s[0]));
-        } else o.add(new Sort.Order(Sort.DEFAULT_DIRECTION, s[0]));
-      }
-      offers = offerRepository.findAll(spec, PageRequest.of(page, size, Sort.by(o)));
-    } else
-      offers = offerRepository.findAll(PageRequest.of(page, size));
-    if (offers.getContent().size() > 0)
-      return offers.map(OfferDto::new);
-    else
-      throw new EntityNotFoundException(Offer.class,"");
+  public Page<OfferDto> getAllOffers(
+      Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir) {
+
+    Sort sortFields = Sort.by(sort);
+    Pageable pageable =
+        PageRequest.of(
+            page,
+            size,
+            dir.equals(Sort.Direction.ASC.toString())
+                ? sortFields.ascending()
+                : sortFields.descending());
+
+    Page<Offer> products = offerRepository.findAll(spec, pageable);
+    int totalPages = products.getTotalPages();
+    if (totalPages <= page) throw new EntityNotFoundException(Page.class, page.longValue() + 1);
+    return products.map(OfferDto::new);
   }
 
   private void checkId(Long id) {

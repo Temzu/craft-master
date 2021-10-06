@@ -15,7 +15,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/offers")
@@ -26,12 +25,15 @@ public class OfferController {
 
   @GetMapping
   public Page<OfferDto> getAll(
-          @RequestParam MultiValueMap<String,String> params,
-          @RequestParam(defaultValue = "1") Integer page,
-          @RequestParam(defaultValue = "10") Integer size,
-          @RequestParam(defaultValue = "") String[] sort) {
+      @RequestParam MultiValueMap<String, String> params,
+      @RequestParam(defaultValue = "1") Integer page,
+      @RequestParam(defaultValue = "10") Integer size,
+      @RequestParam(defaultValue = "id") String[] sort,
+      @RequestParam(defaultValue = "ASC") String dir) {
     if (page < 1) throw new InvalidPageException(page.toString());
-    return offerService.getAllOffers(OfferSpecifications.build(params), page - 1, size, Optional.of(sort));
+    System.out.println(dir);
+    return offerService.getAllOffers(
+        OfferSpecifications.build(params), page - 1, size, sort, dir.toUpperCase());
   }
 
   @GetMapping("/nonpaged/")
@@ -54,7 +56,8 @@ public class OfferController {
   public StatusDto saveOffer(@RequestBody OfferDto offerDto) {
     offerDto.setId(null);
     offerService.saveOrUpdate(offerDto, JwtProvider.getUserId());
-    //ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий статус
+    // ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий
+    // статус
     return new StatusDto(StatusCode.STATUS_OK);
   }
 

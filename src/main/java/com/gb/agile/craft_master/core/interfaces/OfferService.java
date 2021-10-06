@@ -10,15 +10,14 @@ import java.util.Optional;
 
 public interface OfferService {
 
-    List<Offer> getAllOffersNonPaged();
+  List<Offer> getAllOffersNonPaged();
 
-    Offer getOfferById(Long id);
+  Offer getOfferById(Long id);
 
-    void deleteOfferById(Long id);
+  void deleteOfferById(Long id);
 
-    Offer saveOrUpdate(OfferDto offerDto, Integer userId);
+  Offer saveOrUpdate(OfferDto offerDto, Long userId);
 
-    Page<OfferDto> getAllOffers(Specification<Offer> spec, Integer page,
-                                Integer size,
-                                Optional<String[]> sort);
+  Page<OfferDto> getAllOffers(
+      Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir);
 }
