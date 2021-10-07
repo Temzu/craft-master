@@ -26,7 +26,7 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Integer id) {
+    public User getUser(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
@@ -37,20 +37,20 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Integer id, @RequestBody UserDto user) {
+    public User updateUser(@PathVariable Long id, @RequestBody UserDto user) {
         return userService.updateUser(id, user);
     }
 
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Integer id) {
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/user_info")
     public UserInfoDto getUserInfo() {
-        Integer userId = JwtProvider.getUserId();
+        Long userId = JwtProvider.getUserId();
         return new UserInfoDto(userService.getUserById(userId));
     }
 }

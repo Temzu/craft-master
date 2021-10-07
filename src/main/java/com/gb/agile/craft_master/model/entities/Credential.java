@@ -16,10 +16,10 @@ public class Credential {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column
     private String code;
@@ -30,7 +30,7 @@ public class Credential {
     @Column
     private String name;
 
-    public Credential(Integer userId, CredentialDto credential) {
+    public Credential(Long userId, CredentialDto credential) {
         this.userId = userId;
         this.code = credential.getCode();
         this.value = credential.getValue();

@@ -28,12 +28,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public User getProxyById(Integer id) {
+    public User getProxyById(Long id) {
         return userRepository.getById(id);
     }
 
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User updateUser(Integer id, UserDto userDto) {
+    public User updateUser(Long id, UserDto userDto) {
         User updatableUser = getUserById(id);
         if (updatableUser == null) throw new RuntimeException("User not found");
         updatableUser.setLogin(userDto.getLogin());
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void deleteUserById(Integer id) {
+    public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
 }
