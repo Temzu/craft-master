@@ -10,8 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OfferDto {
-//  @JsonProperty("id")
-//  private long id;
+  @JsonProperty("id")
+  private long id;
   @JsonProperty("title")
   private String title;
 //  @JsonProperty("description")
