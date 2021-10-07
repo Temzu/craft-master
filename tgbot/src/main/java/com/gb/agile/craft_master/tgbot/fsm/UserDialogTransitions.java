@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.tgbot.fsm;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.gb.agile.craft_master.tgbot.utils.MessageDto;
+import com.gb.agile.craft_master.tgbot.entities.MessageDto;
 import com.gb.agile.craft_master.tgbot.utils.RestRequests;
 import com.gb.agile.craft_master.tgbot.utils.TelegramUtils;
 import org.apache.camel.Exchange;
@@ -16,31 +16,41 @@ public class UserDialogTransitions {
 
     public boolean Login(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
-
+        boolean result = false;
         if (msg.getText().equals("/start")) {
             String userName = "Error";
             String login = msg.getChatId();
             String password = msg.getChatId(); //TODO: unsecured
-            try{
+            try {
                 userName = request.getIn().getBody(IncomingMessage.class).getFrom().getUsername();
-                restRequests.createUser(login, userName, password);
-                restRequests.loginUser(login, password);
+                if (!restRequests.loginUser(login, password)) {
+                    restRequests.createUser(login, userName, password);
+                    restRequests.loginUser(login, password);
+                }
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
             response.setText(String.format("%s logged in", userName));
             response.setChatId(msg.getChatId());
             response.setReplyMarkup(TelegramUtils.getInlineKeyboardMarkup(List.of("Заказчик", "Исполнитель")));
-            return true;
+            result = true;
         }
-        return false;
+        return result;
     }
 
     public boolean GetRole(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
-        response.setText(msg.getText());
+        String text = "Error";
+        boolean result = false;
+        try {
+            text = msg.getText().equals("Заказчик") ? restRequests.getOffers() : restRequests.getOrders();
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        response.setText(text);
         response.setChatId(msg.getChatId());
-        return true;
+        return result;
     }
 
     public boolean Restart(Exchange request, OutgoingTextMessage response) {

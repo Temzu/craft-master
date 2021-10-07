@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.tgbot.utils;
+package com.gb.agile.craft_master.tgbot.entities;
 
 import lombok.Getter;
 import lombok.Setter;
