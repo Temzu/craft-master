@@ -8,36 +8,48 @@ public enum UserDialogState {
     Start {
         @Override
         public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
-            return transitAction(request, response) ? LoggedIn : Start;
+            return transitAction(request, response) ? GetRole : Start;
         }
 
         @Override
         public boolean transitAction(Exchange request, OutgoingTextMessage response) {
-            return userDialogTransitions.Login(request, response);
-        }
-    },
-
-    LoggedIn {
-        @Override
-        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
-            return transitAction(request, response) ? GetRole : LoggedIn;
-        }
-
-        @Override
-        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
-            return userDialogTransitions.GetRole(request, response);
+            return userDialogTransitions.login(request, response);
         }
     },
 
     GetRole {
         @Override
         public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
-            return transitAction(request, response) ? Start : GetRole;
+            return transitAction(request, response) ? ChooseItem : Start;
         }
 
         @Override
         public boolean transitAction(Exchange request, OutgoingTextMessage response) {
-            return userDialogTransitions.Restart(request, response);
+            return userDialogTransitions.getRole(request, response);
+        }
+    },
+
+    ChooseItem {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request, response) ? Final : Start;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.chooseItem(request, response);
+        }
+    },
+
+    Final {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request, response) ? GetRole : Start;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.transparent(request, response);
         }
     };
 

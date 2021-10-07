@@ -14,7 +14,7 @@ public class UserDialogTransitions {
 
     private final RestRequests restRequests = new RestRequests();
 
-    public boolean Login(Exchange request, OutgoingTextMessage response) {
+    public boolean login(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
         boolean result = false;
         if (msg.getText().equals("/start")) {
@@ -38,7 +38,7 @@ public class UserDialogTransitions {
         return result;
     }
 
-    public boolean GetRole(Exchange request, OutgoingTextMessage response) {
+    public boolean getRole(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
         String text = "Error";
         boolean result = false;
@@ -53,8 +53,18 @@ public class UserDialogTransitions {
         return result;
     }
 
-    public boolean Restart(Exchange request, OutgoingTextMessage response) {
-        response.setText("Restart");
+    public boolean chooseItem(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        response.setText("Выбран элемент: " + msg.getText() + '\n' + "Любой текст для перезапуска");
+        response.setChatId(msg.getChatId());
+        return true;
+    }
+
+    public boolean transparent(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        response.setChatId(msg.getChatId());
+        response.setText("Выберите роль: " + msg.getText());
+        response.setReplyMarkup(TelegramUtils.getInlineKeyboardMarkup(List.of("Заказчик", "Исполнитель")));
         return true;
     }
 }
