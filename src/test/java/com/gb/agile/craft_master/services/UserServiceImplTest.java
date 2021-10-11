@@ -24,7 +24,7 @@ class UserServiceImplTest {
 
     @Test
     public void whenFindById_thenFindShouldBeSuccessful() {
-        User user = userService.getUserById(1);
+        User user = userService.getUserById(Long.valueOf(1));
         assertEquals(1, user.getId());
     }
 

@@ -18,19 +18,19 @@ public class CredentialServiceImpl implements CredentialService {
 
     @Transactional
     @Override
-    public List<Credential> getAllCredentialByUserId(Integer userId) {
+    public List<Credential> getAllCredentialByUserId(Long userId) {
         return credentialRepository.getAllByUserId(userId);
     }
 
     @Transactional
     @Override
-    public Credential addCredential(Integer userId, CredentialDto credentialDto) {
+    public Credential addCredential(Long userId, CredentialDto credentialDto) {
         return credentialRepository.save(new Credential(userId, credentialDto));
     }
 
     @Transactional
     @Override
-    public void deleteCredential(Integer userId, String code) {
+    public void deleteCredential(Long userId, String code) {
         credentialRepository.deleteCredentialByUserIdAndCode(userId, code);
     }
 }

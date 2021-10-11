@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface CredentialService {
 
-    List<Credential> getAllCredentialByUserId(Integer userId);
+    List<Credential> getAllCredentialByUserId(Long userId);
 
-    Credential addCredential(Integer userId, CredentialDto credentialDto);
+    Credential addCredential(Long userId, CredentialDto credentialDto);
 
-    void deleteCredential(Integer userId, String code);
+    void deleteCredential(Long userId, String code);
 }

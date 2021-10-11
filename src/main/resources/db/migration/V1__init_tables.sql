@@ -22,7 +22,7 @@ CREATE TABLE `user`
     PRIMARY KEY (id)
 );
 
-CREATE TABLE service
+CREATE TABLE occupation
 (
     id bigserial NOT NULL,
     parent_id integer,
@@ -39,9 +39,9 @@ CREATE TABLE profile
         REFERENCES user (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    service_id integer NOT NULL
-        CONSTRAINT fk_profile_service
-        REFERENCES service (id)
+    occupation_id integer NOT NULL
+        CONSTRAINT fk_profile_occupation
+        REFERENCES occupation (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     PRIMARY KEY (id)
@@ -72,9 +72,9 @@ CREATE TABLE offer
         REFERENCES user (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    service_id integer NOT NULL
-        CONSTRAINT fk_offer_service
-        REFERENCES service (id)
+    occupation_id integer NOT NULL
+        CONSTRAINT fk_offer_occupation
+        REFERENCES occupation (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     PRIMARY KEY (id)
