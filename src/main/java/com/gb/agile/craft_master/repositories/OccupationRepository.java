@@ -10,4 +10,5 @@ public interface OccupationRepository extends JpaRepository<Occupation, Long> {
     List<Occupation> getAllByParentId(Long parentId);
 
     boolean deleteOccupationById(Long id);
+
 }
