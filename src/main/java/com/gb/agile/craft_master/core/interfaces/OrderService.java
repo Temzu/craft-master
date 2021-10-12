@@ -1,16 +1,16 @@
 package com.gb.agile.craft_master.core.interfaces;
 
-import com.gb.agile.craft_master.model.entities.Order;
+import com.gb.agile.craft_master.model.entities.Bid;
 
 import java.util.List;
 
 public interface OrderService {
 
-  List<Order> getAllOrders();
+  List<Bid> getAllOrders();
 
-  Order getOrderById(Long id);
+  Bid getOrderById(Long id);
 
   void deleteOrderById(Long id);
 
-  Order saveOrUpdate(Order offer);
+  Bid saveOrUpdate(Bid offer);
 }

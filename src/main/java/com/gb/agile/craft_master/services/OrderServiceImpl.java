@@ -3,7 +3,7 @@ package com.gb.agile.craft_master.services;
 import com.gb.agile.craft_master.core.interfaces.OrderService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
-import com.gb.agile.craft_master.model.entities.Order;
+import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,16 +18,16 @@ public class OrderServiceImpl implements OrderService {
   private final OrderRepository orderRepository;
 
   @Override
-  public List<Order> getAllOrders() {
+  public List<Bid> getAllOrders() {
     return orderRepository.findAll();
   }
 
   @Override
-  public Order getOrderById(Long id) {
+  public Bid getOrderById(Long id) {
     checkId(id);
     return orderRepository
         .findById(id)
-        .orElseThrow(() -> new EntityNotFoundException(Order.class, id));
+        .orElseThrow(() -> new EntityNotFoundException(Bid.class, id));
   }
 
   @Override
@@ -36,16 +36,16 @@ public class OrderServiceImpl implements OrderService {
     try {
       orderRepository.deleteById(id);
     } catch (EmptyResultDataAccessException e) {
-      throw new EntityNotFoundException(Order.class, id);
+      throw new EntityNotFoundException(Bid.class, id);
     }
   }
 
   @Override
-  public Order saveOrUpdate(Order order) {
-    return orderRepository.save(order);
+  public Bid saveOrUpdate(Bid bid) {
+    return orderRepository.save(bid);
   }
 
   private void checkId(Long id) {
-    if (id <= 0) throw new EntityBadIdException(Order.class, id);
+    if (id <= 0) throw new EntityBadIdException(Bid.class, id);
   }
 }
