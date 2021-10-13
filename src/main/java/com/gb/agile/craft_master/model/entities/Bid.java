@@ -2,42 +2,34 @@ package com.gb.agile.craft_master.model.entities;
 
 import javax.persistence.*;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Data
 @Entity
-@Table(name = "offer")
-public class Offer {
+@Table(name = "bid")
+public class Bid {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Setter(value = AccessLevel.PRIVATE)
   private Long id;
 
-  @Column(name = "title")
-  private String title;
-
-  @Column(name = "description")
-  private String description;
+  @Column(name = "name")
+  private String name;
 
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @JoinColumn(name = "user_id")
   private User user;
 
-  // вид работ/услуг
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @JoinColumn(name = "occupation_id")
-  private Occupation occupation;
+  @Column (name = "offer_id")
+  private Long offerId;
 
-  // выбранное предложение
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @JoinColumn(name = "order_id")
-  private Bid bid;
-
-  // цена заявки
   @Column (name = "price")
   private BigDecimal price;
 
