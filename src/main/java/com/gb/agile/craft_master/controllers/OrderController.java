@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.controllers;
 
-import com.gb.agile.craft_master.services.interfaces.OrderService;
+import com.gb.agile.craft_master.services.OrderService;
 import com.gb.agile.craft_master.model.entities.Order;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

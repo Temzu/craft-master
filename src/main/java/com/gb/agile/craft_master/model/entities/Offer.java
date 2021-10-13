@@ -3,6 +3,7 @@ package com.gb.agile.craft_master.model.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
 import io.swagger.models.auth.In;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
@@ -39,6 +41,22 @@ public class Offer {
   @Column(name = "offer_status")
   private Integer offerStatusValue;
 
+  @ManyToOne
+  @JoinColumn(name = "user_creator_id")
+  private User creator;
+
+  @ManyToOne
+  @JoinColumn(name = "occupation_id")
+  private Occupation occupation;
+
+  @ManyToOne
+  @JoinColumn(name = "user_executor_id")
+  private User executor;
+
+  @Column(name = "created_at")
+  @CreationTimestamp
+  private LocalDateTime createdAt;
+
   @Transient
   private OfferStatus offerStatus;
 
@@ -55,12 +73,4 @@ public class Offer {
       this.offerStatusValue = offerStatus.getCode();
     }
   }
-
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
-
-  @ManyToOne
-  @JoinColumn(name = "occupation_id")
-  private Occupation occupation;
 }

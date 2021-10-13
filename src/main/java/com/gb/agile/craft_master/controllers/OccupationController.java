@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 
-import com.gb.agile.craft_master.services.interfaces.OccupationService;
+import com.gb.agile.craft_master.services.OccupationService;
 import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import lombok.RequiredArgsConstructor;

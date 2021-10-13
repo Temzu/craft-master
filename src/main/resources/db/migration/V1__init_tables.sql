@@ -72,12 +72,12 @@ CREATE TABLE credential
 
 CREATE TABLE offer
 (
-    id            bigserial      NOT NULL,
-    title         character(128) NOT NULL,
-    description   character(256),
-    offer_status  integer default 1 NOT NULL,
-    user_id       integer        NOT NULL
-        CONSTRAINT fk_offer_user
+    id              bigserial         NOT NULL,
+    title           character(128)    NOT NULL,
+    description     character(256),
+    offer_status    integer DEFAULT 1 NOT NULL,
+    user_creator_id integer           NOT NULL
+        CONSTRAINT fk_offer_user_creator
             REFERENCES user (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
@@ -86,5 +86,11 @@ CREATE TABLE offer
             REFERENCES occupation (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
+    user_executor_id integer
+        CONSTRAINT fk_offer_user_executor
+            REFERENCES user (id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION,
+    created_at timestamp DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
