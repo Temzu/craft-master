@@ -28,4 +28,6 @@ public class Occupation {
   public String toString() {
     return String.format("%s [%d/%d]", name, id, parentId);
   }
+
+
 }
