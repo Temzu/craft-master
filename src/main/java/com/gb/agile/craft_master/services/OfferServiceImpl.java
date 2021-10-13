@@ -1,8 +1,7 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.services.interfaces.OccupationService;
-import com.gb.agile.craft_master.services.interfaces.OfferService;
-import com.gb.agile.craft_master.services.interfaces.UserService;
+import com.gb.agile.craft_master.config.JwtProvider;
+import com.gb.agile.craft_master.core.enums.OfferStatus;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
@@ -10,6 +9,10 @@ import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.repositories.OfferRepository;
+import com.gb.agile.craft_master.services.interfaces.OccupationService;
+import com.gb.agile.craft_master.services.interfaces.OfferService;
+import com.gb.agile.craft_master.services.interfaces.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -18,8 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,15 +54,24 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public Offer saveOrUpdate(OfferDto offerDto, Long userId) {
+  public Offer saveOrUpdate(OfferDto offerDto) {
+    Long userId = JwtProvider.getUserId();
     Occupation occupation = occupationService.getOccupationById(offerDto.getOccupationId());
     User user = userService.getProxyById(userId);
+    int offerStatusValue = offerDto.getOfferStatusValue();
+
+    if (!OfferStatus.contains(offerStatusValue)) {
+      throw new EntityNotFoundException(OfferStatus.class, (long) offerStatusValue);
+    }
+
     Offer offer = new Offer();
     offer.setId(offerDto.getId());
     offer.setTitle(offerDto.getTitle());
     offer.setDescription(offerDto.getDescription());
     offer.setUser(user);
     offer.setOccupation(occupation);
+    offer.setOfferStatusValue(offerStatusValue);
+
     return offerRepository.save(offer);
   }
 
@@ -79,11 +89,15 @@ public class OfferServiceImpl implements OfferService {
 
     Page<Offer> products = offerRepository.findAll(spec, pageable);
     int totalPages = products.getTotalPages();
-    if (totalPages <= page) throw new EntityNotFoundException(Page.class, page.longValue() + 1);
+    if (totalPages <= page) {
+      throw new EntityNotFoundException(Page.class, page.longValue() + 1);
+    }
     return products.map(OfferDto::new);
   }
 
   private void checkId(Long id) {
-    if (id <= 0) throw new EntityBadIdException(Offer.class, id);
+    if (id <= 0) {
+      throw new EntityBadIdException(Offer.class, id);
+    }
   }
 }

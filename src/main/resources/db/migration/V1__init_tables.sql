@@ -75,6 +75,7 @@ CREATE TABLE offer
     id            bigserial      NOT NULL,
     title         character(128) NOT NULL,
     description   character(256),
+    offer_status  integer default 1 NOT NULL,
     user_id       integer        NOT NULL
         CONSTRAINT fk_offer_user
             REFERENCES user (id)

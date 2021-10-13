@@ -15,7 +15,7 @@ public interface OfferService {
 
   void deleteOfferById(Long id);
 
-  Offer saveOrUpdate(OfferDto offerDto, Long userId);
+  Offer saveOrUpdate(OfferDto offerDto);
 
   Page<OfferDto> getAllOffers(
       Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir);

@@ -1,6 +1,8 @@
-package com.gb.agile.craft_master.exceptions.entityexceptions;
+package com.gb.agile.craft_master.exceptions.handlers;
 
 import com.gb.agile.craft_master.exceptions.CraftMasterError;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
+import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

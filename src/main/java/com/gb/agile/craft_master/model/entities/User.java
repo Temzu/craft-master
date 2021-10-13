@@ -1,5 +1,6 @@
 package com.gb.agile.craft_master.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gb.agile.craft_master.model.dtos.UserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
