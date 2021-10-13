@@ -8,6 +8,7 @@ import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundExcep
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
+import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.model.entities.User;
@@ -66,9 +67,7 @@ public class OfferServiceImpl implements OfferService {
     User creator = userService.getProxyById(userId);
     int offerStatusValue = offerDto.getOfferStatusValue();
 
-    if (!OfferStatus.contains(offerStatusValue)) {
-      throw new EntityNotFoundException(OfferStatus.class, (long) offerStatusValue);
-    }
+    checkStatus(offerStatusValue);
 
     Offer offer = new Offer();
     offer.setId(offerDto.getId());
@@ -103,7 +102,7 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<MyOfferDto> getAllOfferByCreator() {
+  public List<MyOfferDto> getAllOffersByCurrentUser() {
     User creator = userService.getUserById(JwtProvider.getUserId());
     return offerRepository.getAllByCreator(creator).stream().map(MyOfferDto::new)
         .collect(Collectors.toList());
@@ -111,14 +110,39 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto) {
-    Long userCreatorId = JwtProvider.getUserId();
+    Long creatorId = JwtProvider.getUserId();
+    Long offerId = updateOfferExecutorDto.getId();
     User executor = userService.getUserById(updateOfferExecutorDto.getNewExecutorId());
-    if (!offerRepository.existsByCreator(userService.getUserById(userCreatorId))) {
-      throw new DataAccessFailedException(Offer.class);
-    }
-    Offer offer = offerRepository.getById(updateOfferExecutorDto.getId());
+
+    checkAccess(offerId, creatorId);
+
+    Offer offer = offerRepository.getById(offerId);
     offer.setExecutor(executor);
     return new MyOfferDto(offer);
+  }
+
+  @Override
+  public void updateStatus(UpdateOfferStatusDto offerStatusDto) {
+    Long creatorId = JwtProvider.getUserId();
+    Long offerId = offerStatusDto.getId();
+
+    checkAccess(offerId, creatorId);
+    checkStatus(offerStatusDto.getNewStatus());
+
+    Offer offer = offerRepository.getById(offerId);
+    offer.setOfferStatusValue(offerStatusDto.getNewStatus());
+  }
+
+  private void checkAccess(Long offerId, Long userCreatorId) {
+    if (!offerRepository.existsByIdAndCreator(offerId, userService.getUserById(userCreatorId))) {
+      throw new DataAccessFailedException(Offer.class);
+    }
+  }
+
+  private void checkStatus(int offerStatusValue) {
+    if (!OfferStatus.contains(offerStatusValue)) {
+      throw new EntityNotFoundException(OfferStatus.class, (long) offerStatusValue);
+    }
   }
 
   private void checkId(Long id) {

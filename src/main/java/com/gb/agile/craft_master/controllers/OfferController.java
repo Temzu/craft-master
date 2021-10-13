@@ -4,6 +4,7 @@ import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
+import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.repositories.specifications.OfferSpecifications;
 import com.gb.agile.craft_master.services.OfferService;
@@ -52,7 +53,7 @@ public class OfferController {
 
   @GetMapping("/my_offers")
   public List<MyOfferDto> getAllMyOffers() {
-    return offerService.getAllOfferByCreator();
+    return offerService.getAllOffersByCurrentUser();
   }
 
   @GetMapping("/{id}")
@@ -78,8 +79,15 @@ public class OfferController {
 
   @PutMapping("/add_executor")
   @PreAuthorize("isAuthenticated()")
-  public MyOfferDto addExecutorToOffer(@RequestBody UpdateOfferExecutorDto offerDto) {
-    return offerService.updateExecutor(offerDto);
+  public MyOfferDto addExecutorToOffer(@RequestBody UpdateOfferExecutorDto offerExecutorDto) {
+    return offerService.updateExecutor(offerExecutorDto);
+  }
+
+  @PutMapping("/update_status")
+  @PreAuthorize("isAuthenticated()")
+  public ResponseEntity<HttpStatus> updateStatus(@RequestBody UpdateOfferStatusDto offerStatusDto) {
+    offerService.updateStatus(offerStatusDto);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")

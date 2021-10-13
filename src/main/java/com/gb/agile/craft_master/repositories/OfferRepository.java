@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long>, JpaSpecificationExecutor<Offer> {
 
-  boolean existsByCreator(User creator);
+  boolean existsByIdAndCreator(Long id, User creator);
 
   List<Offer> getAllByCreator(User creator);
 }

@@ -3,6 +3,7 @@ package com.gb.agile.craft_master.services;
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
+import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Offer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,7 +17,7 @@ public interface OfferService {
   Page<OfferDto> getAllOffers(
       Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir);
 
-  List<MyOfferDto> getAllOfferByCreator();
+  List<MyOfferDto> getAllOffersByCurrentUser();
 
   Offer getOfferById(Long id);
 
@@ -25,4 +26,6 @@ public interface OfferService {
   Offer saveOrUpdate(OfferDto offerDto);
 
   MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto);
+
+  void updateStatus(UpdateOfferStatusDto offerStatusDto);
 }
