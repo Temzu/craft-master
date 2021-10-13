@@ -36,7 +36,7 @@ public class OfferController {
         OfferSpecifications.build(params), page - 1, size, sort, dir.toUpperCase());
   }
 
-  @GetMapping("/nonpaged/")
+  @GetMapping("/nonpaged")
   public List<Offer> getAllOffers() {
     return offerService.getAllOffersNonPaged();
   }

@@ -20,7 +20,7 @@ public enum UserDialogState {
     GetRole {
         @Override
         public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
-            return transitAction(request, response) ? ChooseItem : Start;
+            return transitAction(request, response) ? ChooseOrderItem : ChooseOfferCategory;
         }
 
         @Override
@@ -29,7 +29,7 @@ public enum UserDialogState {
         }
     },
 
-    ChooseItem {
+    ChooseOrderItem {
         @Override
         public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
             return transitAction(request, response) ? Final : Start;
@@ -37,7 +37,7 @@ public enum UserDialogState {
 
         @Override
         public boolean transitAction(Exchange request, OutgoingTextMessage response) {
-            return userDialogTransitions.chooseItem(request, response);
+            return userDialogTransitions.chooseOrderItem(request, response);
         }
     },
 
@@ -51,9 +51,34 @@ public enum UserDialogState {
         public boolean transitAction(Exchange request, OutgoingTextMessage response) {
             return userDialogTransitions.transparent(request, response);
         }
+    },
+
+    ChooseOfferCategory {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request, response) ? ChooseOffers : ChooseOfferCategory;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.getOfferCategory(request, response);
+        }
+    },
+
+    ChooseOffers {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request, response) ? GetRole : Start;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.chooseOfferItem(request, response);
+        }
     };
 
     public final static UserDialogTransitions userDialogTransitions = new UserDialogTransitions();
+
     public abstract UserDialogState nextState(Exchange request, OutgoingTextMessage response);
 
     public abstract boolean transitAction(Exchange request, OutgoingTextMessage response);

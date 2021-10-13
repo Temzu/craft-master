@@ -34,7 +34,7 @@ public class Offer {
 
   // выбранное предложение
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @JoinColumn(name = "order_id")
+  @JoinColumn(name = "bid_id")
   private Bid bid;
 
   // цена заявки
