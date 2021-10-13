@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/occupations")
 @RequiredArgsConstructor
+@PreAuthorize("isAuthenticated()")
 public class OccupationController {
 
 private final OccupationService occupationService;
