@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@RequiredArgsConstructor
 @Table(name = "occupation")
 public class Occupation {
 

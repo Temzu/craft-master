@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.core.interfaces.RoleService;
-import com.gb.agile.craft_master.core.interfaces.UserService;
+import com.gb.agile.craft_master.services.interfaces.RoleService;
+import com.gb.agile.craft_master.services.interfaces.UserService;
 import com.gb.agile.craft_master.exceptions.LoginFailedException;
 import com.gb.agile.craft_master.core.enums.RoleCodes;
 import com.gb.agile.craft_master.model.entities.User;

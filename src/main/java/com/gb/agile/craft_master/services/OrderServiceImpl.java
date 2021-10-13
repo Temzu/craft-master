@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.core.interfaces.OrderService;
+import com.gb.agile.craft_master.services.interfaces.OrderService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Bid;

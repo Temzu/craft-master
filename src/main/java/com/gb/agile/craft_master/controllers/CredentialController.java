@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.config.JwtProvider;
-import com.gb.agile.craft_master.core.interfaces.CredentialService;
+import com.gb.agile.craft_master.services.interfaces.CredentialService;
 import com.gb.agile.craft_master.model.entities.Credential;
 import com.gb.agile.craft_master.model.dtos.CredentialDto;
 import lombok.RequiredArgsConstructor;

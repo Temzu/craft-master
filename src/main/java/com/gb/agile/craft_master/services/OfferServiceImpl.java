@@ -1,9 +1,8 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.core.interfaces.OccupationService;
-import com.gb.agile.craft_master.core.interfaces.OfferService;
-import com.gb.agile.craft_master.core.interfaces.UserService;
-import com.gb.agile.craft_master.exceptions.InvalidPageException;
+import com.gb.agile.craft_master.services.interfaces.OccupationService;
+import com.gb.agile.craft_master.services.interfaces.OfferService;
+import com.gb.agile.craft_master.services.interfaces.UserService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
