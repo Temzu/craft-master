@@ -29,6 +29,9 @@ public class User {
     @Column
     private String name;
 
+    @Column
+    private Float rating;
+
     @OneToOne
     @JoinColumn(name = "role_id")
     private Role role;

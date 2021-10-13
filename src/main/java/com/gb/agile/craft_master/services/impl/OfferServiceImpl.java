@@ -16,6 +16,7 @@ import com.gb.agile.craft_master.services.OccupationService;
 import com.gb.agile.craft_master.services.OfferService;
 import com.gb.agile.craft_master.services.UserService;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -99,6 +100,13 @@ public class OfferServiceImpl implements OfferService {
       throw new EntityNotFoundException(Page.class, page.longValue() + 1);
     }
     return products.map(OfferDto::new);
+  }
+
+  @Override
+  public List<MyOfferDto> getAllOfferByCreator() {
+    User creator = userService.getUserById(JwtProvider.getUserId());
+    return offerRepository.getAllByCreator(creator).stream().map(MyOfferDto::new)
+        .collect(Collectors.toList());
   }
 
   @Override

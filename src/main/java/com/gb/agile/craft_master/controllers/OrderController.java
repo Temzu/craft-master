@@ -1,8 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
-import com.gb.agile.craft_master.services.interfaces.OrderService;
-import com.gb.agile.craft_master.model.entities.Order;
-import java.util.List;
+import com.gb.agile.craft_master.model.entities.Bid;
+import com.gb.agile.craft_master.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

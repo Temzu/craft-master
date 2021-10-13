@@ -22,6 +22,8 @@ public class MyOfferDto {
     this.occupationName = offer.getOccupation().getName();
     this.status = offer.getOfferStatusValue();
     this.createdAt = offer.getCreatedAt();
-    this.executor = new ExecutorDto(offer.getExecutor());
+    if (offer.getExecutor() != null) {
+      this.executor = new ExecutorDto(offer.getExecutor());
+    }
   }
 }

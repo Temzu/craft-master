@@ -38,7 +38,9 @@ public class OfferController {
       @RequestParam(defaultValue = "10") Integer size,
       @RequestParam(defaultValue = "id") String[] sort,
       @RequestParam(defaultValue = "ASC") String dir) {
-    if (page < 1) throw new InvalidPageException(page.toString());
+    if (page < 1) {
+      throw new InvalidPageException(page.toString());
+    }
     return offerService.getAllOffers(
         OfferSpecifications.build(params), page - 1, size, sort, dir.toUpperCase());
   }
@@ -46,6 +48,11 @@ public class OfferController {
   @GetMapping("/nonpaged")
   public List<Offer> getAllOffers() {
     return offerService.getAllOffersNonPaged();
+  }
+
+  @GetMapping("/my_offers")
+  public List<MyOfferDto> getAllMyOffers() {
+    return offerService.getAllOfferByCreator();
   }
 
   @GetMapping("/{id}")

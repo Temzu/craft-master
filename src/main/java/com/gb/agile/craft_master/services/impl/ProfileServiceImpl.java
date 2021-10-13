@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
 import com.gb.agile.craft_master.core.interfaces.ProfileService;
 import com.gb.agile.craft_master.model.dtos.ProfileDto;
@@ -21,9 +21,7 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   @Override
-  public void deleteProfileById(
-
-          Long id) {
+  public void deleteProfileById(Long id) {
 
   }
 

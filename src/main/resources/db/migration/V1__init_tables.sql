@@ -20,11 +20,6 @@ CREATE TABLE user
     rating   numeric(5, 4),
     PRIMARY KEY (id)
 );
-CREATE INDEX user_name
-    ON user (name);
-CREATE INDEX user_rating
-    ON user (rating);
-
 
 CREATE TABLE occupation
 (
@@ -34,8 +29,6 @@ CREATE TABLE occupation
     PRIMARY KEY (id),
     UNIQUE (parent_id, id)
 );
-CREATE INDEX occupation_name
-ON occupation (name);
 
 CREATE TABLE profile
 (

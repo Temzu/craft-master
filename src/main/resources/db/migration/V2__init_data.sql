@@ -26,7 +26,8 @@ INSERT INTO offer (title, description, user_creator_id, occupation_id)
 VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6),
        ('Предложение_2', 'Описание_2', 2, 3),
        ('Предложение_3', 'Описание_3', 2, 5),
-       ('Предложение_4', 'Описание_4', 1, 4);
+       ('Предложение_4', 'Описание_4', 1, 4),
+       ('Установка плит', '5 плит, высота 4 м', 1, 6);
 
 INSERT INTO profile (id, user_id, occupation_id)
 VALUES (1, 2, 3),
@@ -36,6 +37,4 @@ INSERT INTO credential (user_id, code, value, name)
 VALUES (2, 'phone', '+79001238070', NULL),
        (2, 'sdfsd', 'asdfsfadf', NULL);
 
-INSERT INTO offer (title, description, user_creator_id, occupation_id)
-VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6);
 

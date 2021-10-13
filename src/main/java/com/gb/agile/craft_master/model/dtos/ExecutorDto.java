@@ -8,10 +8,11 @@ public class ExecutorDto {
 
   private Long id;
   private String name;
-//  private Float rating;
+  private Float rating;
 
   public ExecutorDto(User user) {
     this.id = user.getId();
     this.name = user.getName();
+    this.rating = user.getRating();
   }
 }
