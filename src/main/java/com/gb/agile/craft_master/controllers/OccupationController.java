@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 
-import com.gb.agile.craft_master.core.interfaces.OccupationService;
+import com.gb.agile.craft_master.services.interfaces.OccupationService;
 import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ private final OccupationService occupationService;
     }
 
     @GetMapping("/{id}")
-    public Occupation getOccupation(@PathVariable Long id) {
-        return occupationService.getOccupationById(id);
+    public OccupationDto getOccupation(@PathVariable Long id) {
+        return new OccupationDto(occupationService.getOccupationById(id));
     }
 
     @DeleteMapping("/{id}")

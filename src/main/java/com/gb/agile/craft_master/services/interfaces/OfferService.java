@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.core.interfaces;
+package com.gb.agile.craft_master.services.interfaces;
 
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.entities.Offer;
@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OfferService {
 
