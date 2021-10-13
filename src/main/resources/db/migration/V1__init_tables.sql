@@ -79,7 +79,8 @@ CREATE TABLE offer
     id            bigserial         NOT NULL,
     title         character(128)    NOT NULL, -- наименование
     description   character(32000),           -- описание заявки
-    bid_id      integer,                    -- отобранная заявка исполнителя
+    price         numeric(20, 10),            -- цена заявки
+    bid_id        integer,                    -- отобранная заявка исполнителя
     date_beg      date              NOT NULL, -- дата ввода
     date_end      date,                       -- срок жизни
     user_id       integer           NOT NULL  -- id пользователя
