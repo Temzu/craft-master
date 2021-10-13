@@ -2,7 +2,7 @@ package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.enums.StatusCode;
-import com.gb.agile.craft_master.core.interfaces.OfferService;
+import com.gb.agile.craft_master.services.OfferService;
 import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.dtos.StatusDto;

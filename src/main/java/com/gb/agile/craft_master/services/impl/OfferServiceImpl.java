@@ -1,16 +1,16 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
-import com.gb.agile.craft_master.core.interfaces.OccupationService;
-import com.gb.agile.craft_master.core.interfaces.OfferService;
-import com.gb.agile.craft_master.core.interfaces.UserService;
-import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
+import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.repositories.OfferRepository;
+import com.gb.agile.craft_master.services.OccupationService;
+import com.gb.agile.craft_master.services.OfferService;
+import com.gb.agile.craft_master.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;

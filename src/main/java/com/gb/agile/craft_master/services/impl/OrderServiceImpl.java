@@ -1,10 +1,10 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
-import com.gb.agile.craft_master.core.interfaces.OrderService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Order;
 import com.gb.agile.craft_master.repositories.OrderRepository;
+import com.gb.agile.craft_master.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.core.interfaces;
+package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.entities.Offer;

@@ -1,6 +1,8 @@
 package com.gb.agile.craft_master.services;
 
+import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
+import com.gb.agile.craft_master.services.impl.OccupationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

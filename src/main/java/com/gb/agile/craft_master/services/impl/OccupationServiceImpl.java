@@ -1,9 +1,9 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
-import com.gb.agile.craft_master.core.interfaces.OccupationService;
 import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.repositories.OccupationRepository;
+import com.gb.agile.craft_master.services.OccupationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

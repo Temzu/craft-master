@@ -8,9 +8,7 @@ import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdExceptio
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.entities.Offer;
-import com.gb.agile.craft_master.core.interfaces.OfferService;
 import java.util.List;
-import java.util.Optional;
 
 import com.gb.agile.craft_master.repositories.OccupationRepository;
 import com.gb.agile.craft_master.repositories.UserRepository;

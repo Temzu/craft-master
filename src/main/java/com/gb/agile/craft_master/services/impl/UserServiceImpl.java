@@ -1,12 +1,12 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
-import com.gb.agile.craft_master.core.interfaces.RoleService;
-import com.gb.agile.craft_master.core.interfaces.UserService;
 import com.gb.agile.craft_master.exceptions.LoginFailedException;
 import com.gb.agile.craft_master.core.enums.RoleCodes;
 import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.UserDto;
 import com.gb.agile.craft_master.repositories.UserRepository;
+import com.gb.agile.craft_master.services.RoleService;
+import com.gb.agile.craft_master.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

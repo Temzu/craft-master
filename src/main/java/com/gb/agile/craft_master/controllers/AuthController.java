@@ -3,7 +3,7 @@ package com.gb.agile.craft_master.controllers;
 import com.gb.agile.craft_master.config.Const;
 import com.gb.agile.craft_master.config.JwtFilter;
 import com.gb.agile.craft_master.config.JwtProvider;
-import com.gb.agile.craft_master.core.interfaces.UserService;
+import com.gb.agile.craft_master.services.UserService;
 import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.AuthRequestDto;
 import com.gb.agile.craft_master.model.dtos.AuthResponseDto;
