@@ -8,7 +8,7 @@ CREATE TABLE role
 
 CREATE TABLE user
 (
-    id       serial         NOT NULL,
+    id       bigserial         NOT NULL,
     role_id  integer        NOT NULL
         CONSTRAINT fk_user_role
             REFERENCES role (id)
@@ -39,7 +39,7 @@ ON occupation (name);
 
 CREATE TABLE profile
 (
-    id            serial  NOT NULL,
+    id            bigserial  NOT NULL,
     user_id       integer NOT NULL
         CONSTRAINT fk_profile_user
             REFERENCES user (id)
@@ -52,12 +52,19 @@ CREATE TABLE profile
             ON DELETE NO ACTION,
     PRIMARY KEY (id)
 );
+CREATE INDEX user_name
+    ON user (name);
+CREATE INDEX user_rating
+    ON user (rating);
+CREATE INDEX occupation_name
+ON occupation (name);
 CREATE UNIQUE INDEX profile_user_occupation_uindex
     ON profile (user_id, occupation_id);
 
+
 CREATE TABLE credential
 (
-    id      serial        NOT NULL,
+    id      bigserial        NOT NULL,
     user_id integer       NOT NULL
         CONSTRAINT fk_credential_user
             REFERENCES user (id)
@@ -72,12 +79,18 @@ CREATE TABLE credential
 
 CREATE TABLE offer
 (
-    id              bigserial         NOT NULL,
-    title           character(128)    NOT NULL,
-    description     character(256),
-    offer_status    integer DEFAULT 1 NOT NULL,
-    user_creator_id integer           NOT NULL
+    id            bigserial      NOT NULL,
+    title         character(128) NOT NULL,
+    description   character(256),
+    bid_id      integer,
+    offer_status  integer default 1 NOT NULL,
+    user_creator_id integer        NOT NULL
         CONSTRAINT fk_offer_user_creator
+            REFERENCES user (id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION,
+    user_executor_id integer
+        CONSTRAINT fk_offer_user_executor
             REFERENCES user (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
@@ -86,11 +99,28 @@ CREATE TABLE offer
             REFERENCES occupation (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
-    user_executor_id integer
-        CONSTRAINT fk_offer_user_executor
-            REFERENCES user (id)
-            ON UPDATE NO ACTION
-            ON DELETE NO ACTION,
-    created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+    created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    date_end timestamp,
     PRIMARY KEY (id)
+);
+
+
+-- заявка на исполнение заказа (вместо order)
+CREATE TABLE bid
+(
+    id            bigserial        NOT NULL,
+    price         numeric(20, 10)  NOT NULL, -- цена предложения
+    date_beg      date,                      -- дата ввода
+    date_end      date,                      -- срок жизни
+    user_id       integer          NOT NULL  -- пользователь
+    CONSTRAINT fk_bid_user
+        REFERENCES user (id)
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    offer_id      integer          NOT NULL  -- id заявки
+    CONSTRAINT fk_bid_offer
+        REFERENCES offer (id)
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    PRIMARY KEY  (id)
 );
