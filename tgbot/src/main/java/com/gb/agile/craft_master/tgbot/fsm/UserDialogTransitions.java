@@ -30,7 +30,7 @@ public class UserDialogTransitions {
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            response.setText(String.format("%s logged in", userName));
+            response.setText(String.format("Вы вошли в систему как %s\nВаша роль?", userName));
             response.setChatId(msg.getChatId());
             response.setReplyMarkup(TelegramUtils.getInlineKeyboardMarkup(List.of("Заказчик", "Исполнитель")));
             result = true;
@@ -41,10 +41,12 @@ public class UserDialogTransitions {
     public boolean getRole(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
         String text = "Error";
-        boolean result = false;
+        boolean result = msg.getText().equals("Исполнитель");
         try {
-            text = msg.getText().equals("Заказчик") ? restRequests.getOffers() : restRequests.getOrders();
-            result = true;
+            text = result ?
+                    "Размещенные предложения:\n" + restRequests.getOffers()
+                    :
+                    "Выберете категорию :\n" + restRequests.getOccupations(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,9 +55,9 @@ public class UserDialogTransitions {
         return result;
     }
 
-    public boolean chooseItem(Exchange request, OutgoingTextMessage response) {
+    public boolean chooseOrderItem(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
-        response.setText("Выбран элемент: " + msg.getText() + '\n' + "Любой текст для перезапуска");
+        response.setText("Вы откликнулись на предложение: " + msg.getText() + '\n' + "Введите любой текст для перезапуска");
         response.setChatId(msg.getChatId());
         return true;
     }
@@ -65,6 +67,26 @@ public class UserDialogTransitions {
         response.setChatId(msg.getChatId());
         response.setText("Выберите роль: " + msg.getText());
         response.setReplyMarkup(TelegramUtils.getInlineKeyboardMarkup(List.of("Заказчик", "Исполнитель")));
+        return true;
+    }
+
+    public boolean getOfferCategory(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        String text = "Error";
+        try {
+            text = restRequests.getOccupations(Integer.parseInt(msg.getText()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        response.setText(text);
+        response.setChatId(msg.getChatId());
+        return true;
+    }
+
+    public boolean chooseOfferItem(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        response.setText("Вы выбрали категорию: " + msg.getText() + '\n' + "Введите любой текст для перезапуска");
+        response.setChatId(msg.getChatId());
         return true;
     }
 }
