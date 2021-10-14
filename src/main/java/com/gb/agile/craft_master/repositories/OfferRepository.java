@@ -11,9 +11,13 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OfferRepository extends JpaRepository<Offer, Long>, JpaSpecificationExecutor<Offer> {
+public interface OfferRepository extends JpaRepository<Offer, Long>,
+    JpaSpecificationExecutor<Offer> {
 
-  Page<Offer> findAllByOccupationIn(List<Occupation> occupations, Pageable pageable);
+  Page<Offer> findAllByOfferStatusValueAndCreatorIsNotAndOccupationIdIn(Integer statusCode,
+      User creator,
+      List<Long> occupations,
+      Pageable pageable);
 
   boolean existsByIdAndCreator(Long id, User creator);
 

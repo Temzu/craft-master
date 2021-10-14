@@ -115,16 +115,14 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public Page<FindOfferDto> getAllOffersForCurrentUser(Integer page, Integer pageSize) {
     Long executorId = JwtProvider.getUserId();
-    List<Long> occupations = profileService.getUserProfiles(executorId).stream()
+    List<Long> occupationsIds = profileService.getUserProfiles(executorId).stream()
         .map(ProfileDto::getOccupationId).collect(
             Collectors.toList());
-    System.out.println(occupations);
 
-    List<Occupation> curUserOccupations = occupationService.getAllByOccupationId(occupations);
-
-    System.out.println(curUserOccupations);
-
-    return offerRepository.findAllByOccupationIn(curUserOccupations,
+    return offerRepository.findAllByOfferStatusValueAndCreatorIsNotAndOccupationIdIn(
+        OfferStatus.CREATED.getCode(),
+        userService.getUserById(executorId),
+        occupationsIds,
         PageRequest.of(page, pageSize)).map(FindOfferDto::new);
   }
 
