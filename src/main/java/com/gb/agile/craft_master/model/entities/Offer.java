@@ -1,14 +1,12 @@
 package com.gb.agile.craft_master.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
-import io.swagger.models.auth.In;
+import com.gb.agile.craft_master.model.dtos.OfferDto;
+import com.gb.agile.craft_master.model.dtos.SaveOfferDto;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,9 +17,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "offer")
 public class Offer {
@@ -38,7 +38,7 @@ public class Offer {
   private String description;
 
   @Basic
-  @Column(name = "offer_status")
+  @Column(name = "offer_status", columnDefinition = "integer default 1")
   private Integer offerStatusValue;
 
   @ManyToOne
@@ -72,5 +72,11 @@ public class Offer {
     if (offerStatus != null) {
       this.offerStatusValue = offerStatus.getCode();
     }
+  }
+
+  public Offer(OfferDto offerDto) {
+    this.title = offerDto.getTitle();
+    this.description = offerDto.getDescription();
+    this.offerStatusValue = OfferStatus.CREATED.getCode();
   }
 }

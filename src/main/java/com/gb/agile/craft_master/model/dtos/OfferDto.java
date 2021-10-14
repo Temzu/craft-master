@@ -27,4 +27,17 @@ public class OfferDto {
         this.offerStatus = OfferStatus.of(offerStatusValue);
         this.created_at = offer.getCreatedAt();
     }
+
+    public OfferDto(SaveOfferDto saveOfferDto) {
+        this.title = saveOfferDto.getTitle();
+        this.description = saveOfferDto.getDescription();
+        this.occupationId = saveOfferDto.getOccupationId();
+    }
+
+    public OfferDto(UpdateOfferDto updateOfferDto) {
+        this.id = updateOfferDto.getId();
+        this.title = updateOfferDto.getTitle();
+        this.description = updateOfferDto.getDescription();
+        this.occupationId = updateOfferDto.getOccupationId();
+    }
 }

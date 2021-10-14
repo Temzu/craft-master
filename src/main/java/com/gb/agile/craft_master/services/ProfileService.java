@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master.core.interfaces;
+package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.model.dtos.ProfileDto;
 import com.gb.agile.craft_master.model.entities.Occupation;

@@ -2,7 +2,7 @@ package com.gb.agile.craft_master.services.impl;
 
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
-import com.gb.agile.craft_master.core.interfaces.ProfileService;
+import com.gb.agile.craft_master.services.ProfileService;
 import com.gb.agile.craft_master.exceptions.DataAccessFailedException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
@@ -66,22 +66,23 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public Offer saveOrUpdate(OfferDto offerDto) {
-    Long userId = JwtProvider.getUserId();
     Occupation occupation = occupationService.getOccupationById(offerDto.getOccupationId());
-    User creator = userService.getProxyById(userId);
-    int offerStatusValue = offerDto.getOfferStatusValue();
 
-    checkStatus(offerStatusValue);
-
-    Offer offer = new Offer();
-    offer.setId(offerDto.getId());
-    offer.setTitle(offerDto.getTitle());
-    offer.setDescription(offerDto.getDescription());
-    offer.setCreator(creator);
-    offer.setOccupation(occupation);
-    offer.setOfferStatusValue(offerStatusValue);
-
-    return offerRepository.save(offer);
+    Offer offer;
+    if (offerDto.getId() == null) {
+      User creator = userService.getProxyById(JwtProvider.getUserId());
+      offer = new Offer(offerDto);
+      offer.setCreator(creator);
+      offer.setOccupation(occupation);
+      return offerRepository.save(offer);
+    } else {
+      checkAccess(offerDto.getId(), JwtProvider.getUserId());
+      offer = offerRepository.getById(offerDto.getId());
+      offer.setTitle(offerDto.getTitle());
+      offer.setDescription(offerDto.getDescription());
+      offer.setOccupation(occupation);
+      return offer;
+    }
   }
 
   @Override

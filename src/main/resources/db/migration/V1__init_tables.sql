@@ -75,7 +75,7 @@ CREATE TABLE offer
     title         character(128) NOT NULL,
     description   character(256),
     bid_id      integer,
-    offer_status  integer default 1 NOT NULL,
+    offer_status  integer DEFAULT 1,
     user_creator_id integer        NOT NULL
         CONSTRAINT fk_offer_user_creator
             REFERENCES user (id)

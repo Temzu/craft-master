@@ -1,10 +1,13 @@
 package com.gb.agile.craft_master.controllers;
 
+import com.gb.agile.craft_master.core.enums.OfferStatus;
 import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.model.dtos.FindOfferDto;
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
+import com.gb.agile.craft_master.model.dtos.SaveOfferDto;
 import com.gb.agile.craft_master.model.dtos.StatusDto;
+import com.gb.agile.craft_master.model.dtos.UpdateOfferDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Offer;
@@ -72,8 +75,8 @@ public class OfferController {
 
   @PostMapping
   @PreAuthorize("isAuthenticated()")
-  public StatusDto saveOffer(@RequestBody OfferDto offerDto) {
-    offerDto.setId(null);
+  public StatusDto saveOffer(@RequestBody SaveOfferDto saveOfferDto) {
+    OfferDto offerDto = new OfferDto(saveOfferDto);
     offerService.saveOrUpdate(offerDto);
     // ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий
     // статус
@@ -82,8 +85,8 @@ public class OfferController {
 
   @PutMapping
   @PreAuthorize("isAuthenticated()")
-  public OfferDto updateOffer(@RequestBody OfferDto offerDto) {
-    return new OfferDto(offerService.saveOrUpdate(offerDto));
+  public OfferDto updateOffer(@RequestBody UpdateOfferDto updateOfferDto) {
+    return new OfferDto(offerService.saveOrUpdate(new OfferDto(updateOfferDto)));
   }
 
   @PutMapping("/add_executor")
