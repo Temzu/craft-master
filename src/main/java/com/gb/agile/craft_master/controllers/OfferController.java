@@ -72,12 +72,12 @@ public class OfferController {
 
   @PostMapping
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<HttpStatus> saveOffer(@RequestBody OfferDto offerDto) {
+  public StatusDto saveOffer(@RequestBody OfferDto offerDto) {
     offerDto.setId(null);
     offerService.saveOrUpdate(offerDto);
     // ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий
     // статус
-    return new ResponseEntity<>(HttpStatus.OK);
+    return new StatusDto(1);
   }
 
   @PutMapping
@@ -96,7 +96,7 @@ public class OfferController {
   @PreAuthorize("isAuthenticated()")
   public StatusDto updateStatus(@RequestBody UpdateOfferStatusDto offerStatusDto) {
     offerService.updateStatus(offerStatusDto);
-    return new StatusDto(HttpStatus.OK.value());
+    return new StatusDto(1);
   }
 
   @DeleteMapping("/{id}")
