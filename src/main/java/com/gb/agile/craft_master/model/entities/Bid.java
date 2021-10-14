@@ -20,9 +20,6 @@ public class Bid {
   @Setter(value = AccessLevel.PRIVATE)
   private Long id;
 
-  @Column(name = "name")
-  private String name;
-
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @JoinColumn(name = "user_id")
   private User user;

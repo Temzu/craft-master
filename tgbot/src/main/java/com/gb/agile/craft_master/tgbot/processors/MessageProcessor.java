@@ -18,7 +18,7 @@ public class MessageProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws RuntimeException {
         OutgoingTextMessage msg = new OutgoingTextMessage();
-        String transition = state.name();
+        // DEBUG String transition = state.name();
         try {
             if (!(exchange.getIn().getBody() instanceof IncomingCallbackQuery)) {
                 User from = exchange.getIn().getBody(IncomingMessage.class).getFrom();
@@ -30,9 +30,10 @@ public class MessageProcessor implements Processor {
         } catch (Exception e) {
             msg.setText(e.getMessage());
         } finally {
-            transition = '\n' + transition + "->" + state.name();
+            // DEBUG transition = '\n' + transition + "->" + state.name();
             if (msg.getText() == null) msg.setText("Error");
-            msg.setText(msg.getText() + transition);
+            // DEBUG msg.setText(msg.getText() + transition);
+            msg.setText(msg.getText());
             exchange.getIn().setBody(msg);
         }
     }

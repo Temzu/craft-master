@@ -54,7 +54,6 @@ ON occupation (name);
 CREATE UNIQUE INDEX profile_user_occupation_uindex
     ON profile (user_id, occupation_id);
 
-
 CREATE TABLE credential
 (
     id      bigserial        NOT NULL,
@@ -96,7 +95,6 @@ CREATE TABLE offer
     date_end timestamp,
     PRIMARY KEY (id)
 );
-
 
 -- заявка на исполнение заказа (вместо order)
 CREATE TABLE bid

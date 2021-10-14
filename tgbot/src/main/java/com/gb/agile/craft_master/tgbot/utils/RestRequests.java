@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.gb.agile.craft_master.tgbot.entities.OccupationDto;
 import com.gb.agile.craft_master.tgbot.entities.OfferDto;
 import com.gb.agile.craft_master.tgbot.entities.OrderDto;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ public class RestRequests {
     private final String USERS_API_URL = HOST + API + "users/";
     private final String OFFERS_API_URL = HOST + API + "offers/nonpaged/";
     private final String ORDERS_API_URL = HOST + API + "orders/";
+    private final String OCCUPATION_API_URL = HOST + API + "occupations/";
     private final String AUTH_API_URL = HOST + "/auth/user_login";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -54,7 +56,7 @@ public class RestRequests {
             String response = restTemplate.postForObject(AUTH_API_URL, request, String.class);
             JsonNode root = objectMapper.readTree(response);
             token = root.get("token").toString().replace("\"","").replace("Bearer ","");
-            //headers.setBearerAuth(token);
+            headers.setBearerAuth(token);
         } catch (Exception e) {
             return false;
         }
@@ -64,10 +66,13 @@ public class RestRequests {
     private String offerArrayToString (OfferDto[] offers) {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < offers.length; i++) {
-            sb.append(offers[i].getId());
-            sb.append(") ");
-            sb.append(offers[i].getTitle());
-            sb.append('\n');
+            sb.append(offers[i].getId())
+                .append(") ")
+                .append(offers[i].getTitle())
+                .append(" [")
+                .append(offers[i].getUser().getName())
+                .append("]")
+                .append('\n');
         }
         return sb.toString();
     }
@@ -83,5 +88,26 @@ public class RestRequests {
         ObjectReader reader = objectMapper.readerFor(OrderDto[].class);
         OrderDto[] list = reader.readValue(response);
         return Arrays.toString(list);
+    }
+
+    public String getOccupations(Integer id) throws JsonProcessingException {
+        HttpEntity<String> request = new HttpEntity<>("body", headers);
+        ResponseEntity<String> response = restTemplate.exchange(OCCUPATION_API_URL +
+                (id == null ? "" : id.toString()), HttpMethod.GET, request, String.class);
+        ObjectReader reader = objectMapper.readerFor(OccupationDto[].class);
+        OccupationDto[] list = reader.readValue(response.getBody());
+        return occupationArrayToString(list);
+    }
+
+    private String occupationArrayToString(OccupationDto[] occupations) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < occupations.length; i++) {
+            sb.append(occupations[i].getId())
+                    .append(") ")
+                    .append(occupations[i].getName());
+            if (occupations[i].getChild().length > 0) sb.append('>');
+            sb.append('\n');
+        }
+        return sb.toString();
     }
 }
