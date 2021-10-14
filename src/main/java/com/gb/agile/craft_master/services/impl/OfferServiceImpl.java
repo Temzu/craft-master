@@ -90,14 +90,7 @@ public class OfferServiceImpl implements OfferService {
   public Page<OfferDto> getAllOffers(
       Specification<Offer> spec, Integer page, Integer pageSize, String[] sort, String dir) {
 
-    Sort sortFields = Sort.by(sort);
-    Pageable pageable =
-        PageRequest.of(
-            page,
-            pageSize,
-            dir.equals(Sort.Direction.ASC.toString())
-                ? sortFields.ascending()
-                : sortFields.descending());
+    Pageable pageable = getPageable(page, pageSize, sort, dir);
 
     Page<Offer> products = offerRepository.findAll(spec, pageable);
     int totalPages = products.getTotalPages();
@@ -108,10 +101,12 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public List<MyOfferDto> getAllOffersByCurrentUser() {
-    User creator = userService.getUserById(JwtProvider.getUserId());
-    return offerRepository.getAllByCreator(creator).stream().map(MyOfferDto::new)
-        .collect(Collectors.toList());
+  public Page<MyOfferDto> getAllOffersByCurrentUser(Integer page, Integer size, String dir,
+      String[] sort) {
+    Pageable pageable = getPageable(page, size, sort, dir);
+
+    return offerRepository.findAllByCreatorId(JwtProvider.getUserId(), pageable)
+        .map(MyOfferDto::new);
   }
 
   @Override
@@ -130,11 +125,10 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto) {
-    Long creatorId = JwtProvider.getUserId();
     Long offerId = updateOfferExecutorDto.getId();
     User executor = userService.getUserById(updateOfferExecutorDto.getNewExecutorId());
 
-    checkAccess(offerId, creatorId);
+    checkAccess(offerId, JwtProvider.getUserId());
 
     Offer offer = offerRepository.getById(offerId);
     offer.setExecutor(executor);
@@ -143,14 +137,23 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public void updateStatus(UpdateOfferStatusDto offerStatusDto) {
-    Long creatorId = JwtProvider.getUserId();
     Long offerId = offerStatusDto.getId();
 
-    checkAccess(offerId, creatorId);
+    checkAccess(offerId, JwtProvider.getUserId());
     checkStatus(offerStatusDto.getNewStatus());
 
     Offer offer = offerRepository.getById(offerId);
     offer.setOfferStatusValue(offerStatusDto.getNewStatus());
+  }
+
+  private Pageable getPageable(Integer page, Integer pageSize, String[] sort, String dir) {
+    Sort sortFields = Sort.by(sort);
+    return PageRequest.of(
+        page,
+        pageSize,
+        dir.equals(Sort.Direction.ASC.toString())
+            ? sortFields.ascending()
+            : sortFields.descending());
   }
 
   private void checkAccess(Long offerId, Long userCreatorId) {

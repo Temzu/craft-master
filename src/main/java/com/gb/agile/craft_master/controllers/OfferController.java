@@ -55,8 +55,13 @@ public class OfferController {
   }
 
   @GetMapping("/my_offers")
-  public List<MyOfferDto> getAllMyOffers() {
-    return offerService.getAllOffersByCurrentUser();
+  public Page<MyOfferDto> getAllMyOffers(
+      @RequestParam(defaultValue = "1") Integer page,
+      @RequestParam(defaultValue = "10") Integer size,
+      @RequestParam(defaultValue = "DESC") String dir,
+      @RequestParam(defaultValue = "createdAt") String[] sort
+  ) {
+    return offerService.getAllOffersByCurrentUser(page - 1, size, dir, sort);
   }
 
   @GetMapping("/suitable")
