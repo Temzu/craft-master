@@ -57,6 +57,7 @@ public class OfferServiceImpl implements OfferService {
   @Override
   public void deleteOfferById(Long id) {
     checkId(id);
+    checkAccess(id, JwtProvider.getUserId());
     try {
       offerRepository.deleteById(id);
     } catch (EmptyResultDataAccessException e) {
