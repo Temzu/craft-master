@@ -1,8 +1,10 @@
 package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.exceptions.InvalidPageException;
+import com.gb.agile.craft_master.model.dtos.FindOfferDto;
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
+import com.gb.agile.craft_master.model.dtos.StatusDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Offer;
@@ -39,9 +41,7 @@ public class OfferController {
       @RequestParam(defaultValue = "10") Integer size,
       @RequestParam(defaultValue = "id") String[] sort,
       @RequestParam(defaultValue = "ASC") String dir) {
-    if (page < 1) {
-      throw new InvalidPageException(page.toString());
-    }
+    checkPage(page);
     return offerService.getAllOffers(
         OfferSpecifications.build(params), page - 1, size, sort, dir.toUpperCase());
   }
@@ -54,6 +54,15 @@ public class OfferController {
   @GetMapping("/my_offers")
   public List<MyOfferDto> getAllMyOffers() {
     return offerService.getAllOffersByCurrentUser();
+  }
+
+  @GetMapping("/suitable")
+  public Page<FindOfferDto> getAllOffersForMe(
+      @RequestParam(defaultValue = "1") Integer page,
+      @RequestParam(defaultValue = "10") Integer size
+  ) {
+    checkPage(page);
+    return offerService.getAllOffersForCurrentUser(page - 1, size);
   }
 
   @GetMapping("/{id}")
@@ -85,14 +94,20 @@ public class OfferController {
 
   @PutMapping("/update_status")
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<HttpStatus> updateStatus(@RequestBody UpdateOfferStatusDto offerStatusDto) {
+  public StatusDto updateStatus(@RequestBody UpdateOfferStatusDto offerStatusDto) {
     offerService.updateStatus(offerStatusDto);
-    return new ResponseEntity<>(HttpStatus.OK);
+    return new StatusDto(HttpStatus.OK.value());
   }
 
   @DeleteMapping("/{id}")
   @PreAuthorize("isAuthenticated()")
   public void deleteOfferById(@PathVariable Long id) {
     offerService.deleteOfferById(id);
+  }
+
+  private void checkPage(Integer page) {
+    if (page < 1) {
+      throw new InvalidPageException(page.toString());
+    }
   }
 }

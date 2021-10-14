@@ -29,9 +29,15 @@ VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6),
        ('Предложение_4', 'Описание_4', 1, 4),
        ('Установка плит', '5 плит, высота 4 м', 1, 6);
 
-INSERT INTO profile (id, user_id, occupation_id)
-VALUES (1, 2, 3),
-       (2, 2, 6);
+INSERT INTO profile (user_id, occupation_id)
+VALUES (2, 1),
+       (2, 2),
+       (2, 3),
+       (1, 1),
+       (1, 4),
+       (1, 5),
+       (1, 6);
+
 
 INSERT INTO credential (user_id, code, value, name)
 VALUES (2, 'phone', '+79001238070', NULL),

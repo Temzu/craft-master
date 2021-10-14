@@ -25,6 +25,11 @@ public class OccupationServiceImpl implements OccupationService {
     }
 
     @Override
+    public List<Occupation> getAllByOccupationId(List<Long> ids) {
+        return occupationRepository.findAllById(ids);
+    }
+
+    @Override
     public List<OccupationDto> getOccupationsByParent(Long parentId) {
         return occupationRepository.getAllByParentId(parentId)
                 .stream()

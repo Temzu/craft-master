@@ -9,6 +9,8 @@ public interface OccupationService {
 
     List<OccupationDto> getAllOccupations();
 
+    List<Occupation> getAllByOccupationId(List<Long> ids);
+
     Occupation getOccupationById(Long id);
 
     List<OccupationDto> getOccupationsByParent(Long parentId);

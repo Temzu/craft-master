@@ -1,5 +1,6 @@
 package com.gb.agile.craft_master.services;
 
+import com.gb.agile.craft_master.model.dtos.FindOfferDto;
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
@@ -18,6 +19,8 @@ public interface OfferService {
       Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir);
 
   List<MyOfferDto> getAllOffersByCurrentUser();
+
+  Page<FindOfferDto> getAllOffersForCurrentUser(Integer page, Integer size);
 
   Offer getOfferById(Long id);
 

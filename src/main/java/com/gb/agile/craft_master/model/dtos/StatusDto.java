@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatusDto {
-    private Integer status;
+
+  private Integer status;
 }

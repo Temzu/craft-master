@@ -2,11 +2,14 @@ package com.gb.agile.craft_master.services.impl;
 
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
+import com.gb.agile.craft_master.core.interfaces.ProfileService;
 import com.gb.agile.craft_master.exceptions.DataAccessFailedException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
+import com.gb.agile.craft_master.model.dtos.FindOfferDto;
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
+import com.gb.agile.craft_master.model.dtos.ProfileDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
@@ -36,6 +39,7 @@ public class OfferServiceImpl implements OfferService {
   private final OfferRepository offerRepository;
   private final UserService userService;
   private final OccupationService occupationService;
+  private final ProfileService profileService;
 
   @Override
   public List<Offer> getAllOffersNonPaged() {
@@ -82,13 +86,13 @@ public class OfferServiceImpl implements OfferService {
 
   @Override
   public Page<OfferDto> getAllOffers(
-      Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir) {
+      Specification<Offer> spec, Integer page, Integer pageSize, String[] sort, String dir) {
 
     Sort sortFields = Sort.by(sort);
     Pageable pageable =
         PageRequest.of(
             page,
-            size,
+            pageSize,
             dir.equals(Sort.Direction.ASC.toString())
                 ? sortFields.ascending()
                 : sortFields.descending());
@@ -106,6 +110,22 @@ public class OfferServiceImpl implements OfferService {
     User creator = userService.getUserById(JwtProvider.getUserId());
     return offerRepository.getAllByCreator(creator).stream().map(MyOfferDto::new)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public Page<FindOfferDto> getAllOffersForCurrentUser(Integer page, Integer pageSize) {
+    Long executorId = JwtProvider.getUserId();
+    List<Long> occupations = profileService.getUserProfiles(executorId).stream()
+        .map(ProfileDto::getOccupationId).collect(
+            Collectors.toList());
+    System.out.println(occupations);
+
+    List<Occupation> curUserOccupations = occupationService.getAllByOccupationId(occupations);
+
+    System.out.println(curUserOccupations);
+
+    return offerRepository.findAllByOccupationIn(curUserOccupations,
+        PageRequest.of(page, pageSize)).map(FindOfferDto::new);
   }
 
   @Override
