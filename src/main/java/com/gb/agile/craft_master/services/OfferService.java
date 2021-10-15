@@ -18,7 +18,7 @@ public interface OfferService {
   Page<OfferDto> getAllOffers(
       Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir);
 
-  Page<MyOfferDto> getAllOffersByCurrentUser(Integer page, Integer size, String dir, String[] sort);
+  List<MyOfferDto> getAllOffersByCurrentUser(Integer page, Integer size, String dir, String[] sort);
 
   Page<FindOfferDto> getAllOffersForCurrentUser(Integer page, Integer size);
 

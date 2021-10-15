@@ -55,7 +55,7 @@ public class OfferController {
   }
 
   @GetMapping("/my_offers")
-  public Page<MyOfferDto> getAllMyOffers(
+  public List<MyOfferDto> getAllMyOffers(
       @RequestParam(defaultValue = "1") Integer page,
       @RequestParam(defaultValue = "10") Integer size,
       @RequestParam(defaultValue = "DESC") String dir,

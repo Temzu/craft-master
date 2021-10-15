@@ -101,12 +101,12 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
-  public Page<MyOfferDto> getAllOffersByCurrentUser(Integer page, Integer size, String dir,
+  public List<MyOfferDto> getAllOffersByCurrentUser(Integer page, Integer size, String dir,
       String[] sort) {
     Pageable pageable = getPageable(page, size, sort, dir);
 
     return offerRepository.findAllByCreatorId(JwtProvider.getUserId(), pageable)
-        .map(MyOfferDto::new);
+        .stream().map(MyOfferDto::new).collect(Collectors.toList());
   }
 
   @Override
