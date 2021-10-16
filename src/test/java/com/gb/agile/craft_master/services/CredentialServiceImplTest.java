@@ -1,6 +1,5 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.services.interfaces.CredentialService;
 import com.gb.agile.craft_master.model.entities.Credential;
 import com.gb.agile.craft_master.model.dtos.CredentialDto;
 import org.junit.jupiter.api.Test;

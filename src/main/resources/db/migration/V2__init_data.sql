@@ -22,15 +22,23 @@ VALUES (1, NULL, 'Строительство'),
        (11, 10, 'Кухня'),
        (12, 10, 'Санузел');
 
-INSERT INTO offer (title, description, user_id, occupation_id, date_beg)
-VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6, TO_DATE('10/10/2021', 'DD/MM/YYYY')),
-       ('Предложение_2', 'Описание_2', 2, 3, TO_DATE('17/10/2021', 'DD/MM/YYYY')),
-       ('Предложение_3', 'Описание_3', 2, 5, TO_DATE('18/10/2021', 'DD/MM/YYYY')),
-       ('Предложение_4', 'Описание_4', 1, 4, TO_DATE('19/10/2021', 'DD/MM/YYYY'));
+INSERT INTO offer (title, description, user_creator_id, occupation_id)
+VALUES ('Установка плит', '5 плит, высота 4 м', 1, 6),
+       ('Предложение_2', 'Описание_2', 2, 3),
+       ('Предложение_3', 'Описание_3', 2, 5),
+       ('Предложение_4', 'Описание_4', 1, 4),
+       ('Установка плит', '5 плит, высота 4 м', 1, 6),
+       ('Предложение_5', 'Описание_5', 1, 1);
 
-INSERT INTO profile (id, user_id, occupation_id)
-VALUES (1, 2, 3),
-       (2, 2, 6);
+INSERT INTO profile (user_id, occupation_id)
+VALUES (2, 1),
+       (2, 2),
+       (2, 3),
+       (1, 1),
+       (1, 4),
+       (1, 5),
+       (1, 6);
+
 
 INSERT INTO credential (user_id, code, value, name)
 VALUES (2, 'phone', '+79001238070', NULL),

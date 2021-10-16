@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
-    List<ProfileDto> getAllByUserId(Long userId);
+    List<Profile> getAllByUserId(Long userId);
 
     void deleteById (Long Id);
 

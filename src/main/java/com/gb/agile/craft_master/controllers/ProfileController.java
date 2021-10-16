@@ -1,6 +1,6 @@
 package com.gb.agile.craft_master.controllers;
 
-import com.gb.agile.craft_master.core.interfaces.ProfileService;
+import com.gb.agile.craft_master.services.ProfileService;
 import com.gb.agile.craft_master.model.dtos.ProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,6 +1,6 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
-import com.gb.agile.craft_master.services.interfaces.OccupationService;
+import com.gb.agile.craft_master.services.OccupationService;
 import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.repositories.OccupationRepository;
@@ -22,6 +22,11 @@ public class OccupationServiceImpl implements OccupationService {
     @Override
     public Occupation getOccupationById(Long id) {
         return occupationRepository.getById(id);
+    }
+
+    @Override
+    public List<Occupation> getAllByOccupationId(List<Long> ids) {
+        return occupationRepository.findAllById(ids);
     }
 
     @Override

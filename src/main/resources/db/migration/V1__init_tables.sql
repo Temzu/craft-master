@@ -1,15 +1,14 @@
 CREATE TABLE role
 (
-    id   bigserial      NOT NULL,
+    id   serial         NOT NULL,
     code character(16)  NOT NULL,
     name character(128) NOT NULL,
     PRIMARY KEY (id)
 );
 
-
 CREATE TABLE user
 (
-    id       bigserial      NOT NULL,
+    id       bigserial         NOT NULL,
     role_id  integer        NOT NULL
         CONSTRAINT fk_user_role
             REFERENCES role (id)
@@ -22,7 +21,6 @@ CREATE TABLE user
     PRIMARY KEY (id)
 );
 
-
 CREATE TABLE occupation
 (
     id        bigserial      NOT NULL,
@@ -31,7 +29,6 @@ CREATE TABLE occupation
     PRIMARY KEY (id),
     UNIQUE (parent_id, id)
 );
-
 
 CREATE TABLE profile
 (
@@ -46,7 +43,7 @@ CREATE TABLE profile
             REFERENCES occupation (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
-        PRIMARY KEY (id)
+    PRIMARY KEY (id)
 );
 CREATE INDEX user_name
     ON user (name);
@@ -57,45 +54,47 @@ ON occupation (name);
 CREATE UNIQUE INDEX profile_user_occupation_uindex
     ON profile (user_id, occupation_id);
 
-
 CREATE TABLE credential
 (
-    id      bigserial     NOT NULL,
+    id      bigserial        NOT NULL,
     user_id integer       NOT NULL
         CONSTRAINT fk_credential_user
-             REFERENCES user (id)
-             ON UPDATE NO ACTION
-             ON DELETE NO ACTION,
-    code     character(16) NOT NULL,
-    value    character(128),
-    name     character(128),
+            REFERENCES user (id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION,
+    code    character(16) NOT NULL,
+    value   character(128),
+    name    character(128),
     PRIMARY KEY (id),
     UNIQUE (user_id, code)
 );
 
--- предложение работы
 CREATE TABLE offer
 (
-    id            bigserial         NOT NULL,
-    title         character(128)    NOT NULL, -- наименование
-    description   character(32000),           -- описание заявки
-    price         numeric(20, 10),            -- цена заявки
-    bid_id        integer,                    -- отобранная заявка исполнителя
-    date_beg      date              NOT NULL, -- дата ввода
-    date_end      date,                       -- срок жизни
-    user_id       integer           NOT NULL  -- id пользователя
-        CONSTRAINT fk_offer_user
+    id            bigserial      NOT NULL,
+    title         character(128) NOT NULL,
+    description   character(256),
+    bid_id      integer,
+    offer_status  integer DEFAULT 1,
+    user_creator_id integer        NOT NULL
+        CONSTRAINT fk_offer_user_creator
             REFERENCES user (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
-    occupation_id integer           NOT NULL  -- id вида работ/услуг
+    user_executor_id integer
+        CONSTRAINT fk_offer_user_executor
+            REFERENCES user (id)
+            ON UPDATE NO ACTION
+            ON DELETE NO ACTION,
+    occupation_id integer        NOT NULL
         CONSTRAINT fk_offer_occupation
             REFERENCES occupation (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
+    created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    date_end timestamp,
     PRIMARY KEY (id)
 );
-
 
 -- заявка на исполнение заказа (вместо order)
 CREATE TABLE bid
