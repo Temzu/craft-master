@@ -1,13 +1,27 @@
 package com.gb.agile.craft_master.model.entities;
 
-import javax.persistence.*;
-
+import com.gb.agile.craft_master.core.enums.OfferStatus;
+import com.gb.agile.craft_master.model.dtos.OfferDto;
+import com.gb.agile.craft_master.model.dtos.SaveOfferDto;
+import java.time.LocalDateTime;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.Data;
-
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "offer")
 public class Offer {
@@ -23,30 +37,46 @@ public class Offer {
   @Column(name = "description")
   private String description;
 
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @JoinColumn(name = "user_id")
-  private User user;
+  @Basic
+  @Column(name = "offer_status", columnDefinition = "integer default 1")
+  private Integer offerStatusValue;
 
-  // вид работ/услуг
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+  @ManyToOne
+  @JoinColumn(name = "user_creator_id")
+  private User creator;
+
+  @ManyToOne
   @JoinColumn(name = "occupation_id")
   private Occupation occupation;
 
-  // выбранное предложение
-  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @JoinColumn(name = "bid_id")
-  private Bid bid;
+  @ManyToOne
+  @JoinColumn(name = "user_executor_id")
+  private User executor;
 
-  // цена заявки
-  @Column (name = "price")
-  private BigDecimal price;
+  @Column(name = "created_at")
+  @CreationTimestamp
+  private LocalDateTime createdAt;
 
-  // дата ввода заявки
-  @Column (name = "date_beg")
-  private ZonedDateTime dateBeg;
+  @Transient
+  private OfferStatus offerStatus;
 
-  // дата завершения заявки (время жизни)
-  @Column (name = "date_end")
-  private ZonedDateTime dateEnd;
+  @PostLoad
+  void fillTransient() {
+    if (offerStatusValue > 0) {
+      this.offerStatus = OfferStatus.of(offerStatusValue);
+    }
+  }
 
+  @PrePersist
+  void fillPersistent() {
+    if (offerStatus != null) {
+      this.offerStatusValue = offerStatus.getCode();
+    }
+  }
+
+  public Offer(OfferDto offerDto) {
+    this.title = offerDto.getTitle();
+    this.description = offerDto.getDescription();
+    this.offerStatusValue = OfferStatus.CREATED.getCode();
+  }
 }

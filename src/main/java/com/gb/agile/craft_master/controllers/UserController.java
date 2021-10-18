@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.config.JwtProvider;
-import com.gb.agile.craft_master.services.interfaces.UserService;
+import com.gb.agile.craft_master.services.UserService;
 import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.UserDto;
 import com.gb.agile.craft_master.model.dtos.UserInfoDto;

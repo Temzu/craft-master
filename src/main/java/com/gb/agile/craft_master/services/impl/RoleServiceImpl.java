@@ -1,6 +1,6 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
-import com.gb.agile.craft_master.services.interfaces.RoleService;
+import com.gb.agile.craft_master.services.RoleService;
 import com.gb.agile.craft_master.model.entities.Role;
 import com.gb.agile.craft_master.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;

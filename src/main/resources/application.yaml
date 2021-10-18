@@ -20,3 +20,6 @@ spring:
       path: /h2
       settings:
         web-allow-others: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false

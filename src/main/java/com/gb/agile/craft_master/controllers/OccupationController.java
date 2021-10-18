@@ -1,8 +1,8 @@
 package com.gb.agile.craft_master.controllers;
 
-import com.gb.agile.craft_master.services.OccupationServiceImpl;
 import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
+import com.gb.agile.craft_master.services.impl.OccupationServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.access.prepost.PreAuthorize;

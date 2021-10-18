@@ -1,6 +1,6 @@
-package com.gb.agile.craft_master.services;
+package com.gb.agile.craft_master.services.impl;
 
-import com.gb.agile.craft_master.services.interfaces.CredentialService;
+import com.gb.agile.craft_master.services.CredentialService;
 import com.gb.agile.craft_master.model.entities.Credential;
 import com.gb.agile.craft_master.model.dtos.CredentialDto;
 import com.gb.agile.craft_master.repositories.CredentialRepository;
