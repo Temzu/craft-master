@@ -9,11 +9,11 @@ public interface OccupationService {
 
     List<OccupationDto> getAllOccupations();
 
-    List<Occupation> getAllByOccupationId(List<Long> ids);
+    OccupationDto getOccupationDtoById(Long id);
 
     Occupation getOccupationById(Long id);
 
-    List<OccupationDto> getOccupationsByParent(Long parentId);
+    List<OccupationDto> getOccupationDtosByParent(Long parentId);
 
     void deleteOccupationById(Long id);
 

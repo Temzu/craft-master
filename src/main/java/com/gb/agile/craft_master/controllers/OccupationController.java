@@ -1,9 +1,8 @@
 package com.gb.agile.craft_master.controllers;
 
-
-import com.gb.agile.craft_master.services.OccupationService;
 import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
+import com.gb.agile.craft_master.services.impl.OccupationServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +16,7 @@ import java.util.List;
 @PreAuthorize("isAuthenticated()")
 public class OccupationController {
 
-private final OccupationService occupationService;
+private final OccupationServiceImpl occupationService;
 
     @GetMapping
     public List<OccupationDto> getAllOccupations() {
@@ -26,7 +25,7 @@ private final OccupationService occupationService;
 
     @GetMapping("/{id}")
     public OccupationDto getOccupation(@PathVariable Long id) {
-        return new OccupationDto(occupationService.getOccupationById(id));
+        return occupationService.getOccupationDtoById(id);
     }
 
     @DeleteMapping("/{id}")
