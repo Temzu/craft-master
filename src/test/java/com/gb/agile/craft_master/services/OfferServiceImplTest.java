@@ -37,7 +37,7 @@ class OfferServiceImplTest {
 
   @Test
   void getAllOffersNonPaged() {
-    List<Offer> allOffers = offerService.getAllOffersNonPaged();
+    List<OfferDto> allOffers = offerService.getAllOffersNonPaged();
     assertFalse(allOffers.isEmpty());
   }
 

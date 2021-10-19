@@ -16,8 +16,8 @@ public class OfferDto {
   private String title;
 //  @JsonProperty("description")
 //  private String description;
-  @JsonProperty("user")
-  private UserDto user;
+  @JsonProperty("creator")
+  private UserDto creator;
 //  private ServiceDto service;
   @Override
   public String toString() {

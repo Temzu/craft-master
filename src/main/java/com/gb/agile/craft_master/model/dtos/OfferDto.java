@@ -3,6 +3,8 @@ package com.gb.agile.craft_master.model.dtos;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
 import com.gb.agile.craft_master.model.entities.Offer;
 import java.time.LocalDateTime;
+
+import com.gb.agile.craft_master.model.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +18,8 @@ public class OfferDto {
     private Long occupationId;
     private Integer offerStatusValue;
     private OfferStatus offerStatus;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
+    private User creator;
 
     public OfferDto(Offer offer) {
         this.id = offer.getId();
@@ -25,7 +28,8 @@ public class OfferDto {
         this.occupationId = offer.getOccupation().getId();
         this.offerStatusValue = offer.getOfferStatusValue();
         this.offerStatus = OfferStatus.of(offerStatusValue);
-        this.created_at = offer.getCreatedAt();
+        this.createdAt = offer.getCreatedAt();
+        this.creator = offer.getCreator();
     }
 
     public OfferDto(SaveOfferDto saveOfferDto) {

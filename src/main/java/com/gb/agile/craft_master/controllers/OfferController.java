@@ -50,7 +50,7 @@ public class OfferController {
   }
 
   @GetMapping("/nonpaged")
-  public List<Offer> getAllOffers() {
+  public List<OfferDto> getAllOffers() {
     return offerService.getAllOffersNonPaged();
   }
 

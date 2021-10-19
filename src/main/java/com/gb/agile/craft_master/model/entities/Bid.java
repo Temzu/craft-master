@@ -2,9 +2,7 @@ package com.gb.agile.craft_master.model.entities;
 
 import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -12,6 +10,7 @@ import java.time.ZonedDateTime;
 @Data
 @Entity
 @Table(name = "bid")
+@NoArgsConstructor
 public class Bid {
 
   @Id

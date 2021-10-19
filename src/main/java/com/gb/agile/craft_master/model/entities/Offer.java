@@ -3,6 +3,8 @@ package com.gb.agile.craft_master.model.entities;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.dtos.SaveOfferDto;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -36,6 +38,9 @@ public class Offer {
 
   @Column(name = "description")
   private String description;
+
+  @Column(name = "price")
+  private BigDecimal price;
 
   @Basic
   @Column(name = "offer_status", columnDefinition = "integer default 1")

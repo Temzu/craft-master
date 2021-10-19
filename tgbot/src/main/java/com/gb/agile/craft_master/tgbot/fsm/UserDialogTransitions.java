@@ -59,6 +59,7 @@ public class UserDialogTransitions {
         MessageDto msg = new MessageDto(request);
         response.setText("Вы откликнулись на предложение: " + msg.getText() + '\n' + "Введите любой текст для перезапуска");
         response.setChatId(msg.getChatId());
+        restRequests.createBid(Integer.parseInt(msg.getText()),msg.getChatId());
         return true;
     }
 

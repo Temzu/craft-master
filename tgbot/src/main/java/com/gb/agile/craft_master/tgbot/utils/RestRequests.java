@@ -17,7 +17,7 @@ public class RestRequests {
     private final String HOST = "http://localhost:8189/craftmaster/";
     private final String API = "api/v1/";
     private final String USERS_API_URL = HOST + API + "users/";
-    private final String OFFERS_API_URL = HOST + API + "offers/nonpaged/";
+    private final String OFFERS_API_URL = HOST + API + "offers/";
     private final String ORDERS_API_URL = HOST + API + "orders/";
     private final String OCCUPATION_API_URL = HOST + API + "occupations/";
     private final String AUTH_API_URL = HOST + "/auth/user_login";
@@ -70,14 +70,14 @@ public class RestRequests {
                 .append(") ")
                 .append(offers[i].getTitle())
                 .append(" [")
-                .append(offers[i].getUser().getName())
+                .append(offers[i].getCreator().getName())
                 .append("]")
                 .append('\n');
         }
         return sb.toString();
     }
     public String getOffers() throws JsonProcessingException {
-        String response = restTemplate.getForObject(OFFERS_API_URL, String.class);
+        String response = restTemplate.getForObject(OFFERS_API_URL + "nonpaged/", String.class);
         ObjectReader reader = objectMapper.readerFor(OfferDto[].class);
         OfferDto[] list = reader.readValue(response);
         return offerArrayToString(list);
@@ -109,5 +109,15 @@ public class RestRequests {
             sb.append('\n');
         }
         return sb.toString();
+    }
+
+    public void createBid(int offerId, String userLogin) {
+        HttpEntity<String> request = new HttpEntity<>("boby", headers);
+        try {
+            String response = restTemplate.postForObject(
+                    String.format("%sbyoffer/offerid=%d&userlogin=%s",OFFERS_API_URL, offerId, userLogin),
+                    request, String.class);
+        } catch (Exception e) {
+        }
     }
 }
