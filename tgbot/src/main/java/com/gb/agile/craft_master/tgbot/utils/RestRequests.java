@@ -94,9 +94,15 @@ public class RestRequests {
         HttpEntity<String> request = new HttpEntity<>("body", headers);
         ResponseEntity<String> response = restTemplate.exchange(OCCUPATION_API_URL +
                 (id == null ? "" : id.toString()), HttpMethod.GET, request, String.class);
-        ObjectReader reader = objectMapper.readerFor(OccupationDto[].class);
-        OccupationDto[] list = reader.readValue(response.getBody());
-        return occupationArrayToString(list);
+        ObjectReader reader = objectMapper.readerFor(id == null ? OccupationDto[].class : OccupationDto.class);
+        if (id == null) {
+            OccupationDto[] list = reader.readValue(response.getBody());
+            return occupationArrayToString(list);
+        } else {
+            OccupationDto occupation = reader.readValue(response.getBody());
+            return occupationArrayToString(occupation.getChildren());
+        }
+
     }
 
     private String occupationArrayToString(OccupationDto[] occupations) {
@@ -105,7 +111,7 @@ public class RestRequests {
             sb.append(occupations[i].getId())
                     .append(") ")
                     .append(occupations[i].getName());
-            if (occupations[i].getChild().length > 0) sb.append('>');
+            if (occupations[i].getChildren().length > 0) sb.append(BotCharacters.OCCUPATION_LIST_SIGN.value);
             sb.append('\n');
         }
         return sb.toString();
@@ -115,8 +121,23 @@ public class RestRequests {
         HttpEntity<String> request = new HttpEntity<>("boby", headers);
         try {
             String response = restTemplate.postForObject(
-                    String.format("%sbyoffer/offerid=%d&userlogin=%s",OFFERS_API_URL, offerId, userLogin),
+                    String.format("%sbyoffer/offerid=%d&userlogin=%s",ORDERS_API_URL, offerId, userLogin),
                     request, String.class);
+        } catch (Exception e) {
+        }
+    }
+
+    public void createOffer(OfferDto offer) {
+        JSONObject offerJson = new JSONObject();
+        offerJson.put("title", offer.getTitle());
+        offerJson.put("description", offer.getDescription());
+        offerJson.put("occupationId", offer.getOccupationId());
+        offerJson.put("price",offer.getPrice());
+        offerJson.put("user",offer.getCreator());
+
+        HttpEntity<String> request = new HttpEntity<>(offerJson.toString(), headers);
+        try {
+            String response = restTemplate.postForObject(OFFERS_API_URL, request, String.class);
         } catch (Exception e) {
         }
     }

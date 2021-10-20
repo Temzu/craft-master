@@ -2,17 +2,22 @@ package com.gb.agile.craft_master.tgbot.fsm;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gb.agile.craft_master.tgbot.entities.MessageDto;
+import com.gb.agile.craft_master.tgbot.entities.OfferDto;
+import com.gb.agile.craft_master.tgbot.entities.UserDto;
+import com.gb.agile.craft_master.tgbot.utils.BotCharacters;
 import com.gb.agile.craft_master.tgbot.utils.RestRequests;
 import com.gb.agile.craft_master.tgbot.utils.TelegramUtils;
 import org.apache.camel.Exchange;
 import org.apache.camel.component.telegram.model.*;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class UserDialogTransitions {
 
     private final RestRequests restRequests = new RestRequests();
+    private OfferDto offer;
 
     public boolean login(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
@@ -73,21 +78,46 @@ public class UserDialogTransitions {
 
     public boolean getOfferCategory(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
+        boolean result = true;
         String text = "Error";
         try {
             text = restRequests.getOccupations(Integer.parseInt(msg.getText()));
+            result = (!text.contains(BotCharacters.OCCUPATION_LIST_SIGN.value));
         } catch (Exception e) {
             e.printStackTrace();
         }
         response.setText(text);
         response.setChatId(msg.getChatId());
-        return true;
+        return result;
     }
 
     public boolean chooseOfferItem(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
-        response.setText("Вы выбрали категорию: " + msg.getText() + '\n' + "Введите любой текст для перезапуска");
+        response.setText("Вы выбрали категорию: " + msg.getText() + '\n' + "Введите описание заказа: ");
+        offer = new OfferDto();
+        UserDto creator = new UserDto();
+        creator.setLogin(msg.getChatId());
+        offer.setCreator(creator);
+        offer.setOccupationId(Long.parseLong(msg.getText()));
         response.setChatId(msg.getChatId());
+        return true;
+    }
+
+    public boolean placeOfferDetails(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        offer.setTitle("Заказ");
+        offer.setDescription(msg.getText());
+        response.setText("Введите стоимость заказа: ");
+        response.setChatId(msg.getChatId());
+        return true;
+    }
+
+    public boolean placeOfferPrice(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        offer.setPrice(new BigDecimal(msg.getText()));
+        response.setText("Вы оформили заказ: " + offer.toString() + '\n' + "Введите любой текст для перезапуска");
+        response.setChatId(msg.getChatId());
+        restRequests.createOffer(offer);
         return true;
     }
 }

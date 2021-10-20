@@ -68,12 +68,35 @@ public enum UserDialogState {
     ChooseOffers {
         @Override
         public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
-            return transitAction(request, response) ? GetRole : Start;
+            return transitAction(request, response) ? PlaceOffer : Start;
         }
 
         @Override
         public boolean transitAction(Exchange request, OutgoingTextMessage response) {
             return userDialogTransitions.chooseOfferItem(request, response);
+        }
+    },
+
+    PlaceOffer {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request,response) ? PlaceOfferDetails : Start;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.placeOfferDetails(request, response);
+        }
+    },
+    PlaceOfferDetails {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request,response) ? Final : Start;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.placeOfferPrice(request, response);
         }
     };
 
