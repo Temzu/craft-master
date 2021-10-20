@@ -21,10 +21,15 @@ public class MessageProcessor implements Processor {
         // DEBUG String transition = state.name();
         try {
             if (!(exchange.getIn().getBody() instanceof IncomingCallbackQuery)) {
-                User from = exchange.getIn().getBody(IncomingMessage.class).getFrom();
+                IncomingMessage msgIn = exchange.getIn().getBody(IncomingMessage.class);
+                User from = msgIn.getFrom();
                 if (from.isBot()) throw new RuntimeException("Bots are not allowed");
+                if (msgIn.getText().equals("/exit")) {
+                    state = UserDialogState.Start;
+                    msg.setText("Введите /start");
+                }
             }
-//            exchange.getIn().getBody(IncomingMessage.class)
+
             state = state.nextState(exchange, msg);
 
         } catch (Exception e) {

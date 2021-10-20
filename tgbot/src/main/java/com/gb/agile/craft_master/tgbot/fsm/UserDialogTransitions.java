@@ -51,7 +51,8 @@ public class UserDialogTransitions {
             text = result ?
                     "Размещенные предложения:\n" + restRequests.getOffers()
                     :
-                    "Выберете категорию :\n" + restRequests.getOccupations(null);
+                    "Отклики на ваши заявки:\n" + restRequests.getOrders() + "\n" +
+                    "Выберите категорию :\n" + restRequests.getOccupations(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,7 +72,7 @@ public class UserDialogTransitions {
     public boolean transparent(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
         response.setChatId(msg.getChatId());
-        response.setText("Выберите роль: " + msg.getText());
+        response.setText("Выберите роль: ");
         response.setReplyMarkup(TelegramUtils.getInlineKeyboardMarkup(List.of("Заказчик", "Исполнитель")));
         return true;
     }
