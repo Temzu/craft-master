@@ -37,7 +37,11 @@ public class OfferDto {
         this.title = saveOfferDto.getTitle();
         this.description = saveOfferDto.getDescription();
         this.occupationId = saveOfferDto.getOccupationId();
-        this.price = saveOfferDto.getPrice();
+        if (saveOfferDto.getPrice() != null) {
+            this.price = saveOfferDto.getPrice();
+        } else {
+            this.price = BigDecimal.ZERO;
+        }
     }
 
     public OfferDto(UpdateOfferDto updateOfferDto) {

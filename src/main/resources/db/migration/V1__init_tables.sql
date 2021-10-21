@@ -74,7 +74,7 @@ CREATE TABLE offer
     id            bigserial      NOT NULL,
     title         character(128) NOT NULL,
     description   character(256),
-    price         numeric(18, 2)   NOT NULL,
+    price         numeric(18, 2) DEFAULT 0,
     bid_id      integer,
     offer_status  integer DEFAULT 1,
     user_creator_id integer        NOT NULL
