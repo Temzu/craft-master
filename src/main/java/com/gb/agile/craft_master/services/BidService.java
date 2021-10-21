@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public interface OfferService {
+public interface BidService {
 
   List<Offer> getAllOffersNonPaged();
 

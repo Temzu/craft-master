@@ -23,10 +23,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @SpringBootTest
-class OfferServiceImplTest {
+class BidServiceImplTest {
 
   @Autowired
-  private OfferService offerService;
+  private BidService bidService;
 
   @Autowired
   private UserRepository userRepository;
@@ -37,7 +37,7 @@ class OfferServiceImplTest {
 
   @Test
   void getAllOffersNonPaged() {
-    List<Offer> allOffers = offerService.getAllOffersNonPaged();
+    List<Offer> allOffers = bidService.getAllOffersNonPaged();
     assertFalse(allOffers.isEmpty());
   }
 
@@ -50,14 +50,14 @@ class OfferServiceImplTest {
     params.add("dir","desc");
     int size = 2;
     String[] sort = new String[]{"title"};
-    Page<OfferDto> allOffers = offerService.getAllOffers(OfferSpecifications.build(params), 0, size, sort, "dir");
+    Page<OfferDto> allOffers = bidService.getAllOffers(OfferSpecifications.build(params), 0, size, sort, "dir");
     assertFalse(allOffers.isEmpty());
   }
 
   @CsvSource(value = {"1", "4"})
   @ParameterizedTest
   void getOfferById_true(Long id) {
-    Offer offer = offerService.getOfferById(id);
+    Offer offer = bidService.getOfferById(id);
     System.out.println(offer);
     assertNotNull(offer);
   }
@@ -65,31 +65,31 @@ class OfferServiceImplTest {
   @CsvSource(value = {"0", "-1"})
   @ParameterizedTest
   void getOfferById_false_bad_id(Long id) {
-    assertThrows(EntityBadIdException.class, () -> offerService.getOfferById(id));
+    assertThrows(EntityBadIdException.class, () -> bidService.getOfferById(id));
   }
 
   @CsvSource(value = {"1000", "10000", "1000000"})
   @ParameterizedTest
   void getOfferById_false_not_found(Long id) {
-    assertThrows(EntityNotFoundException.class, () -> offerService.getOfferById(id));
+    assertThrows(EntityNotFoundException.class, () -> bidService.getOfferById(id));
   }
 
   @CsvSource(value = {"1", "4"})
   @ParameterizedTest
   void deleteOfferById_true(Long id) {
-    offerService.deleteOfferById(id);
+    bidService.deleteOfferById(id);
   }
 
   @CsvSource(value = {"1000", "10000", "1000000"})
   @ParameterizedTest
   void deleteOfferById_false_not_found(Long id) {
-    assertThrows(EntityNotFoundException.class, () -> offerService.deleteOfferById(id));
+    assertThrows(EntityNotFoundException.class, () -> bidService.deleteOfferById(id));
   }
 
   @CsvSource(value = {"0", "-1"})
   @ParameterizedTest
   void deleteOfferById_false_bad_id(Long id) {
-    assertThrows(EntityBadIdException.class, () -> offerService.deleteOfferById(id));
+    assertThrows(EntityBadIdException.class, () -> bidService.deleteOfferById(id));
   }
 
 //  @CsvSource(value = {"1", "5", "-1", "100"})

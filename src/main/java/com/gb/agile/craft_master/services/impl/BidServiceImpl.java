@@ -17,7 +17,7 @@ import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.repositories.OfferRepository;
 import com.gb.agile.craft_master.services.OccupationService;
-import com.gb.agile.craft_master.services.OfferService;
+import com.gb.agile.craft_master.services.BidService;
 import com.gb.agile.craft_master.services.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class OfferServiceImpl implements OfferService {
+public class BidServiceImpl implements BidService {
 
   private final OfferRepository offerRepository;
   private final UserService userService;
