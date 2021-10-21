@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.model.entities.Bid;
-import com.gb.agile.craft_master.services.OrderService;
+import com.gb.agile.craft_master.services.BidService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,30 +19,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
 
-  private final OrderService orderService;
+  private final BidService bidService;
 
   @GetMapping()
   public List<Bid> getAllOrders() {
-    return orderService.getAllOrders();
+    return bidService.getAll();
   }
 
   @GetMapping("/{id}")
   public Bid getOrderById(@PathVariable Long id) {
-    return orderService.getOrderById(id);
+    return bidService.getById(id);
   }
 
   @PostMapping
   public Bid updateOrder(@RequestBody Bid bid) {
-    return orderService.saveOrUpdate(bid);
+    return bidService.saveOrUpdate(bid);
   }
 
   @PutMapping
   public Bid saveOrder(@RequestBody Bid bid) {
-    return orderService.saveOrUpdate(bid);
+    return bidService.saveOrUpdate(bid);
   }
 
   @DeleteMapping("/{id}")
   public void deleteOrderById(@PathVariable Long id) {
-    orderService.deleteOrderById(id);
+    bidService.deleteById(id);
   }
 }

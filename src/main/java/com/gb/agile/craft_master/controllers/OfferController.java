@@ -1,5 +1,6 @@
 package com.gb.agile.craft_master.controllers;
 
+import com.gb.agile.craft_master.core.enums.OfferStatus;
 import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.model.dtos.FindOfferDto;
 import com.gb.agile.craft_master.model.dtos.MyOfferDto;
@@ -11,10 +12,12 @@ import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
 import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.repositories.specifications.OfferSpecifications;
-import com.gb.agile.craft_master.services.BidService;
+import com.gb.agile.craft_master.services.OfferService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,9 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/offers")
 @RequiredArgsConstructor
-public class BidController {
+public class OfferController {
 
-  private final BidService bidService;
+  private final OfferService offerService;
 
   @GetMapping
   public Page<OfferDto> getAll(
@@ -42,13 +45,13 @@ public class BidController {
       @RequestParam(defaultValue = "id") String[] sort,
       @RequestParam(defaultValue = "ASC") String dir) {
     checkPage(page);
-    return bidService.getAllOffers(
+    return offerService.getAllOffers(
         OfferSpecifications.build(params), page - 1, size, sort, dir.toUpperCase());
   }
 
   @GetMapping("/nonpaged")
   public List<Offer> getAllOffers() {
-    return bidService.getAllOffersNonPaged();
+    return offerService.getAllOffersNonPaged();
   }
 
   @GetMapping("/my_offers")
@@ -58,7 +61,7 @@ public class BidController {
       @RequestParam(defaultValue = "DESC") String dir,
       @RequestParam(defaultValue = "createdAt") String[] sort
   ) {
-    return bidService.getAllOffersByCurrentUser(page - 1, size, dir, sort);
+    return offerService.getAllOffersByCurrentUser(page - 1, size, dir, sort);
   }
 
   @GetMapping("/suitable")
@@ -67,19 +70,19 @@ public class BidController {
       @RequestParam(defaultValue = "10") Integer size
   ) {
     checkPage(page);
-    return bidService.getAllOffersForCurrentUser(page - 1, size);
+    return offerService.getAllOffersForCurrentUser(page - 1, size);
   }
 
   @GetMapping("/{id}")
   public Offer getOfferById(@PathVariable Long id) {
-    return bidService.getOfferById(id);
+    return offerService.getOfferById(id);
   }
 
   @PostMapping
   @PreAuthorize("isAuthenticated()")
   public StatusDto saveOffer(@RequestBody SaveOfferDto saveOfferDto) {
     OfferDto offerDto = new OfferDto(saveOfferDto);
-    bidService.saveOrUpdate(offerDto);
+    offerService.saveOrUpdate(offerDto);
     // ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий
     // статус
     return new StatusDto(1);
@@ -88,26 +91,26 @@ public class BidController {
   @PutMapping
   @PreAuthorize("isAuthenticated()")
   public OfferDto updateOffer(@RequestBody UpdateOfferDto updateOfferDto) {
-    return new OfferDto(bidService.saveOrUpdate(new OfferDto(updateOfferDto)));
+    return new OfferDto(offerService.saveOrUpdate(new OfferDto(updateOfferDto)));
   }
 
   @PutMapping("/add_executor")
   @PreAuthorize("isAuthenticated()")
   public MyOfferDto addExecutorToOffer(@RequestBody UpdateOfferExecutorDto offerExecutorDto) {
-    return bidService.updateExecutor(offerExecutorDto);
+    return offerService.updateExecutor(offerExecutorDto);
   }
 
   @PutMapping("/update_status")
   @PreAuthorize("isAuthenticated()")
   public StatusDto updateStatus(@RequestBody UpdateOfferStatusDto offerStatusDto) {
-    bidService.updateStatus(offerStatusDto);
+    offerService.updateStatus(offerStatusDto);
     return new StatusDto(1);
   }
 
   @DeleteMapping("/{id}")
   @PreAuthorize("isAuthenticated()")
   public void deleteOfferById(@PathVariable Long id) {
-    bidService.deleteOfferById(id);
+    offerService.deleteOfferById(id);
   }
 
   private void checkPage(Integer page) {
