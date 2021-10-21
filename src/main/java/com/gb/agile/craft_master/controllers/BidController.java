@@ -1,5 +1,6 @@
 package com.gb.agile.craft_master.controllers;
 
+import com.gb.agile.craft_master.model.dtos.BidDto;
 import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.services.BidService;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping("/api/v1/bids")
 @RequiredArgsConstructor
-public class OrderController {
+public class BidController {
 
   private final BidService bidService;
 
   @GetMapping()
-  public List<Bid> getAllOrders() {
+  public List<Bid> getAllBids() {
     return bidService.getAll();
   }
 
@@ -45,4 +46,10 @@ public class OrderController {
   public void deleteOrderById(@PathVariable Long id) {
     bidService.deleteById(id);
   }
+
+  @GetMapping("/byoffer/{id}")
+  public List<BidDto> getByOfferId(@PathVariable Long id) {
+    return bidService.getByOfferId(id);
+  }
+
 }

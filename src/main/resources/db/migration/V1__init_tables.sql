@@ -100,10 +100,10 @@ CREATE TABLE offer
 CREATE TABLE bid
 (
     id            bigserial        NOT NULL,
-    price         numeric(20, 10)  NOT NULL, -- цена предложения
-    date_beg      date,                      -- дата ввода
-    date_end      date,                      -- срок жизни
-    user_id       integer          NOT NULL  -- пользователь
+    price         numeric(20, 10)  DEFAULT 0, -- цена предложения
+    date_beg      date,                       -- дата ввода
+    date_end      date,                       -- срок жизни
+    user_id       integer          NOT NULL   -- пользователь
     CONSTRAINT fk_bid_user
         REFERENCES user (id)
         ON UPDATE NO ACTION
