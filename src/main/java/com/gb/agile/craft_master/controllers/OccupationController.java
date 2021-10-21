@@ -23,6 +23,11 @@ private final OccupationServiceImpl occupationService;
         return occupationService.getAllOccupations();
     }
 
+    @GetMapping("/single")
+    public List<OccupationDto> getAllSingleOccupations() {
+        return occupationService.getAllSingleOccupations();
+    }
+
     @GetMapping("/{id}")
     public OccupationDto getOccupation(@PathVariable Long id) {
         return occupationService.getOccupationDtoById(id);

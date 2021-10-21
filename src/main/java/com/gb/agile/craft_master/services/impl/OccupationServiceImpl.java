@@ -45,6 +45,11 @@ public class OccupationServiceImpl implements OccupationService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<OccupationDto> getAllSingleOccupations() {
+        return getOccupationDtosByParent(null);
+    }
+
     @Transactional
     @Override
     public void deleteOccupationById(Long id) {
