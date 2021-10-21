@@ -10,6 +10,5 @@ public class SaveOfferDto {
   private String title;
   private String description;
   private Long occupationId;
-  private UserDto user;
   private BigDecimal price;
 }

@@ -82,6 +82,7 @@ public class OfferController {
   @PreAuthorize("isAuthenticated()")
   public StatusDto saveOffer(@RequestBody SaveOfferDto saveOfferDto) {
     OfferDto offerDto = new OfferDto(saveOfferDto);
+    System.out.println(saveOfferDto);
     offerService.saveOrUpdate(offerDto);
     // ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий
     // статус
