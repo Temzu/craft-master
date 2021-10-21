@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
@@ -14,13 +16,16 @@ public class OfferDto {
   private long id;
   @JsonProperty("title")
   private String title;
-//  @JsonProperty("description")
-//  private String description;
-  @JsonProperty("user")
-  private UserDto user;
-//  private ServiceDto service;
+  @JsonProperty("description")
+  private String description;
+  @JsonProperty("creator")
+  private UserDto creator;
+  @JsonProperty("price")
+  private BigDecimal price;
+  @JsonProperty("occupation_id")
+  private Long occupationId;
   @Override
   public String toString() {
-    return String.format("[%s]",title);
+    return String.format("%s[%s]",title,creator.getName());
   }
 }

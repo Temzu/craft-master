@@ -2,6 +2,7 @@ package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.model.dtos.BidDto;
 import com.gb.agile.craft_master.model.entities.Bid;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface BidService {
   Bid saveOrUpdate(Bid bid);
 
   List<BidDto> getByOfferId(Long id);
+
+  public BidDto createByOfferAndUser(Long offerId, String userLogin);
+
 }

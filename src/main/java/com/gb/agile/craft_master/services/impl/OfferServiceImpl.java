@@ -2,16 +2,11 @@ package com.gb.agile.craft_master.services.impl;
 
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
+import com.gb.agile.craft_master.model.dtos.*;
 import com.gb.agile.craft_master.services.ProfileService;
 import com.gb.agile.craft_master.exceptions.DataAccessFailedException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
-import com.gb.agile.craft_master.model.dtos.FindOfferDto;
-import com.gb.agile.craft_master.model.dtos.MyOfferDto;
-import com.gb.agile.craft_master.model.dtos.OfferDto;
-import com.gb.agile.craft_master.model.dtos.ProfileDto;
-import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
-import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.model.entities.User;
@@ -22,6 +17,7 @@ import com.gb.agile.craft_master.services.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,10 +36,14 @@ public class OfferServiceImpl implements OfferService {
   private final UserService userService;
   private final OccupationService occupationService;
   private final ProfileService profileService;
+  private final ModelMapper modelMapper;
 
   @Override
-  public List<Offer> getAllOffersNonPaged() {
-    return offerRepository.findAll();
+  public List<OfferDto> getAllOffersNonPaged() {
+    return offerRepository.findAll()
+            .stream()
+            .map(offer -> (modelMapper.map(offer, OfferDto.class)))
+            .collect(Collectors.toList());
   }
 
   @Override
