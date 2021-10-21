@@ -1,13 +1,16 @@
 package com.gb.agile.craft_master.services.impl;
 
+import com.gb.agile.craft_master.services.OfferService;
 import com.gb.agile.craft_master.services.OrderService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
 import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.repositories.OrderRepository;
+import com.gb.agile.craft_master.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +19,8 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
   private final OrderRepository orderRepository;
+  private final OfferService offerService;
+  private final UserService userService;
 
   @Override
   public List<Bid> getAllOrders() {
@@ -47,5 +52,15 @@ public class OrderServiceImpl implements OrderService {
 
   private void checkId(Long id) {
     if (id <= 0) throw new EntityBadIdException(Bid.class, id);
+  }
+
+  @Transactional
+  public Bid createByOfferAndUser(Long offerId, String userLogin) {
+    Bid result = new Bid();
+    result.setOfferId(offerId);
+    result.setPrice(offerService.getOfferById(offerId).getPrice());
+    result.setUser(userService.getByLogin(userLogin));
+    orderRepository.save(result);
+    return result;
   }
 }

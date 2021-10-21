@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface OrderService {
 
-  List<Bid> getAllOrders();
+    List<Bid> getAllOrders();
 
-  Bid getOrderById(Long id);
+    Bid getOrderById(Long id);
 
-  void deleteOrderById(Long id);
+    void deleteOrderById(Long id);
 
-  Bid saveOrUpdate(Bid offer);
+    Bid saveOrUpdate(Bid offer);
+
+    Bid createByOfferAndUser(Long offerId, String userLogin);
 }

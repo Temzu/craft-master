@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface OfferService {
 
-  List<Offer> getAllOffersNonPaged();
+  List<OfferDto> getAllOffersNonPaged();
 
   Page<OfferDto> getAllOffers(
       Specification<Offer> spec, Integer page, Integer size, String[] sort, String dir);

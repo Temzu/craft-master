@@ -74,6 +74,7 @@ CREATE TABLE offer
     id            bigserial      NOT NULL,
     title         character(128) NOT NULL,
     description   character(256),
+    price         numeric(18, 2)   NOT NULL,
     bid_id      integer,
     offer_status  integer DEFAULT 1,
     user_creator_id integer        NOT NULL
@@ -100,7 +101,7 @@ CREATE TABLE offer
 CREATE TABLE bid
 (
     id            bigserial        NOT NULL,
-    price         numeric(20, 10)  NOT NULL, -- цена предложения
+    price         numeric(18, 2)   NOT NULL, -- цена предложения
     date_beg      date,                      -- дата ввода
     date_end      date,                      -- срок жизни
     user_id       integer          NOT NULL  -- пользователь

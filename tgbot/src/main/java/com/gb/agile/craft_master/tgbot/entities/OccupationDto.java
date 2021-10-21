@@ -17,6 +17,6 @@ public class OccupationDto {
     private Long id;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("child")
-    private OccupationDto[] child;
+    @JsonProperty("children")
+    private OccupationDto[] children;
 }
