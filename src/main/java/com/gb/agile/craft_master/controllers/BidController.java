@@ -46,7 +46,6 @@ public class BidController {
     }
 
     @GetMapping("/create")
-    @ResponseBody
     public BidDto createByOfferAndUser(
             @RequestParam(name = "offerid") String offerId,
             @RequestParam(name = "userlogin")  String userLogin) {
