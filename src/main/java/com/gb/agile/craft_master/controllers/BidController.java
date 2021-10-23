@@ -46,15 +46,10 @@ public class BidController {
     }
 
     @GetMapping("/create")
+    @ResponseBody
     public BidDto createByOfferAndUser(
             @RequestParam(name = "offerid") String offerId,
-            @RequestParam(name = "userid")  String userLogin) {
+            @RequestParam(name = "userlogin")  String userLogin) {
         return bidService.createByOfferAndUser(Long.valueOf(offerId), userLogin);
     }
-
-//    @GetMapping("/create")
-//    public BidDto createByOfferAndUser() {
-//        return bidService.createByOfferAndUser(Long.valueOf(1), "andrey");
-//    }
-
 }
