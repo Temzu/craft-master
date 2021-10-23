@@ -2,11 +2,8 @@ package com.gb.agile.craft_master.model.dtos;
 
 import com.gb.agile.craft_master.core.enums.OfferStatus;
 import com.gb.agile.craft_master.model.entities.Offer;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import com.sun.xml.bind.v2.TODO;
+import java.time.ZonedDateTime;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +17,7 @@ public class OfferDto {
     private Long occupationId;
     private Integer offerStatusValue;
     private OfferStatus offerStatus;
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
     private UserDto creator;
     private BigDecimal price;
 

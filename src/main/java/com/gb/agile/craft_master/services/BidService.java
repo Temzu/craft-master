@@ -1,6 +1,8 @@
 package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.model.dtos.BidDto;
+import com.gb.agile.craft_master.model.dtos.MyExecOfferDto;
+import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.entities.Bid;
 import org.springframework.transaction.annotation.Transactional;
 

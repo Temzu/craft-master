@@ -22,4 +22,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long>,
   boolean existsByIdAndCreator(Long id, User creator);
 
   List<Offer> findAllByCreatorId(Long creatorId, Pageable pageable);
+
+  List<Offer> findAllByCreatorId(Long creatorId);
+
 }

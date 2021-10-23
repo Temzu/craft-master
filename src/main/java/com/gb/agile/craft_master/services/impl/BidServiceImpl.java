@@ -1,6 +1,7 @@
 package com.gb.agile.craft_master.services.impl;
 
 import com.gb.agile.craft_master.model.dtos.BidDto;
+import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.services.BidService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
@@ -69,9 +70,10 @@ public class BidServiceImpl implements BidService {
   @Override
   @Transactional
   public BidDto createByOfferAndUser(Long offerId, String userLogin) {
+    Offer offer = offerService.getOfferById(offerId);
     Bid bid = new Bid();
-    bid.setOfferId(offerId);
-    bid.setPrice(offerService.getOfferById(offerId).getPrice());
+    bid.setOffer(offer);
+    bid.setPrice(offer.getPrice());  // пока что цену предложения ставим, как в заявке
     bid.setUser(userService.getByLogin(userLogin));
     bidRepository.save(bid);
     return modelMapper.map(bid, BidDto.class);

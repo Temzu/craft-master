@@ -6,6 +6,7 @@ import com.gb.agile.craft_master.model.dtos.SaveOfferDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,12 +56,16 @@ public class Offer {
   private Occupation occupation;
 
   @ManyToOne
+  @JoinColumn(name = "accepted_bid_id")
+  private Bid acceptedBid;
+
+  @ManyToOne
   @JoinColumn(name = "user_executor_id")
   private User executor;
 
   @Column(name = "created_at")
   @CreationTimestamp
-  private LocalDateTime createdAt;
+  private ZonedDateTime createdAt;
 
   @Transient
   private OfferStatus offerStatus;

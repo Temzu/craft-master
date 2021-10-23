@@ -23,8 +23,9 @@ public class Bid {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @Column (name = "offer_id")
-  private Long offerId;
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+  @JoinColumn (name = "offer_id")
+  private Offer offer;
 
   @Column (name = "price")
   private BigDecimal price;
