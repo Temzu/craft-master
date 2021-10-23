@@ -1,7 +1,7 @@
 package com.gb.agile.craft_master.model.dtos;
 
 import com.gb.agile.craft_master.model.entities.Offer;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import lombok.Data;
 
 @Data
@@ -12,7 +12,7 @@ public class MyOfferDto {
   private String description;
   private String occupationName;
   private Integer status;
-  private LocalDateTime createdAt;
+  private ZonedDateTime createdAt;
   private ExecutorDto executor;
 
   public MyOfferDto(Offer offer) {

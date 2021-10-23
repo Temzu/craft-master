@@ -173,4 +173,20 @@ public class OfferServiceImpl implements OfferService {
       throw new EntityBadIdException(Offer.class, id);
     }
   }
+
+  @Override
+  public List<OfferDto> getAllOffersByCreator(Long userId) {
+    return offerRepository
+            .findAllByCreatorId(userId)
+            .stream().map(offer -> (modelMapper.map(offer, OfferDto.class)))
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<MyExecOfferDto> getAllOffersByCurrentUserMyExecOfferDto() {
+    return offerRepository
+            .findAllByCreatorId(JwtProvider.getUserId())
+            .stream().map(offer -> (new MyExecOfferDto(offer)))
+            .collect(Collectors.toList());
+  }
 }
