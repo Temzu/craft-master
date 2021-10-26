@@ -5,9 +5,9 @@ import com.gb.agile.craft_master.model.entities.User;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -22,4 +22,10 @@ public interface OfferRepository extends JpaRepository<Offer, Long>,
   boolean existsByIdAndCreator(Long id, User creator);
 
   List<Offer> findAllByCreatorId(Long creatorId, Pageable pageable);
+
+  List<Offer> findAllByCreatorId(Long creatorId);
+
+  @Query(value = "select o from Offer o where o.acceptedBid in (select b from Bid b where b.user = ?1)")
+  List<Offer> findAllAcceptedUserBidsOffers(User user);
+
 }

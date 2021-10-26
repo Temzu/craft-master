@@ -74,10 +74,11 @@ CREATE TABLE offer
     id            bigserial      NOT NULL,
     title         character(128) NOT NULL,
     description   character(256),
-    price         numeric(18, 2) DEFAULT 0,
     bid_id      integer,
     offer_status  integer DEFAULT 1,
-    user_creator_id integer        NOT NULL
+    price         numeric(9, 2)   DEFAULT 0,  -- цена предложения
+    accepted_bid_id integer,
+    user_creator_id integer       NOT NULL
         CONSTRAINT fk_offer_user_creator
             REFERENCES user (id)
             ON UPDATE NO ACTION
@@ -96,15 +97,17 @@ CREATE TABLE offer
     date_end timestamp,
     PRIMARY KEY (id)
 );
+CREATE UNIQUE INDEX offer_accepted_bid_id
+    ON offer (accepted_bid_id);
 
 -- заявка на исполнение заказа (вместо order)
 CREATE TABLE bid
 (
     id            bigserial        NOT NULL,
-    price         numeric(18, 2)   NOT NULL, -- цена предложения
-    date_beg      date,                      -- дата ввода
-    date_end      date,                      -- срок жизни
-    user_id       integer          NOT NULL  -- пользователь
+    price         numeric(9, 2)   DEFAULT 0,  -- цена предложения
+    date_beg      date,                       -- дата ввода
+    date_end      date,                       -- срок жизни
+    user_id       integer          NOT NULL   -- пользователь
     CONSTRAINT fk_bid_user
         REFERENCES user (id)
         ON UPDATE NO ACTION
@@ -116,3 +119,10 @@ CREATE TABLE bid
         ON DELETE NO ACTION,
     PRIMARY KEY  (id)
 );
+
+ALTER TABLE offer
+    ADD CONSTRAINT fk_offer_bid_id
+    FOREIGN KEY (accepted_bid_id)
+    REFERENCES bid (id)
+    ON UPDATE NO ACTION
+   ON DELETE NO ACTION;

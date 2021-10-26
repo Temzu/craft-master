@@ -1,8 +1,6 @@
 package com.gb.agile.craft_master.model.dtos;
 
 import com.gb.agile.craft_master.model.entities.Bid;
-import com.gb.agile.craft_master.model.entities.Offer;
-import com.gb.agile.craft_master.model.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,24 +9,20 @@ import java.time.ZonedDateTime;
 
 @Data
 @NoArgsConstructor
-public class BidDto {
+public class GetBidDto {
 
     private Long id;
-    private String title;
-    private String description;
-    private Long occupationId;
-    private User user;
+    private ExecutorDto executor;
     private ZonedDateTime begDate;
     private ZonedDateTime endDate;
     private BigDecimal price;
-    private Offer offer;
 
-    public BidDto(Bid bid) {
+    public GetBidDto (Bid bid) {
         this.id = bid.getId();
-        this.user = bid.getUser();
-        this.price = bid.getPrice();
+        this.executor = new ExecutorDto(bid.getUser());
         this.begDate = bid.getDateBeg();
         this.endDate = bid.getDateEnd();
-        this.offer = bid.getOffer();
+        this.price = bid.getPrice();
     }
+
 }
