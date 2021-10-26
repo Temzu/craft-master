@@ -75,6 +75,8 @@ public class OfferServiceImpl implements OfferService {
       offer = new Offer(offerDto);
       offer.setCreator(creator);
       offer.setOccupation(occupation);
+      offer.setPrice(offerDto.getPrice());
+      System.out.println(offer);
       return offerRepository.save(offer);
     } else {
       checkAccess(offerDto.getId(), JwtProvider.getUserId());

@@ -18,7 +18,7 @@ public class RestRequests {
     private final String API = "api/v1/";
     private final String USERS_API_URL = HOST + API + "users/";
     private final String OFFERS_API_URL = HOST + API + "offers/";
-    private final String ORDERS_API_URL = HOST + API + "orders/";
+    private final String BIDS_API_URL = HOST + API + "bids/";
     private final String OCCUPATION_API_URL = HOST + API + "occupations/";
     private final String AUTH_API_URL = HOST + "/auth/user_login";
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -84,7 +84,7 @@ public class RestRequests {
     }
 
     public String getOrders() throws JsonProcessingException {
-        String response = restTemplate.getForObject(ORDERS_API_URL, String.class);
+        String response = restTemplate.getForObject(BIDS_API_URL, String.class);
         ObjectReader reader = objectMapper.readerFor(OrderDto[].class);
         OrderDto[] list = reader.readValue(response);
         return Arrays.toString(list);
@@ -121,7 +121,7 @@ public class RestRequests {
         HttpEntity<String> request = new HttpEntity<>("boby", headers);
         try {
             String response = restTemplate.postForObject(
-                    String.format("%sbyoffer/offerid=%d&userlogin=%s",ORDERS_API_URL, offerId, userLogin),
+                    String.format("%sbyoffer/offerid=%d&userlogin=%s", BIDS_API_URL, offerId, userLogin),
                     request, String.class);
         } catch (Exception e) {
         }

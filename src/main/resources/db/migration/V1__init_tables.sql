@@ -74,6 +74,7 @@ CREATE TABLE offer
     id            bigserial      NOT NULL,
     title         character(128) NOT NULL,
     description   character(256),
+    bid_id      integer,
     offer_status  integer DEFAULT 1,
     price         numeric(9, 2)   DEFAULT 0,  -- цена предложения
     accepted_bid_id integer,
@@ -111,7 +112,7 @@ CREATE TABLE bid
         REFERENCES user (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    offer_id      integer          NOT NULL   -- id заявки
+    offer_id      integer          NOT NULL  -- id заявки
     CONSTRAINT fk_bid_offer
         REFERENCES offer (id)
         ON UPDATE NO ACTION
