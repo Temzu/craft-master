@@ -46,6 +46,11 @@ INSERT INTO credential (user_id, code, value, name)
 VALUES (2, 'phone', '+79001238070', NULL),
        (2, 'sdfsd', 'asdfsfadf', NULL);
 
+-- для теста акцептованных откликов
+
+INSERT INTO offer (id, title, description, user_creator_id, occupation_id)
+VALUES (7, 'Установка плит', '5 плит, высота 4 м', 2, 6),
+       (8, 'Предложение_5', 'Описание_5', 3, 1);
 
 INSERT INTO bid (id, user_id, offer_id, price)
 VALUES (1, 1, 1, 10000.00),
@@ -54,4 +59,8 @@ VALUES (1, 1, 1, 10000.00),
        (4, 1, 2, 13000.00),
        (5, 3, 2, 14000.00),
        (6, 1, 3, 16000.00),
-       (7, 3, 3, 12000.00);
+       (7, 1, 7, 12000.00),
+       (8, 1, 8, 12000.00);
+
+UPDATE offer SET accepted_bid_id = 7 WHERE id = 7;
+UPDATE offer SET accepted_bid_id = 8 WHERE id = 8;

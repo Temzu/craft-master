@@ -5,7 +5,6 @@ import com.gb.agile.craft_master.model.entities.Offer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.PostConstruct;
 import java.time.ZonedDateTime;
 
 @Data
