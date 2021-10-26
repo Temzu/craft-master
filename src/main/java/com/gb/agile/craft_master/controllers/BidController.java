@@ -1,6 +1,7 @@
 package com.gb.agile.craft_master.controllers;
 
 import com.gb.agile.craft_master.model.dtos.BidDto;
+import com.gb.agile.craft_master.model.dtos.BidUserDto;
 import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.services.BidService;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,10 @@ public class BidController {
             @RequestParam(name = "offerid") String offerId,
             @RequestParam(name = "userlogin")  String userLogin) {
         return bidService.createByOfferAndUser(Long.valueOf(offerId), userLogin);
+    }
+
+    @GetMapping("/userofferbids")
+    public List<BidUserDto> getUserOfferBids() {
+        return bidService.getUserOfferBids();
     }
 }

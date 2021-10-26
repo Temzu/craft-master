@@ -1,7 +1,10 @@
 package com.gb.agile.craft_master.services.impl;
 
+import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.model.dtos.BidDto;
+import com.gb.agile.craft_master.model.dtos.BidUserDto;
 import com.gb.agile.craft_master.model.entities.Offer;
+import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.services.BidService;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
@@ -77,5 +80,13 @@ public class BidServiceImpl implements BidService {
     bid.setUser(userService.getByLogin(userLogin));
     bidRepository.save(bid);
     return modelMapper.map(bid, BidDto.class);
+  }
+
+  @Override
+  public List<BidUserDto> getUserOfferBids() {
+    return bidRepository.getUserOfferBids(userService.getUserById(JwtProvider.getUserId()))
+            .stream()
+            .map(bid -> new BidUserDto(bid))
+            .collect(Collectors.toList());
   }
 }
