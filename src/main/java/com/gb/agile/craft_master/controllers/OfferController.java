@@ -109,4 +109,8 @@ public class OfferController {
     }
   }
 
+  @GetMapping("/accepteduserbids")
+  public List<MyExecOfferDto> getAcceptedUserBidsOffers() {
+    return offerService.getAllAcceptedBidsByCurrentUserMyExecOfferDto();
+  }
 }

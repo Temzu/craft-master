@@ -32,4 +32,6 @@ public interface OfferService {
 
   List<MyExecOfferDto> getAllOffersByCurrentUserMyExecOfferDto();
 
+  List<MyExecOfferDto> getAllAcceptedBidsByCurrentUserMyExecOfferDto();
+
 }

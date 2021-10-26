@@ -189,4 +189,13 @@ public class OfferServiceImpl implements OfferService {
             .stream().map(offer -> (new MyExecOfferDto(offer)))
             .collect(Collectors.toList());
   }
+
+    @Override
+    public List<MyExecOfferDto> getAllAcceptedBidsByCurrentUserMyExecOfferDto() {
+    return offerRepository.findAllAcceptedUserBidsOffers(userService.getUserById(JwtProvider.getUserId()))
+            .stream()
+            .map(offer -> new MyExecOfferDto(offer))
+            .collect(Collectors.toList());
+    }
+
 }

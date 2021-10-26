@@ -96,6 +96,8 @@ CREATE TABLE offer
     date_end timestamp,
     PRIMARY KEY (id)
 );
+CREATE UNIQUE INDEX offer_accepted_bid_id
+    ON offer (accepted_bid_id);
 
 -- заявка на исполнение заказа (вместо order)
 CREATE TABLE bid
