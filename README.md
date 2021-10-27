@@ -27,9 +27,9 @@ b2c, c2c is an application that will allow people of working specialties (builde
 ##
 #### Screenshot of Android application:
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/51756264/139079534-9d7e5197-3a83-4a61-a6b5-e2850f804c9b.jpg" width="300"/>
-    <br>
     <img src="https://user-images.githubusercontent.com/51756264/139081373-4cbd8e30-78a1-47af-bd30-aa16bd5895d6.gif" width="300"/>
+    <br>
+    <img src="https://user-images.githubusercontent.com/51756264/139079534-9d7e5197-3a83-4a61-a6b5-e2850f804c9b.jpg" width="300"/>
 </p>
 
 
