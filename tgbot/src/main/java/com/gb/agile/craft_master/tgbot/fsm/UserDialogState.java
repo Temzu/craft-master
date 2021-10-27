@@ -20,12 +20,36 @@ public enum UserDialogState {
     GetRole {
         @Override
         public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
-            return transitAction(request, response) ? ChooseOrderItem : ChooseOfferCategory;
+            return transitAction(request, response) ? ChooseOrderItem : GetExecutorAction;
         }
 
         @Override
         public boolean transitAction(Exchange request, OutgoingTextMessage response) {
             return userDialogTransitions.getRole(request, response);
+        }
+    },
+
+    GetExecutorAction {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request, response) ? ChooseOfferCategory : ChooseBid;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.getExecutorAction(request, response);
+        }
+    },
+
+    ChooseBid {
+        @Override
+        public UserDialogState nextState(Exchange request, OutgoingTextMessage response) {
+            return transitAction(request, response) ? Start : Final;
+        }
+
+        @Override
+        public boolean transitAction(Exchange request, OutgoingTextMessage response) {
+            return userDialogTransitions.chooseBid(request, response);
         }
     },
 

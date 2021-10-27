@@ -27,6 +27,7 @@ public class RestRequests {
 
     private RestTemplate restTemplate;
     private HttpHeaders headers;
+    private BidDto[] bidsList;
 
     public RestRequests() {
         restTemplate = new RestTemplate();
@@ -89,8 +90,8 @@ public class RestRequests {
         ResponseEntity<String> response = restTemplate.exchange(BIDS_API_URL + "userofferbids",
                 HttpMethod.GET, request, String.class);
         ObjectReader reader = objectMapper.readerFor(BidDto[].class);
-        BidDto[] list = reader.readValue(response.getBody());
-        return bidArrayToString(list);
+        bidsList = reader.readValue(response.getBody());
+        return bidArrayToString(bidsList);
     }
 
     private String bidArrayToString(BidDto[] bids) {
@@ -155,6 +156,17 @@ public class RestRequests {
         HttpEntity<String> request = new HttpEntity<>(offerJson.toString(), headers);
         try {
             String response = restTemplate.postForObject(OFFERS_API_URL, request, String.class);
+        } catch (Exception e) {
+        }
+    }
+
+    public void acceptBid(int bidId) {
+        BidDto bid = bidsList[bidId - 1];
+        HttpEntity<String> request = new HttpEntity<>("boby", headers);
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    String.format("%saccept/%s", BIDS_API_URL, bid.getId()),
+                    HttpMethod.GET, request, String.class);
         } catch (Exception e) {
         }
     }

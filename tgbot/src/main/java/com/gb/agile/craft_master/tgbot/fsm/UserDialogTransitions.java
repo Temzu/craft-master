@@ -48,11 +48,12 @@ public class UserDialogTransitions {
         String text = "Error";
         boolean result = msg.getText().equals("Исполнитель");
         try {
-            text = result ?
-                    "Размещенные предложения:\n" + restRequests.getOffers()
-                    :
-                    "Отклики на ваши заявки:\n" + restRequests.getBids() + "\n" +
-                    "Выберите категорию :\n" + restRequests.getOccupations(null);
+            if (result) text = "Размещенные предложения:\n" + restRequests.getOffers();
+            else {
+                response.setReplyMarkup(
+                        TelegramUtils.getInlineKeyboardMarkup(List.of("Создать заявку", "Акцептовать заявку")));
+                text = "Ваше действие?";
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,6 +121,32 @@ public class UserDialogTransitions {
         response.setText("Вы оформили заказ: " + offer.toString() + '\n' + "Введите любой текст для перезапуска");
         response.setChatId(msg.getChatId());
         restRequests.createOffer(offer);
+        return true;
+    }
+
+    public boolean getExecutorAction(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        response.setChatId(msg.getChatId());
+        boolean result = msg.getText().equals("Создать заявку");
+        String text = "Error";
+        try {
+            text = result
+                    ?
+                    "Выберите категорию :\n" + restRequests.getOccupations(null)
+                    :
+                    "Отклики на ваши заявки:\n" + restRequests.getBids() + "\n";
+        } catch (Exception e) {
+
+        }
+        response.setText(text);
+        return result;
+    }
+
+    public boolean chooseBid(Exchange request, OutgoingTextMessage response) {
+        MessageDto msg = new MessageDto(request);
+        response.setChatId(msg.getChatId());
+        restRequests.acceptBid(Integer.parseInt(msg.getText()));
+        response.setText("Акцептована заявка : " + msg.getText());
         return true;
     }
 }
