@@ -1,6 +1,5 @@
 package com.gb.agile.craft_master.controllers;
 
-import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.model.dtos.*;
 import com.gb.agile.craft_master.model.entities.Offer;
@@ -76,7 +75,7 @@ public class OfferController {
   public StatusDto saveOffer(@RequestBody SaveOfferDto saveOfferDto) {
     OfferDto offerDto = new OfferDto(saveOfferDto);
     //offerDto.setCreator(new UserDto(userService.getUserById(JwtProvider.getUserId())));
-    offerService.saveOrUpdate(offerDto);
+    offerService.saveOrUpdateDto(offerDto);
     // ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий
     // статус
     return new StatusDto(1);
@@ -85,7 +84,7 @@ public class OfferController {
   @PutMapping
   @PreAuthorize("isAuthenticated()")
   public OfferDto updateOffer(@RequestBody UpdateOfferDto updateOfferDto) {
-    return new OfferDto(offerService.saveOrUpdate(new OfferDto(updateOfferDto)));
+    return new OfferDto(offerService.saveOrUpdateDto(new OfferDto(updateOfferDto)));
   }
 
   @PutMapping("/add_executor")

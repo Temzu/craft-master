@@ -24,4 +24,6 @@ public interface BidService {
   BidDto createByOfferAndUser(Long offerId, String userLogin);
 
   List<BidUserDto> getUserOfferBids();
+
+  BidDto acceptBid(Long bidId);
 }
