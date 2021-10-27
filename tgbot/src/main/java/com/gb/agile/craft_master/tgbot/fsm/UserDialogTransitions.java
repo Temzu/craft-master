@@ -106,7 +106,7 @@ public class UserDialogTransitions {
 
     public boolean placeOfferDetails(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
-        offer.setTitle("Заказ");
+        offer.setTitle("Заказ, категория " + offer.getOccupationId());
         offer.setDescription(msg.getText());
         response.setText("Введите стоимость заказа: ");
         response.setChatId(msg.getChatId());

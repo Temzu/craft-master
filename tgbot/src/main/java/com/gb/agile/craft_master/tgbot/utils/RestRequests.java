@@ -55,7 +55,7 @@ public class RestRequests {
         try {
             String response = restTemplate.postForObject(AUTH_API_URL, request, String.class);
             JsonNode root = objectMapper.readTree(response);
-            token = root.get("token").toString().replace("\"","").replace("Bearer ","");
+            token = root.get("token").toString().replace("\"", "").replace("Bearer ", "");
             headers.setBearerAuth(token);
         } catch (Exception e) {
             return false;
@@ -63,19 +63,20 @@ public class RestRequests {
         return true;
     }
 
-    private String offerArrayToString (OfferDto[] offers) {
+    private String offerArrayToString(OfferDto[] offers) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < offers.length; i++) {
+        for (int i = 0; i < offers.length; i++) {
             sb.append(offers[i].getId())
-                .append(") ")
-                .append(offers[i].getTitle())
-                .append(" [")
-                .append(offers[i].getCreator().getName())
-                .append("]")
-                .append('\n');
+                    .append(") ")
+                    .append(offers[i].getTitle())
+                    .append(" [")
+                    .append(offers[i].getCreator().getName())
+                    .append("]")
+                    .append('\n');
         }
         return sb.toString();
     }
+
     public String getOffers() throws JsonProcessingException {
         String response = restTemplate.getForObject(OFFERS_API_URL + "nonpaged/", String.class);
         ObjectReader reader = objectMapper.readerFor(OfferDto[].class);
@@ -89,7 +90,21 @@ public class RestRequests {
                 HttpMethod.GET, request, String.class);
         ObjectReader reader = objectMapper.readerFor(BidDto[].class);
         BidDto[] list = reader.readValue(response.getBody());
-        return Arrays.toString(list);
+        return bidArrayToString(list);
+    }
+
+    private String bidArrayToString(BidDto[] bids) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bids.length; i++) {
+            sb.append(i + 1)
+                    .append(") ")
+                    .append(bids[i].getTitle())
+                    .append(" [")
+                    .append(bids[i].getPrice())
+                    .append("]")
+                    .append('\n');
+        }
+        return sb.toString();
     }
 
     public String getOccupations(Integer id) throws JsonProcessingException {
@@ -109,7 +124,7 @@ public class RestRequests {
 
     private String occupationArrayToString(OccupationDto[] occupations) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < occupations.length; i++) {
+        for (int i = 0; i < occupations.length; i++) {
             sb.append(occupations[i].getId())
                     .append(") ")
                     .append(occupations[i].getName());
@@ -134,8 +149,8 @@ public class RestRequests {
         offerJson.put("title", offer.getTitle());
         offerJson.put("description", offer.getDescription());
         offerJson.put("occupationId", offer.getOccupationId());
-        offerJson.put("price",offer.getPrice());
-        offerJson.put("user",offer.getCreator());
+        offerJson.put("price", offer.getPrice());
+        offerJson.put("user", offer.getCreator());
 
         HttpEntity<String> request = new HttpEntity<>(offerJson.toString(), headers);
         try {

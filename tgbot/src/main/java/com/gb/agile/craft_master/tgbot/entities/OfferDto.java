@@ -26,6 +26,6 @@ public class OfferDto {
   private Long occupationId;
   @Override
   public String toString() {
-    return String.format("%s:%f",title,price);
+    return String.format("%s(%.2f)",title,price);
   }
 }
