@@ -29,9 +29,7 @@ public class MessageProcessor implements Processor {
                     msg.setText("Введите /start");
                 }
             }
-
             state = state.nextState(exchange, msg);
-
         } catch (Exception e) {
             msg.setText(e.getMessage());
         } finally {

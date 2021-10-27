@@ -12,7 +12,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BidDto {
-//  private Long id;
+  @JsonProperty("id")
+  private Long id;
   @JsonProperty("title")
   private String title;
   @JsonProperty("description")
