@@ -17,7 +17,7 @@ public class BidController {
     private final BidService bidService;
 
     @GetMapping()
-    public List<Bid> getAllBids() {
+    public List<BidDto> getAllBids() {
         return bidService.getAll();
     }
 
@@ -46,7 +46,7 @@ public class BidController {
         return bidService.getByOfferId(id);
     }
 
-    @GetMapping("/create")
+    @GetMapping("/byoffer")
     public BidDto createByOfferAndUser(
             @RequestParam(name = "offerid") String offerId,
             @RequestParam(name = "userlogin")  String userLogin) {

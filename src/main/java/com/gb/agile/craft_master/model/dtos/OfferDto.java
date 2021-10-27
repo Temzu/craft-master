@@ -6,6 +6,7 @@ import com.gb.agile.craft_master.model.entities.Offer;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
+import com.gb.agile.craft_master.model.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +21,7 @@ public class OfferDto {
     private Integer offerStatusValue;
     private OfferStatus offerStatus;
     private ZonedDateTime createdAt;
-    private UserDto creator;
+    private User creator;
     private BigDecimal price;
 
     public OfferDto(Offer offer) {
@@ -31,7 +32,7 @@ public class OfferDto {
         this.offerStatusValue = offer.getOfferStatusValue();
         this.offerStatus = OfferStatus.of(offerStatusValue);
         this.createdAt = offer.getCreatedAt();
-        // TODO : this.creator = offer.getCreator();
+        this.creator = offer.getCreator();
         this.price = offer.getPrice();
     }
 

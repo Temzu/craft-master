@@ -21,7 +21,7 @@ public class BidDto {
     private ZonedDateTime begDate;
     private ZonedDateTime endDate;
     private BigDecimal price;
-    private Offer offer;
+    private OfferDto offer;
 
     public BidDto(Bid bid) {
         this.id = bid.getId();
@@ -29,6 +29,6 @@ public class BidDto {
         this.price = bid.getPrice();
         this.begDate = bid.getDateBeg();
         this.endDate = bid.getDateEnd();
-        this.offer = bid.getOffer();
+        this.offer = new OfferDto(bid.getOffer());
     }
 }

@@ -66,18 +66,18 @@ public class OfferServiceImpl implements OfferService {
   }
 
   @Override
+  @Transactional
   public Offer saveOrUpdate(OfferDto offerDto) {
     Occupation occupation = occupationService.getOccupationById(offerDto.getOccupationId());
 
     Offer offer;
     if (offerDto.getId() == null) {
-      User creator = userService.getProxyById(JwtProvider.getUserId());
+      User creator = userService.getUserById(JwtProvider.getUserId());
       offer = new Offer(offerDto);
       offer.setCreator(creator);
       offer.setOccupation(occupation);
       offer.setPrice(offerDto.getPrice());
-      System.out.println(offer);
-      return offerRepository.save(offer);
+      return offerRepository.saveAndFlush(offer);
     } else {
       checkAccess(offerDto.getId(), JwtProvider.getUserId());
       offer = offerRepository.getById(offerDto.getId());

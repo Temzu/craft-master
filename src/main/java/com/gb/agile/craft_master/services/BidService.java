@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface BidService {
 
-  List<Bid> getAll();
+  List<BidDto> getAll();
 
   Bid getById(Long id);
 

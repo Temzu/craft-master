@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.gb.agile.craft_master.tgbot.entities.OccupationDto;
 import com.gb.agile.craft_master.tgbot.entities.OfferDto;
-import com.gb.agile.craft_master.tgbot.entities.OrderDto;
+import com.gb.agile.craft_master.tgbot.entities.BidDto;
 import org.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -83,17 +83,19 @@ public class RestRequests {
         return offerArrayToString(list);
     }
 
-    public String getOrders() throws JsonProcessingException {
-        String response = restTemplate.getForObject(BIDS_API_URL, String.class);
-        ObjectReader reader = objectMapper.readerFor(OrderDto[].class);
-        OrderDto[] list = reader.readValue(response);
+    public String getBids() throws JsonProcessingException {
+        HttpEntity<String> request = new HttpEntity<>("body", headers);
+        ResponseEntity<String> response = restTemplate.exchange(BIDS_API_URL + "userofferbids",
+                HttpMethod.GET, request, String.class);
+        ObjectReader reader = objectMapper.readerFor(BidDto[].class);
+        BidDto[] list = reader.readValue(response.getBody());
         return Arrays.toString(list);
     }
 
     public String getOccupations(Integer id) throws JsonProcessingException {
         HttpEntity<String> request = new HttpEntity<>("body", headers);
         ResponseEntity<String> response = restTemplate.exchange(OCCUPATION_API_URL +
-                (id == null ? "" : id.toString()), HttpMethod.GET, request, String.class);
+                (id == null ? "/single" : id.toString()), HttpMethod.GET, request, String.class);
         ObjectReader reader = objectMapper.readerFor(id == null ? OccupationDto[].class : OccupationDto.class);
         if (id == null) {
             OccupationDto[] list = reader.readValue(response.getBody());
@@ -120,9 +122,9 @@ public class RestRequests {
     public void createBid(int offerId, String userLogin) {
         HttpEntity<String> request = new HttpEntity<>("boby", headers);
         try {
-            String response = restTemplate.postForObject(
-                    String.format("%sbyoffer/offerid=%d&userlogin=%s", BIDS_API_URL, offerId, userLogin),
-                    request, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(
+                    String.format("%sbyoffer?offerid=%d&userlogin=%s", BIDS_API_URL, offerId, userLogin),
+                    HttpMethod.GET, request, String.class);
         } catch (Exception e) {
         }
     }
