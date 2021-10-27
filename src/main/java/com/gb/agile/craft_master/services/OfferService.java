@@ -22,7 +22,7 @@ public interface OfferService {
 
   void deleteOfferById(Long id);
 
-  Offer saveOrUpdate(OfferDto offerDto);
+  Offer saveOrUpdateDto(OfferDto offerDto);
 
   MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto);
 
@@ -34,4 +34,5 @@ public interface OfferService {
 
   List<MyExecOfferDto> getAllAcceptedBidsByCurrentUserMyExecOfferDto();
 
+  Offer saveOrUpdate(Offer offer);
 }

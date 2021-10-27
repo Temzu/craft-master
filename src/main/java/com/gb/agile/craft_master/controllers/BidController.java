@@ -57,4 +57,10 @@ public class BidController {
     public List<BidUserDto> getUserOfferBids() {
         return bidService.getUserOfferBids();
     }
+
+    @GetMapping("accept/{id}")
+    public BidDto acceptBid(@PathVariable(name = "id") Long bidId) {
+        return bidService.acceptBid(bidId);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.gb.agile.craft_master.model.dtos;
 
 import com.gb.agile.craft_master.core.enums.OfferStatus;
+import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.model.entities.Offer;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class OfferDto {
-    
+
     private Long id;
     private String title;
     private String description;
@@ -23,8 +24,10 @@ public class OfferDto {
     private ZonedDateTime createdAt;
     private User creator;
     private BigDecimal price;
+    private Long acceptedBidId;
 
     public OfferDto(Offer offer) {
+        Bid acceptedBid = offer.getAcceptedBid();
         this.id = offer.getId();
         this.title = offer.getTitle();
         this.description = offer.getDescription();
@@ -34,6 +37,8 @@ public class OfferDto {
         this.createdAt = offer.getCreatedAt();
         this.creator = offer.getCreator();
         this.price = offer.getPrice();
+        if (acceptedBid != null)
+            this.acceptedBidId = acceptedBid.getId();
     }
 
     public OfferDto(SaveOfferDto saveOfferDto) {
