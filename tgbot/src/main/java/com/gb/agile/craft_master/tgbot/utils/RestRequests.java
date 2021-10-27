@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.gb.agile.craft_master.tgbot.entities.OccupationDto;
 import com.gb.agile.craft_master.tgbot.entities.OfferDto;
-import com.gb.agile.craft_master.tgbot.entities.OrderDto;
+import com.gb.agile.craft_master.tgbot.entities.BidDto;
 import org.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -55,7 +55,7 @@ public class RestRequests {
         try {
             String response = restTemplate.postForObject(AUTH_API_URL, request, String.class);
             JsonNode root = objectMapper.readTree(response);
-            token = root.get("token").toString().replace("\"","").replace("Bearer ","");
+            token = root.get("token").toString().replace("\"", "").replace("Bearer ", "");
             headers.setBearerAuth(token);
         } catch (Exception e) {
             return false;
@@ -63,19 +63,20 @@ public class RestRequests {
         return true;
     }
 
-    private String offerArrayToString (OfferDto[] offers) {
+    private String offerArrayToString(OfferDto[] offers) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < offers.length; i++) {
+        for (int i = 0; i < offers.length; i++) {
             sb.append(offers[i].getId())
-                .append(") ")
-                .append(offers[i].getTitle())
-                .append(" [")
-                .append(offers[i].getCreator().getName())
-                .append("]")
-                .append('\n');
+                    .append(") ")
+                    .append(offers[i].getTitle())
+                    .append(" [")
+                    .append(offers[i].getCreator().getName())
+                    .append("]")
+                    .append('\n');
         }
         return sb.toString();
     }
+
     public String getOffers() throws JsonProcessingException {
         String response = restTemplate.getForObject(OFFERS_API_URL + "nonpaged/", String.class);
         ObjectReader reader = objectMapper.readerFor(OfferDto[].class);
@@ -83,17 +84,33 @@ public class RestRequests {
         return offerArrayToString(list);
     }
 
-    public String getOrders() throws JsonProcessingException {
-        String response = restTemplate.getForObject(BIDS_API_URL, String.class);
-        ObjectReader reader = objectMapper.readerFor(OrderDto[].class);
-        OrderDto[] list = reader.readValue(response);
-        return Arrays.toString(list);
+    public String getBids() throws JsonProcessingException {
+        HttpEntity<String> request = new HttpEntity<>("body", headers);
+        ResponseEntity<String> response = restTemplate.exchange(BIDS_API_URL + "userofferbids",
+                HttpMethod.GET, request, String.class);
+        ObjectReader reader = objectMapper.readerFor(BidDto[].class);
+        BidDto[] list = reader.readValue(response.getBody());
+        return bidArrayToString(list);
+    }
+
+    private String bidArrayToString(BidDto[] bids) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bids.length; i++) {
+            sb.append(i + 1)
+                    .append(") ")
+                    .append(bids[i].getTitle())
+                    .append(" [")
+                    .append(bids[i].getPrice())
+                    .append("]")
+                    .append('\n');
+        }
+        return sb.toString();
     }
 
     public String getOccupations(Integer id) throws JsonProcessingException {
         HttpEntity<String> request = new HttpEntity<>("body", headers);
         ResponseEntity<String> response = restTemplate.exchange(OCCUPATION_API_URL +
-                (id == null ? "" : id.toString()), HttpMethod.GET, request, String.class);
+                (id == null ? "/single" : id.toString()), HttpMethod.GET, request, String.class);
         ObjectReader reader = objectMapper.readerFor(id == null ? OccupationDto[].class : OccupationDto.class);
         if (id == null) {
             OccupationDto[] list = reader.readValue(response.getBody());
@@ -107,7 +124,7 @@ public class RestRequests {
 
     private String occupationArrayToString(OccupationDto[] occupations) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < occupations.length; i++) {
+        for (int i = 0; i < occupations.length; i++) {
             sb.append(occupations[i].getId())
                     .append(") ")
                     .append(occupations[i].getName());
@@ -120,9 +137,9 @@ public class RestRequests {
     public void createBid(int offerId, String userLogin) {
         HttpEntity<String> request = new HttpEntity<>("boby", headers);
         try {
-            String response = restTemplate.postForObject(
-                    String.format("%sbyoffer/offerid=%d&userlogin=%s", BIDS_API_URL, offerId, userLogin),
-                    request, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(
+                    String.format("%sbyoffer?offerid=%d&userlogin=%s", BIDS_API_URL, offerId, userLogin),
+                    HttpMethod.GET, request, String.class);
         } catch (Exception e) {
         }
     }
@@ -132,8 +149,8 @@ public class RestRequests {
         offerJson.put("title", offer.getTitle());
         offerJson.put("description", offer.getDescription());
         offerJson.put("occupationId", offer.getOccupationId());
-        offerJson.put("price",offer.getPrice());
-        offerJson.put("user",offer.getCreator());
+        offerJson.put("price", offer.getPrice());
+        offerJson.put("user", offer.getCreator());
 
         HttpEntity<String> request = new HttpEntity<>(offerJson.toString(), headers);
         try {

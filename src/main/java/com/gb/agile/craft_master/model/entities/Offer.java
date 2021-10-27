@@ -6,18 +6,8 @@ import com.gb.agile.craft_master.model.dtos.SaveOfferDto;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,7 +36,7 @@ public class Offer {
   @Column(name = "offer_status", columnDefinition = "integer default 1")
   private Integer offerStatusValue;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @JoinColumn(name = "user_creator_id")
   private User creator;
 
@@ -87,5 +77,6 @@ public class Offer {
     this.title = offerDto.getTitle();
     this.description = offerDto.getDescription();
     this.offerStatusValue = OfferStatus.CREATED.getCode();
+    this.creator = offerDto.getCreator();
   }
 }

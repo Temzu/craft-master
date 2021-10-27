@@ -1,10 +1,12 @@
 package com.gb.agile.craft_master.controllers;
 
+import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.exceptions.InvalidPageException;
 import com.gb.agile.craft_master.model.dtos.*;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.repositories.specifications.OfferSpecifications;
 import com.gb.agile.craft_master.services.OfferService;
+import com.gb.agile.craft_master.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,7 @@ import java.util.List;
 public class OfferController {
 
   private final OfferService offerService;
+  private final UserService userService;
 
   @GetMapping
   public Page<OfferDto> getAll(
@@ -72,7 +75,7 @@ public class OfferController {
   @PreAuthorize("isAuthenticated()")
   public StatusDto saveOffer(@RequestBody SaveOfferDto saveOfferDto) {
     OfferDto offerDto = new OfferDto(saveOfferDto);
-    System.out.println(saveOfferDto);
+    //offerDto.setCreator(new UserDto(userService.getUserById(JwtProvider.getUserId())));
     offerService.saveOrUpdate(offerDto);
     // ToDo: добавить проверки, если нужны(на размер текста, может), и вернуть соответствующий
     // статус

@@ -11,21 +11,16 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OfferDto {
-  @JsonProperty("id")
-  private long id;
+public class BidDto {
+//  private Long id;
   @JsonProperty("title")
   private String title;
   @JsonProperty("description")
   private String description;
-  @JsonProperty("creator")
-  private UserDto creator;
   @JsonProperty("price")
   private BigDecimal price;
-  @JsonProperty("occupation_id")
-  private Long occupationId;
   @Override
   public String toString() {
-    return String.format("%s(%.2f)",title,price);
+    return String.format("%s[%s]:%.2f",title,description,price);
   }
 }

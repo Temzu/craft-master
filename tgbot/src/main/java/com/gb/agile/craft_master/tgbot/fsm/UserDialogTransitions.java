@@ -51,7 +51,7 @@ public class UserDialogTransitions {
             text = result ?
                     "Размещенные предложения:\n" + restRequests.getOffers()
                     :
-                    "Отклики на ваши заявки:\n" + restRequests.getOrders() + "\n" +
+                    "Отклики на ваши заявки:\n" + restRequests.getBids() + "\n" +
                     "Выберите категорию :\n" + restRequests.getOccupations(null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +106,7 @@ public class UserDialogTransitions {
 
     public boolean placeOfferDetails(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
-        offer.setTitle("Заказ");
+        offer.setTitle("Заказ, категория " + offer.getOccupationId());
         offer.setDescription(msg.getText());
         response.setText("Введите стоимость заказа: ");
         response.setChatId(msg.getChatId());
@@ -116,6 +116,7 @@ public class UserDialogTransitions {
     public boolean placeOfferPrice(Exchange request, OutgoingTextMessage response) {
         MessageDto msg = new MessageDto(request);
         offer.setPrice(new BigDecimal(msg.getText()));
+        //TODO:offer.setCreator();
         response.setText("Вы оформили заказ: " + offer.toString() + '\n' + "Введите любой текст для перезапуска");
         response.setChatId(msg.getChatId());
         restRequests.createOffer(offer);

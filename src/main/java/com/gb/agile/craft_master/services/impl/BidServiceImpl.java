@@ -31,8 +31,11 @@ public class BidServiceImpl implements BidService {
   private final UserService userService;
 
   @Override
-  public List<Bid> getAll() {
-    return bidRepository.findAll();
+  public List<BidDto> getAll() {
+    return bidRepository.findAll()
+            .stream()
+            .map(bid -> (modelMapper.map(bid, BidDto.class)))
+            .collect(Collectors.toList());
   }
 
   @Override
