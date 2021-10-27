@@ -2,16 +2,21 @@ package com.gb.agile.craft_master.model.entities;
 
 import javax.persistence.*;
 
+import com.gb.agile.craft_master.model.dtos.AddBidDto;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Data
 @Entity
 @Table(name = "bid")
+@NoArgsConstructor
 public class Bid {
 
   @Id
@@ -24,8 +29,9 @@ public class Bid {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @Column (name = "offer_id")
-  private Long offerId;
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+  @JoinColumn (name = "offer_id")
+  private Offer offer;
 
   @Column (name = "price")
   private BigDecimal price;
@@ -38,4 +44,12 @@ public class Bid {
   @Column (name = "date_end")
   private ZonedDateTime dateEnd;
 
+  @Column (name = "rating")
+  private Float rating;
+
+  public Bid(AddBidDto addBidDto) {
+    this.price = addBidDto.getPrice();
+    this.dateBeg = ZonedDateTime.ofInstant(Instant.ofEpochMilli(addBidDto.getDateBeg()), ZoneId.of("UTC"));
+    this.dateEnd = ZonedDateTime.ofInstant(Instant.ofEpochMilli(addBidDto.getDateEnd()), ZoneId.of("UTC"));
+  }
 }

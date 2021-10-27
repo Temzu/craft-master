@@ -2,16 +2,12 @@ package com.gb.agile.craft_master.services.impl;
 
 import com.gb.agile.craft_master.config.JwtProvider;
 import com.gb.agile.craft_master.core.enums.OfferStatus;
+import com.gb.agile.craft_master.model.dtos.*;
+import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.services.ProfileService;
 import com.gb.agile.craft_master.exceptions.DataAccessFailedException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityBadIdException;
 import com.gb.agile.craft_master.exceptions.entityexceptions.EntityNotFoundException;
-import com.gb.agile.craft_master.model.dtos.FindOfferDto;
-import com.gb.agile.craft_master.model.dtos.MyOfferDto;
-import com.gb.agile.craft_master.model.dtos.OfferDto;
-import com.gb.agile.craft_master.model.dtos.ProfileDto;
-import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
-import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import com.gb.agile.craft_master.model.entities.Offer;
 import com.gb.agile.craft_master.model.entities.User;
@@ -52,6 +48,11 @@ public class OfferServiceImpl implements OfferService {
     return offerRepository
         .findById(id)
         .orElseThrow(() -> new EntityNotFoundException(Offer.class, id));
+  }
+
+  @Override
+  public Offer getProxyById(Long id) {
+    return offerRepository.getById(id);
   }
 
   @Override
@@ -123,17 +124,17 @@ public class OfferServiceImpl implements OfferService {
         PageRequest.of(page, pageSize)).map(FindOfferDto::new);
   }
 
-  @Override
-  public MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto) {
-    Long offerId = updateOfferExecutorDto.getId();
-    User executor = userService.getUserById(updateOfferExecutorDto.getNewExecutorId());
-
-    checkAccess(offerId, JwtProvider.getUserId());
-
-    Offer offer = offerRepository.getById(offerId);
-    offer.setExecutor(executor);
-    return new MyOfferDto(offer);
-  }
+//  @Override
+//  public MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto) {
+//    Long offerId = updateOfferExecutorDto.getId();
+//    User executor = userService.getUserById(updateOfferExecutorDto.getNewExecutorId());
+//
+//    checkAccess(offerId, JwtProvider.getUserId());
+//
+//    Offer offer = offerRepository.getById(offerId);
+//    offer.setExecutor(executor);
+//    return new MyOfferDto(offer);
+//  }
 
   @Override
   public void updateStatus(UpdateOfferStatusDto offerStatusDto) {
@@ -156,10 +157,23 @@ public class OfferServiceImpl implements OfferService {
             : sortFields.descending());
   }
 
-  private void checkAccess(Long offerId, Long userCreatorId) {
+  public void checkAccess(Long offerId, Long userCreatorId) {
     if (!offerRepository.existsByIdAndCreator(offerId, userService.getUserById(userCreatorId))) {
       throw new DataAccessFailedException(Offer.class);
     }
+  }
+
+  @Override
+  public void setStatusDone(UpdateOfferStatusDto offerStatusDto) {
+    Long offerId = offerStatusDto.getId();
+    checkStatus(offerStatusDto.getNewStatus());
+
+    Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new EntityNotFoundException(Offer.class, offerId));
+    if (!offer.getAcceptedBid().getUser().getId().equals(JwtProvider.getUserId())) {
+      throw new DataAccessFailedException(Offer.class);
+    }
+    offer.setOfferStatusValue(offerStatusDto.getNewStatus());
+    offerRepository.save(offer);
   }
 
   private void checkStatus(int offerStatusValue) {
@@ -172,5 +186,24 @@ public class OfferServiceImpl implements OfferService {
     if (id <= 0) {
       throw new EntityBadIdException(Offer.class, id);
     }
+  }
+
+  @Override
+  public List<MyExecOfferDto> getAllAcceptedBidsByCurrentUserMyExecOfferDto() {
+    return offerRepository.findAllAcceptedUserBidsOffers(userService.getUserById(JwtProvider.getUserId()))
+            .stream()
+            .map(offer -> new MyExecOfferDto(offer))
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public void acceptBid(Bid bid) {
+    Offer offer = bid.getOffer();
+    if (!offer.getCreator().getId().equals(JwtProvider.getUserId())) {
+      throw new DataAccessFailedException(Offer.class);
+    }
+    offer.setAcceptedBid(bid);
+    offer.setOfferStatusValue(OfferStatus.ASSIGNED.getCode());
+    offerRepository.save(offer);
   }
 }

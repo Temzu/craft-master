@@ -1,10 +1,7 @@
 package com.gb.agile.craft_master.services;
 
-import com.gb.agile.craft_master.model.dtos.FindOfferDto;
-import com.gb.agile.craft_master.model.dtos.MyOfferDto;
-import com.gb.agile.craft_master.model.dtos.OfferDto;
-import com.gb.agile.craft_master.model.dtos.UpdateOfferExecutorDto;
-import com.gb.agile.craft_master.model.dtos.UpdateOfferStatusDto;
+import com.gb.agile.craft_master.model.dtos.*;
+import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.model.entities.Offer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,11 +21,21 @@ public interface OfferService {
 
   Offer getOfferById(Long id);
 
+  Offer getProxyById(Long id);
+
   void deleteOfferById(Long id);
 
   Offer saveOrUpdate(OfferDto offerDto);
 
-  MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto);
+  //MyOfferDto updateExecutor(UpdateOfferExecutorDto updateOfferExecutorDto);
 
   void updateStatus(UpdateOfferStatusDto offerStatusDto);
+
+  List<MyExecOfferDto> getAllAcceptedBidsByCurrentUserMyExecOfferDto();
+
+  void acceptBid(Bid bid);
+
+  void checkAccess(Long offerId, Long userCreatorId);
+
+  void setStatusDone(UpdateOfferStatusDto offerStatusDto);
 }

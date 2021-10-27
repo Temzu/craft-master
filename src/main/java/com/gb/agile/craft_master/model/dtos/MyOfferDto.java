@@ -13,7 +13,7 @@ public class MyOfferDto {
   private String occupationName;
   private Integer status;
   private LocalDateTime createdAt;
-  private ExecutorDto executor;
+  private BidDto acceptedBid;
 
   public MyOfferDto(Offer offer) {
     this.id = offer.getId();
@@ -22,8 +22,8 @@ public class MyOfferDto {
     this.occupationName = offer.getOccupation().getName();
     this.status = offer.getOfferStatusValue();
     this.createdAt = offer.getCreatedAt();
-    if (offer.getExecutor() != null) {
-      this.executor = new ExecutorDto(offer.getExecutor());
+    if (offer.getAcceptedBid() != null) {
+      this.acceptedBid = new BidDto(offer.getAcceptedBid());
     }
   }
 }

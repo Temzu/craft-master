@@ -10,11 +10,15 @@ import java.util.stream.Collectors;
 public class UserInfoDto {
     private String login;
     private String name;
+    private Float rating;
+    private Integer numRatings;
     private List<CredentialDto> credentials;
 
     public UserInfoDto(User user) {
         this.login = user.getLogin();
         this.name = user.getName();
+        this.rating = user.getRating();
+        this.numRatings = user.getNumRatings();
         this.credentials =user.getCredentials().stream().map(CredentialDto::new).collect(Collectors.toList());
     }
 }

@@ -18,7 +18,7 @@ public class ProfileDto {
   public ProfileDto(Profile profile) {
     this.id = profile.getId();
     this.user = profile.getUser();
-    this.occupationId = profile.getOccupationId();
+    this.occupationId = profile.getOccupation().getId();
   }
 
 }

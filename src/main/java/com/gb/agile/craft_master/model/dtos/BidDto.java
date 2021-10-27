@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Data
@@ -13,19 +14,18 @@ import java.time.ZonedDateTime;
 public class BidDto {
 
     private Long id;
-    private String title;
-    private String description;
-    private Long occupationId;
-    private User user;
-    private ZonedDateTime begDate;
-    private ZonedDateTime endDate;
+    private ExecutorDto executor;
+    private Long dateBeg;
+    private Long dateEnd;
     private BigDecimal price;
+    private Float rating;
 
     public BidDto(Bid bid) {
         this.id = bid.getId();
-        this.user = bid.getUser();
+        this.executor = new ExecutorDto(bid.getUser());
         this.price = bid.getPrice();
-        this.begDate = bid.getDateBeg();
-        this.endDate = bid.getDateEnd();
+        this.dateBeg = bid.getDateBeg().toInstant().toEpochMilli();
+        this.dateEnd = bid.getDateEnd().toInstant().toEpochMilli();
+        this.rating = bid.getRating();
     }
 }

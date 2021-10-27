@@ -18,4 +18,5 @@ public interface OccupationService {
     void deleteOccupationById(Long id);
 
     Occupation saveOrUpdate(Occupation offer);
+
 }

@@ -1,5 +1,6 @@
 package com.gb.agile.craft_master.services;
 
+import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.UserDto;
 
@@ -23,4 +24,5 @@ public interface UserService {
 
     void deleteUserById(Long id);
 
+    void updateUserRating(User user, Float rating);
 }

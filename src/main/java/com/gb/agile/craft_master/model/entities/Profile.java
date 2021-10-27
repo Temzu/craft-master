@@ -24,7 +24,14 @@ public class Profile {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "occupation_id")
-    private Long occupationId;
+    @OneToOne
+    @JoinColumn(name = "occupation_id", referencedColumnName = "id")
+    private Occupation occupation;
+
+    @Column(name = "work_exp")
+    private Integer workExp;
+
+    @Column(name = "description")
+    private String description;
 
 }

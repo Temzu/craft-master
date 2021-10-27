@@ -18,6 +18,7 @@ CREATE TABLE user
     password character(128) NOT NULL,
     name     character(128) NOT NULL,
     rating   numeric(5, 4),
+    num_ratings integer,
     PRIMARY KEY (id)
 );
 
@@ -43,6 +44,8 @@ CREATE TABLE profile
             REFERENCES occupation (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
+    work_exp integer,
+    description character(256),
     PRIMARY KEY (id)
 );
 CREATE INDEX user_name
@@ -74,15 +77,10 @@ CREATE TABLE offer
     id            bigserial      NOT NULL,
     title         character(128) NOT NULL,
     description   character(256),
-    bid_id      integer,
+    accepted_bid_id      integer,
     offer_status  integer DEFAULT 1,
     user_creator_id integer        NOT NULL
         CONSTRAINT fk_offer_user_creator
-            REFERENCES user (id)
-            ON UPDATE NO ACTION
-            ON DELETE NO ACTION,
-    user_executor_id integer
-        CONSTRAINT fk_offer_user_executor
             REFERENCES user (id)
             ON UPDATE NO ACTION
             ON DELETE NO ACTION,
@@ -95,6 +93,9 @@ CREATE TABLE offer
     date_end timestamp,
     PRIMARY KEY (id)
 );
+CREATE UNIQUE INDEX offer_accepted_bid_id
+    ON offer (accepted_bid_id);
+
 
 -- заявка на исполнение заказа (вместо order)
 CREATE TABLE bid
@@ -113,5 +114,13 @@ CREATE TABLE bid
         REFERENCES offer (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    PRIMARY KEY  (id)
+    PRIMARY KEY  (id),
+    rating   numeric(5, 4)
 );
+
+ALTER TABLE offer
+    ADD CONSTRAINT fk_offer_bid_id
+    FOREIGN KEY (accepted_bid_id)
+    REFERENCES bid (id)
+    ON UPDATE NO ACTION
+   ON DELETE NO ACTION;

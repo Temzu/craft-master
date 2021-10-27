@@ -32,6 +32,9 @@ public class User {
     @Column
     private Float rating;
 
+    @Column(name = "num_ratings")
+    private Integer numRatings;
+
     @OneToOne
     @JoinColumn(name = "role_id")
     private Role role;
@@ -45,5 +48,7 @@ public class User {
         this.name = user.getName();
         this.role = user.getRole();
         this.password = user.getPassword();
+        this.rating = 0f;
+        this.numRatings = 0;
     }
 }

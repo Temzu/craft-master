@@ -4,18 +4,8 @@ import com.gb.agile.craft_master.core.enums.OfferStatus;
 import com.gb.agile.craft_master.model.dtos.OfferDto;
 import com.gb.agile.craft_master.model.dtos.SaveOfferDto;
 import java.time.LocalDateTime;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PostLoad;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,13 +39,13 @@ public class Offer {
   @JoinColumn(name = "occupation_id")
   private Occupation occupation;
 
-  @ManyToOne
-  @JoinColumn(name = "user_executor_id")
-  private User executor;
-
   @Column(name = "created_at")
   @CreationTimestamp
   private LocalDateTime createdAt;
+
+  @OneToOne
+  @JoinColumn(name = "accepted_bid_id", referencedColumnName = "id")
+  private Bid acceptedBid;
 
   @Transient
   private OfferStatus offerStatus;
