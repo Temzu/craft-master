@@ -7,7 +7,6 @@ import com.gb.agile.craft_master.tgbot.entities.UserDto;
 import com.gb.agile.craft_master.tgbot.utils.BotCharacters;
 import com.gb.agile.craft_master.tgbot.utils.RestRequests;
 import com.gb.agile.craft_master.tgbot.utils.TelegramUtils;
-import org.apache.camel.Exchange;
 import org.apache.camel.component.telegram.model.*;
 
 
@@ -19,15 +18,14 @@ public class UserDialogTransitions {
     private final RestRequests restRequests = new RestRequests();
     private OfferDto offer;
 
-    public boolean login(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
+    public boolean login(MessageDto msg, OutgoingTextMessage response) {
         boolean result = false;
         if (msg.getText().equals("/start")) {
             String userName = "Error";
             String login = msg.getChatId();
             String password = msg.getChatId(); //TODO: unsecured
             try {
-                userName = request.getIn().getBody(IncomingMessage.class).getFrom().getUsername();
+                userName = msg.getUserName();
                 if (!restRequests.loginUser(login, password)) {
                     restRequests.createUser(login, userName, password);
                     restRequests.loginUser(login, password);
@@ -36,15 +34,13 @@ public class UserDialogTransitions {
                 e.printStackTrace();
             }
             response.setText(String.format("Вы вошли в систему как %s\nВаша роль?", userName));
-            response.setChatId(msg.getChatId());
             response.setReplyMarkup(TelegramUtils.getInlineKeyboardMarkup(List.of("Заказчик", "Исполнитель")));
             result = true;
         }
         return result;
     }
 
-    public boolean getRole(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
+    public boolean getRole(MessageDto msg, OutgoingTextMessage response) {
         String text = "Error";
         boolean result = msg.getText().equals("Исполнитель");
         try {
@@ -58,28 +54,22 @@ public class UserDialogTransitions {
             e.printStackTrace();
         }
         response.setText(text);
-        response.setChatId(msg.getChatId());
         return result;
     }
 
-    public boolean chooseOrderItem(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
+    public boolean chooseOrderItem(MessageDto msg, OutgoingTextMessage response) {
         response.setText("Вы откликнулись на предложение: " + msg.getText() + '\n' + "Введите любой текст для перезапуска");
-        response.setChatId(msg.getChatId());
         restRequests.createBid(Integer.parseInt(msg.getText()),msg.getChatId());
         return true;
     }
 
-    public boolean transparent(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
-        response.setChatId(msg.getChatId());
+    public boolean transparent(MessageDto msg, OutgoingTextMessage response) {
         response.setText("Выберите роль: ");
         response.setReplyMarkup(TelegramUtils.getInlineKeyboardMarkup(List.of("Заказчик", "Исполнитель")));
         return true;
     }
 
-    public boolean getOfferCategory(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
+    public boolean getOfferCategory(MessageDto msg, OutgoingTextMessage response) {
         boolean result = true;
         String text = "Error";
         try {
@@ -89,44 +79,35 @@ public class UserDialogTransitions {
             e.printStackTrace();
         }
         response.setText(text);
-        response.setChatId(msg.getChatId());
         return result;
     }
 
-    public boolean chooseOfferItem(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
+    public boolean chooseOfferItem(MessageDto msg, OutgoingTextMessage response) {
         response.setText("Вы выбрали категорию: " + msg.getText() + '\n' + "Введите описание заказа: ");
         offer = new OfferDto();
         UserDto creator = new UserDto();
         creator.setLogin(msg.getChatId());
         offer.setCreator(creator);
         offer.setOccupationId(Long.parseLong(msg.getText()));
-        response.setChatId(msg.getChatId());
         return true;
     }
 
-    public boolean placeOfferDetails(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
+    public boolean placeOfferDetails(MessageDto msg, OutgoingTextMessage response) {
         offer.setTitle("Заказ, категория " + offer.getOccupationId());
         offer.setDescription(msg.getText());
         response.setText("Введите стоимость заказа: ");
-        response.setChatId(msg.getChatId());
         return true;
     }
 
-    public boolean placeOfferPrice(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
+    public boolean placeOfferPrice(MessageDto msg, OutgoingTextMessage response) {
         offer.setPrice(new BigDecimal(msg.getText()));
         //TODO:offer.setCreator();
         response.setText("Вы оформили заказ: " + offer.toString() + '\n' + "Введите любой текст для перезапуска");
-        response.setChatId(msg.getChatId());
         restRequests.createOffer(offer);
         return true;
     }
 
-    public boolean getExecutorAction(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
-        response.setChatId(msg.getChatId());
+    public boolean getExecutorAction(MessageDto msg, OutgoingTextMessage response) {
         boolean result = msg.getText().equals("Создать заявку");
         String text = "Error";
         try {
@@ -142,9 +123,7 @@ public class UserDialogTransitions {
         return result;
     }
 
-    public boolean chooseBid(Exchange request, OutgoingTextMessage response) {
-        MessageDto msg = new MessageDto(request);
-        response.setChatId(msg.getChatId());
+    public boolean chooseBid(MessageDto msg, OutgoingTextMessage response) {
         restRequests.acceptBid(Integer.parseInt(msg.getText()));
         response.setText("Акцептована заявка : " + msg.getText());
         return true;

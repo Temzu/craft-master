@@ -1,35 +1,42 @@
 package com.gb.agile.craft_master.tgbot.processors;
 
+import com.gb.agile.craft_master.tgbot.entities.MessageDto;
 import com.gb.agile.craft_master.tgbot.fsm.UserDialogState;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.component.telegram.model.*;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class MessageProcessor implements Processor {
 
-    private UserDialogState state;
+    private Map<String, UserDialogState> state;
 
     MessageProcessor() {
-        state = UserDialogState.Start;
+        this.state = new HashMap<>();
     }
 
     @Override
     public void process(Exchange exchange) throws RuntimeException {
         OutgoingTextMessage msg = new OutgoingTextMessage();
+        MessageDto msgIn = new MessageDto(exchange);
+        msg.setChatId(msgIn.getChatId());
+
+        state.putIfAbsent(msgIn.getChatId(), UserDialogState.Start);
+
         // DEBUG String transition = state.name();
         try {
             if (!(exchange.getIn().getBody() instanceof IncomingCallbackQuery)) {
-                IncomingMessage msgIn = exchange.getIn().getBody(IncomingMessage.class);
-                User from = msgIn.getFrom();
-                if (from.isBot()) throw new RuntimeException("Bots are not allowed");
+                if (msgIn.isBot()) throw new RuntimeException("Bots are not allowed");
                 if (msgIn.getText().equals("/exit")) {
-                    state = UserDialogState.Start;
+                    state.put(msgIn.getChatId(),UserDialogState.Start);
                     msg.setText("Введите /start");
                 }
             }
-            state = state.nextState(exchange, msg);
+            state.put(msgIn.getChatId(),state.get(msgIn.getChatId()).nextState(msgIn, msg));
         } catch (Exception e) {
             msg.setText(e.getMessage());
         } finally {
