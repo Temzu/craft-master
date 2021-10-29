@@ -1,10 +1,12 @@
 package com.gb.agile.craft_master.controllers;
 
-
-import com.gb.agile.craft_master.services.OccupationService;
 import com.gb.agile.craft_master.model.dtos.OccupationDto;
 import com.gb.agile.craft_master.model.entities.Occupation;
 import lombok.RequiredArgsConstructor;
+
+import com.gb.agile.craft_master.model.entities.Occupation;
+import com.gb.agile.craft_master.services.OccupationService;
+import lombok.AllArgsConstructor;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +26,14 @@ private final OccupationService occupationService;
         return occupationService.getAllOccupations();
     }
 
+    @GetMapping("/single")
+    public List<OccupationDto> getAllSingleOccupations() {
+        return occupationService.getAllSingleOccupations();
+    }
+
     @GetMapping("/{id}")
     public OccupationDto getOccupation(@PathVariable Long id) {
-        return new OccupationDto(occupationService.getOccupationById(id));
+        return occupationService.getOccupationDtoById(id);
     }
 
     @DeleteMapping("/{id}")

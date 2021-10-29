@@ -1,11 +1,9 @@
 package com.gb.agile.craft_master.model.entities;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,14 +16,20 @@ public class Occupation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "parentId")
-  private Long parentId;
 
   @Column(name = "name")
   private String name;
 
+  @ManyToOne(fetch = FetchType.LAZY, optional=true)
+  @JoinColumn(name="parent_id")
+  private Occupation parent;
+
+  @OneToMany(mappedBy="parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+  private List<Occupation> children = new ArrayList<>();
+
   @Override
   public String toString() {
-    return String.format("%s [%d/%d]", name, id, parentId);
+    return String.format("%s [%d/%d]", name, id, parent.getId());
   }
+
 }

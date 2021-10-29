@@ -1,8 +1,8 @@
 package com.gb.agile.craft_master.services.impl;
 
+import com.gb.agile.craft_master.services.RoleService;
 import com.gb.agile.craft_master.model.entities.Role;
 import com.gb.agile.craft_master.repositories.RoleRepository;
-import com.gb.agile.craft_master.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
