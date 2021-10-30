@@ -11,6 +11,7 @@ import com.gb.agile.craft_master.model.entities.Bid;
 import com.gb.agile.craft_master.repositories.BidRepository;
 import com.gb.agile.craft_master.services.OfferService;
 import com.gb.agile.craft_master.services.UserService;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -88,7 +89,7 @@ public class BidServiceImpl implements BidService {
     public List<BidUserDto> getUserOfferBids() {
         return bidRepository.getUserOfferBids(userService.getUserById(JwtProvider.getUserId()))
                 .stream()
-                .map(bid -> new BidUserDto(bid))
+                .map(BidUserDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -96,7 +97,7 @@ public class BidServiceImpl implements BidService {
     public BidDto acceptBid(Long bidId) {
         BidDto bidDto = null;
         Bid bid = bidRepository.getById(bidId);
-        if (bid.getOffer().getCreator().getId() == JwtProvider.getUserId()) {
+        if (Objects.equals(bid.getOffer().getCreator().getId(), JwtProvider.getUserId())) {
             Offer offer = bid.getOffer();
             offer.setAcceptedBid(bid);
             offerService.saveOrUpdate(offer);

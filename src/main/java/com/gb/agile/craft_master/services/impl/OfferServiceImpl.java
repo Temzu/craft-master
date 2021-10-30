@@ -190,7 +190,7 @@ public class OfferServiceImpl implements OfferService {
   public List<MyExecOfferDto> getAllOffersByCurrentUserMyExecOfferDto() {
     return offerRepository
         .findAllByCreatorId(JwtProvider.getUserId())
-        .stream().map(offer -> (new MyExecOfferDto(offer)))
+        .stream().map(MyExecOfferDto::new)
         .collect(Collectors.toList());
   }
 
@@ -198,7 +198,7 @@ public class OfferServiceImpl implements OfferService {
   public List<MyExecOfferDto> getAllAcceptedBidsByCurrentUserMyExecOfferDto() {
     return offerRepository.findAllAcceptedUserBidsOffers(userService.getUserById(JwtProvider.getUserId()))
         .stream()
-        .map(offer -> new MyExecOfferDto(offer))
+        .map(MyExecOfferDto::new)
         .collect(Collectors.toList());
   }
 

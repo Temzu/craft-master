@@ -1,4 +1,4 @@
-package com.gb.agile.craft_master;
+package com.gb.agile.craft_master.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -9,8 +9,7 @@ public class CraftMasterConfig {
 
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper;
+        return new ModelMapper();
     }
 
 }
