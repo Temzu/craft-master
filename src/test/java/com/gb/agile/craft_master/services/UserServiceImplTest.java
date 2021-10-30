@@ -1,8 +1,8 @@
 package com.gb.agile.craft_master.services;
 
 import com.gb.agile.craft_master.core.enums.RoleCodes;
-import com.gb.agile.craft_master.model.entities.User;
 import com.gb.agile.craft_master.model.dtos.UserDto;
+import com.gb.agile.craft_master.model.entities.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
